@@ -50,9 +50,5 @@
   "devDependencies": {
     "@types/object-path": "^0.11.1",
     "rollup-plugin-typescript2": "^0.30.0"
-  },
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
   }
 }
