@@ -46,7 +46,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-v1
       - name: Run test
-        run: yarn test
+        run: yarn test:coverage
       - name: Codecov
         uses: codecov/codecov-action@v2
         with:
