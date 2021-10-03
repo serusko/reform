@@ -49,7 +49,7 @@ const Watch: FC<{ name: string }> = memo(({ name }) => {
 
 function App() {
   return (
-    <Form initialValues={{ name: "Foo" }}>
+    <Form initialValues={{ name: "Foo2" }}>
       <>
         <Field component={TextInput} name="name" id="name" label="Name" />
         <br />
