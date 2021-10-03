@@ -1,1 +1,1 @@
-[![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/serusko/58096621ea9997efb9f66ea438592338/raw/form__heads_main.json)]
+[![codecov](https://codecov.io/gh/serusko/form/branch/master/graph/badge.svg?token=L489M7QW8C)](https://codecov.io/gh/serusko/form)
