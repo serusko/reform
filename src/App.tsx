@@ -1,25 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, memo, useEffect, useMemo, useRef } from "react";
+
+import { Form } from "./form/src/Form";
+import { Field } from "./form/src/Field";
+import { useField } from "./form/src/useField";
+
+const TextInput: FC<any> = ({ id, label, onChange, onBlur, value }) => {
+  const count = useRef(0);
+  useEffect(() => {
+    count.current++;
+  });
+
+  return (
+    <>
+      <label htmlFor={id}>
+        {label} ({count.current}):
+      </label>
+      <br />
+      <input
+        onChange={(e) => onChange(e.currentTarget.value || "")}
+        value={value || ""}
+        onBlur={onBlur}
+        autoComplete="off"
+        id={id}
+      />
+    </>
+  );
+};
+
+const Watch: FC<{ name: string }> = memo(({ name }) => {
+  const field = useField(name);
+
+  const count = useRef(0);
+  useEffect(() => {
+    count.current++;
+  });
+
+  return useMemo(
+    () => (
+      <div>
+        {name} ({count.current}):
+        <br />
+        <pre>{JSON.stringify(field, null, 2)}</pre>
+      </div>
+    ),
+    [field, name]
+  );
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Form initialValues={{ name: "Foo" }}>
+      <>
+        <Field component={TextInput} name="name" id="name" label="Name" />
+        <br />
+        <Field
+          component={TextInput}
+          name="surname"
+          id="surname"
+          label="Surname"
+        />
+
+        <Watch name="name" />
+
+        <Watch name="surname" />
+      </>
+    </Form>
   );
 }
 

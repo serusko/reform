@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "declaration": true,
+    "declarationDir": "dist/dts"
+  }
+}
