@@ -3,6 +3,8 @@ import { FC, memo, useEffect, useMemo, useRef } from "react";
 import { Form } from "./form/src/Form";
 import { Field } from "./form/src/Field";
 import { useField } from "./form/src/useField";
+import { formReducer } from "./form/src/formReducer";
+import { FormAction, FormState } from "./form/src/FormContext";
 
 const TextInput: FC<any> = ({ id, label, onChange, onBlur, value }) => {
   const count = useRef(0);
@@ -47,12 +49,32 @@ const Watch: FC<{ name: string }> = memo(({ name }) => {
   );
 });
 
+type FormData = { name: string; surname: string };
+
 function App() {
+  const customReducer = (
+    state: FormState<FormData>,
+    action: FormAction<FormData>
+  ) => {
+    let next: FormState<FormData> = { ...state };
+
+    if (action.type === "onChange" && action.name === "name") {
+      next.values = { ...next.values, surname: "" };
+    }
+
+    return formReducer(next, action);
+  };
+
   return (
-    <Form initialValues={{ name: "Foo" }}>
+    <Form<FormData>
+      initialValues={{ name: "Foo", surname: "" }}
+      reducer={customReducer}
+    >
       <>
         <Field component={TextInput} name="name" id="name" label="Name" />
+
         <br />
+
         <Field
           component={TextInput}
           name="surname"

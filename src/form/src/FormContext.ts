@@ -21,11 +21,11 @@ export interface FormState<D extends Data = Data> {
 
 export type FormAction<D extends Data = Data> =
   | { type: "initialValues"; value: undefined | D }
-  | { name: string; type: "onChange"; value: unknown }
-  | { name: string | string[]; error: undefined | string; type: "setError" }
-  | { errors: Record<string, string>; type: "setErrors" }
-  | { name: string | string[]; type: "setTouched" }
-  | { cb: (data: D) => void; type: "onSubmit" };
+  | { type: "onChange"; name: string; value: unknown }
+  | { type: "setError"; name: string | string[]; error: undefined | string }
+  | { type: "setErrors"; errors: Record<string, string> }
+  | { type: "setTouched"; name: string | string[] }
+  | { type: "onSubmit"; cb: (data: D) => void };
 
 export const initialState = {
   changed: {},

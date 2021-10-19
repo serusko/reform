@@ -8,12 +8,12 @@ export interface FieldProps extends Record<string, any> {
 }
 
 export const Field: FC<FieldProps> = memo((props) => {
-  const f = useField(props.name);
+  const field = useField(props.name);
   const C = props.component;
 
-  const [{ value, disabled }, { error }, { setValue, setTouched }] = f;
-
   return useMemo(() => {
+    const [{ value, disabled }, { error }, { setValue, setTouched }] = field;
+
     return (
       <C
         {...props}
@@ -26,5 +26,5 @@ export const Field: FC<FieldProps> = memo((props) => {
         value={value}
       />
     );
-  }, [C, disabled, error, props, setTouched, setValue, value]);
+  }, [C, field, props]);
 });
