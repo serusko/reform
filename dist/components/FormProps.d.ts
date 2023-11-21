@@ -1,10 +1,9 @@
 import { Dispatch, ReactNode } from 'react';
-import { Schema } from 'yup';
 
-import { Data, FormState, ValidationFn } from '../context';
+import { Data, FormAction, FormState, ValidationFn } from '../context';
 import { FormReducerAction, formReducerType } from '../formReducer';
 
-export interface Props<D extends Data = Data> {
+export default interface FormProps<D extends Data = Data> {
   /**
    * Render Form content
    */
@@ -32,18 +31,26 @@ export interface Props<D extends Data = Data> {
   id?: string;
 
   /**
-   * Keep memoized, so on change, state will be recalculated, revalidated...
+   * Initial Form values,
+   * Keep memoized !!!, so once is changed change, state will be recalculated, revalidated... RESET
    */
   initialValues?: D;
 
   /**
+   * Track state changes
+   * - you can customize callback on state change and trigger updates via dispatch like onSubmit
+   */
+  onStateUpdate?: (
+    action: FormAction<D>,
+    prev: FormState<D>,
+    next: FormState<D>,
+    dispatch: Dispatch<FormReducerAction<D>>,
+  ) => void;
+
+  /**
    * Handle submit
    */
-  onSubmit?: (
-    data: D,
-    dispatch: Dispatch<FormReducerAction<D>>,
-    state: FormState<D>,
-  ) => void | Promise<unknown>; // TODO: !!!!
+  onSubmit?: <R = unknown>(data: D) => void | Promise<R>;
 
   /**
    * Form state reducer = check default formReducer for docs
@@ -53,5 +60,5 @@ export interface Props<D extends Data = Data> {
   /**
    * Validation schema or validation fn
    */
-  validation?: Schema | ValidationFn<D>;
+  validation?: ValidationFn<D>;
 }

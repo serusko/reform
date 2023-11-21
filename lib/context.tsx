@@ -1,10 +1,11 @@
+import { ReactNode } from 'react';
 import { createContext } from 'use-context-selector';
 
-import { initialFormState } from './constants';
+import { SetFieldErrorVal } from './components/BaseFieldProps';
 
 export type Data = Record<string, unknown>;
-export type FormErrors = Record<string, string>;
-export type ValidationFn<D> = (data: D) => undefined | FormErrors | Promise<undefined | FormErrors>;
+export type FormErrors = Record<string, ReactNode>;
+export type ValidationFn<D> = (data: D) => undefined | FormErrors;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Schema = any;
@@ -18,33 +19,39 @@ export type FormAction<D extends Data = Data> =
   | { type: 'init' }
   /** initialValues has changed */
   | { type: 'initialValues'; value: undefined | D }
-  /** onChange called */
-  | { name: string; type: 'onChange'; value: unknown }
-  /** set custom error */
-  | { error: undefined | string; name: string | string[]; type: 'setError' }
-  /** set custom errors (override state) */
+  /** trigger form reset = clear changed, touched, use initialValues */
+  | { type: 'reset' }
+  /** set field value to null*/
+  | { name: string; type: 'clearValue' }
+  /** set field value to value from initialValues */
+  | { name: string; type: 'resetValue' }
+  /** set field value */
+  | { name: string; type: 'setValue'; value: unknown }
+  /** set all values */
+  | { type: 'setValues'; values: D }
+  /** set field error(s) */
+  | { error: SetFieldErrorVal; name: string | string[]; type: 'setError' }
+  /** set errors */
   | { errors: Record<string, string>; type: 'setErrors' }
-  /** setFieldTouched (onBlur) */
+  /** mark field as touched (onBlur) */
   | { name: string | string[]; touched: boolean; type: 'setTouched' }
-  /** Start form submitting */
-  | { type: 'startSubmit' }
-  /** End form submitting */
-  | { result?: unknown; type: 'endSubmit' }
   /** set disabled state */
   | { type: 'setDisabled'; value: boolean }
-  /** start Validation process */
+  /** start form submitting */
+  | { type: 'startSubmit' }
+  /** end form submitting */
+  | { type: 'endSubmit' }
+  /** start validation process */
   | { errors?: FormErrors; type: 'startValidate' }
-  /** end Validation process */
-  | { type: 'endValidate' }
-  /** trigger form reset = clear changed, touched, use initialValues */
-  | { type: 'reset' };
+  /** end validation process */
+  | { type: 'endValidate' };
 
 /**
  * Form state context type
  */
 export interface FormState<D extends Data = Data> {
   /**
-   * List of fields changed by human interactions
+   * List of fields changed by onChange event
    */
   changed: Record<string, boolean>;
   /**
@@ -63,16 +70,6 @@ export interface FormState<D extends Data = Data> {
    */
   errors: FormErrors;
   /**
-   * Initial errors
-   * so you can prefill errors before first validation
-   */
-  initialErrors: FormErrors;
-  /**
-   * Initial touched map
-   * so you can control what errors will be displayed immediately
-   */
-  initialTouched?: Record<string, boolean>;
-  /**
    * Initial data cst from parent
    * every time they changed, "init" action should be triggered
    * so keep it memoized
@@ -84,16 +81,17 @@ export interface FormState<D extends Data = Data> {
   isSubmitting?: boolean;
   /**
    * Data are valid with provided schema
+   * - undefined = in progress / unknown / not yet validated
    */
-  isValid: boolean;
+  isValid: undefined | boolean;
+  /**
+   * In case of async validation, indicate progress
+   */
+  isValidating: boolean;
   /**
    * Remember last action type
    */
   lastAction: FormAction<D>['type'] | string;
-  /**
-   * Propagate form submit promise result
-   */
-  submitResult?: unknown;
   /**
    * Number of times of successful submit (valid data submitted)
    */
@@ -105,12 +103,31 @@ export interface FormState<D extends Data = Data> {
    */
   touched: Record<string, boolean>;
   /**
+   * Register single fields which has being validated asynchronously
+   * - could be used as remark for blocking submitting = wait until ready
+   *
+   */
+  validatingFields?: Record<string, boolean>;
+  /**
    * Form data values
    * could be nested object, we use dot chain to select specific value
-   * like: "tebName.paperCard.fieldSet.paramName"
+   * like: "tebName.paperCard.fieldSet.paramName" or "tabName.arrayTable.3.name" for arrays
    */
   values: D;
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const initialFormState: FormState<Data> = {
+  changed: {},
+  errors: {},
+  initialValues: {},
+  isValid: true,
+  isValidating: false,
+  lastAction: 'init',
+  submitted: 0,
+  touched: {},
+  values: {} as Data,
+};
 
 // bcs var cannot be Generic
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

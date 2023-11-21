@@ -1,4 +1,7 @@
-import { Schema } from 'yup';
+// TODO: support more validation libs
+interface Schema {
+  describe: () => unknown;
+}
 
 /**
  * Check if field is required in schema

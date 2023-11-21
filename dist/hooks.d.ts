@@ -1,24 +1,21 @@
+import { SetFieldErrorVal } from './components/BaseFieldProps';
 import { FormState, Data, FormAction } from './context';
-/**
- * Form State context selector
- */
-export declare function useSelect<D extends Data, V = unknown>(g: (s: FormState<D>) => V): V;
 /**
  * Get field value, meta-info, actions for one field
  * - use dot chain for nested path
  */
 export declare function useField<V = unknown>(name: string): {
-    changed: boolean;
-    disabled: boolean;
     error: string | undefined;
     initialValue: unknown;
+    isChanged: boolean;
+    isDisabled: boolean;
     isRequired: boolean;
+    isTouched: boolean;
     name: string;
     onBlur: () => void;
     onChange: (value: unknown) => void;
-    setError: (error: string | undefined) => void;
+    setError: (error: SetFieldErrorVal) => void;
     setValue: (value: unknown) => void;
-    touched: boolean;
     value: V;
 };
 /**
@@ -43,6 +40,7 @@ export declare function useFieldTouched(name: string): boolean;
  * If you need to set more field values or additional info, use 'useFormDispatch'
  */
 export declare function useSetFieldValue<V = unknown>(name: string): (value: V) => void;
+export declare function useSetValues<D extends Data = Data>(): (values: D) => void;
 /**
  * Mark field as touched
  * - value defaults to true
@@ -57,15 +55,23 @@ export declare function useSetSetFieldTouched(name: string): (touched?: boolean)
  *
  * If you need to set more field values or additional info, use 'useFormDispatch'
  */
-export declare function useSetFieldError(name: string): (error: string | undefined) => void;
+export declare function useSetFieldError(name: string): (error: SetFieldErrorVal | undefined) => void;
+/**
+ * "Redux like" Selector to get specific part of form state, or complete state
+ */
+export declare function useFormSelect<D extends Data = Data, R = unknown>(selector: (s: FormState<D>) => R): R;
+export declare function useFormState<D extends Data>(): FormState<D>;
 /**
  * Form dispatch action
  * enter formReducer action
  */
-export declare function useFormDispatch<D extends Data = Data, A = FormAction<D>>(): (a: A) => void;
+export declare function useFormDispatch<D extends Data = Data, A = FormAction<D>>(): (action: A) => void;
 /**
  * Submit helper to trigger form Submit action
+ * - TODO: think about passing callback - onSubmit
  */
-export declare function useSubmit(): () => void;
-export declare function useFormState<D extends Data>(): FormState<D>;
-export declare function useFormSubmitting(): boolean[];
+export declare function useFormSubmit(): () => void;
+/**
+ * Helper for custom Submit button
+ */
+export declare function useSubmitButton(): [boolean, unknown];

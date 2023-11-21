@@ -1,32 +1,26 @@
 import { get } from 'object-path';
-import { useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import { useContext, useContextSelector } from 'use-context-selector';
 
+import { SetFieldErrorVal } from './components/BaseFieldProps';
 import { FormActionContext, FormStateContext, FormState, Data, FormAction } from './context';
-
-/**
- * Form State context selector
- */
-export function useSelect<D extends Data, V = unknown>(g: (s: FormState<D>) => V) {
-  return useContextSelector<FormState<D>, V>(FormStateContext, g);
-}
 
 /**
  * Get field value, meta-info, actions for one field
  * - use dot chain for nested path
  */
 export function useField<V = unknown>(name: string) {
-  const changed = useSelect((s) => !!s.changed?.[name]);
-  const disabled = useSelect((s) =>
+  const isChanged = useFormSelect((s) => !!s.changed?.[name]);
+  const isDisabled = useFormSelect((s) =>
     s.disabledFields?.[name] ? !!s.disabledFields[name] : !!s.disabled,
   );
-  const error = useSelect((s) =>
+  const error = useFormSelect((s) =>
     s.submitted > 0 || !!s.touched?.[name] ? s.errors?.[name] : undefined,
   );
-  const initialValue = useSelect((s) => s.initialValues?.[name]);
+  const initialValue = useFormSelect((s) => s.initialValues?.[name]);
   const isRequired = false; // TODO: ...
-  const touched = useSelect((s) => s?.submitted > 0 || !!s?.touched[name]);
-  const value: V = useSelect((s) => get(s.values, name));
+  const isTouched = useFormSelect((s) => s?.submitted > 0 || !!s?.touched[name]);
+  const value: V = useFormSelect((s) => get(s.values, name));
 
   const setValue = useSetFieldValue(name);
   const setTouched = useSetSetFieldTouched(name);
@@ -34,22 +28,22 @@ export function useField<V = unknown>(name: string) {
 
   return useMemo(
     () => ({
-      changed,
-      disabled,
       error,
       initialValue,
+      isChanged,
+      isDisabled,
       isRequired,
+      isTouched,
       name,
       onBlur: () => setTouched(),
       onChange: setValue,
       setError,
       setValue,
-      touched,
       value,
     }),
     [
-      changed,
-      disabled,
+      isChanged,
+      isDisabled,
       error,
       initialValue,
       isRequired,
@@ -57,7 +51,7 @@ export function useField<V = unknown>(name: string) {
       setError,
       setTouched,
       setValue,
-      touched,
+      isTouched,
       value,
     ],
   );
@@ -75,7 +69,7 @@ export function useFieldValue<V = unknown>(name: string): V {
  * Get specific field 'error' meta info
  * - use dot chain for nested path
  */
-export function useFieldError(name: string): string | undefined {
+export function useFieldError(name: string): ReactNode | undefined {
   return useContextSelector(FormStateContext, (v) => v.errors[name]);
 }
 
@@ -95,7 +89,12 @@ export function useFieldTouched(name: string): boolean {
  */
 export function useSetFieldValue<V = unknown>(name: string) {
   const dispatch = useContext(FormActionContext);
-  return useCallback((value: V) => dispatch({ name, type: 'onChange', value }), [dispatch, name]);
+  return useCallback((value: V) => dispatch({ name, type: 'setValue', value }), [dispatch, name]);
+}
+
+export function useSetValues<D extends Data = Data>() {
+  const dispatch = useContext(FormActionContext);
+  return useCallback((values: D) => dispatch({ type: 'setValues', values }), [dispatch]);
 }
 
 /**
@@ -122,23 +121,39 @@ export function useSetSetFieldTouched(name: string) {
 export function useSetFieldError(name: string) {
   const dispatch = useContext(FormActionContext);
   return useCallback(
-    (error: string | undefined) => dispatch({ error, name, type: 'setError' }),
+    (error: SetFieldErrorVal | undefined) => dispatch({ error, name, type: 'setError' }),
     [dispatch, name],
   );
+}
+
+/**
+ * "Redux like" Selector to get specific part of form state, or complete state
+ */
+export function useFormSelect<D extends Data = Data, R = unknown>(
+  selector: (s: FormState<D>) => R,
+) {
+  return useContextSelector(FormStateContext, selector);
+}
+
+export function useFormState<D extends Data>(): FormState<D> {
+  return useContext(FormStateContext) as FormState<D>;
 }
 
 /**
  * Form dispatch action
  * enter formReducer action
  */
-export function useFormDispatch<D extends Data = Data, A = FormAction<D>>() {
-  return useContext(FormActionContext) as (a: A) => void;
+export function useFormDispatch<D extends Data = Data, A = FormAction<D>>(): (action: A) => void {
+  const d = useContext(FormActionContext) as (action: A) => void;
+
+  return d || (() => {});
 }
 
 /**
  * Submit helper to trigger form Submit action
+ * - TODO: think about passing callback - onSubmit
  */
-export function useSubmit() {
+export function useFormSubmit() {
   const dispatch = useFormDispatch();
 
   return useCallback(() => {
@@ -146,12 +161,12 @@ export function useSubmit() {
   }, [dispatch]);
 }
 
-export function useFormState<D extends Data>(): FormState<D> {
-  return useContext(FormStateContext) as FormState<D>;
-}
-
-export function useFormSubmitting() {
+/**
+ * Helper for custom Submit button
+ */
+export function useSubmitButton(): [boolean, unknown] {
   const isSubmitting = useContextSelector(FormStateContext, (s) => !!s.isSubmitting);
-  const result = useContextSelector(FormStateContext, (s) => !!s.submitResult);
-  return useMemo(() => [isSubmitting, result], [isSubmitting, result]);
+  const submit = useFormSubmit();
+
+  return useMemo((): [boolean, () => void] => [isSubmitting, submit], [submit, isSubmitting]);
 }

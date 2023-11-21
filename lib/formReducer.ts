@@ -1,3 +1,5 @@
+import { stat } from 'fs';
+
 import * as op from 'object-path';
 
 import { Data, FormAction, FormErrors, FormState, ValidationFn } from './context';
@@ -30,27 +32,10 @@ export function getFormReducer<D extends Data = Data>(
   validate: ValidationFn<D>,
 ): formReducerType<D> {
   return function formReducer(
-    prevState: FormState<D>,
+    state: FormState<D>,
     action: FormAction<D>, // TODO: improve action type - enable any other { type: ... } object
-    /**
-     * YOu can prepare state with custom reducer(s) before it will be processed with default action
-     */
-    customReducers?: formReducerType<D>[] | formReducerType<D>,
   ): FormState<D> {
-    const reducers = customReducers
-      ? Array.isArray(customReducers)
-        ? customReducers
-        : [customReducers]
-      : [];
-
-    // TODO: think about running reducers after this "common" so state will be muted after changes not before
-    const state = reducers.reduce((s, reducer) => reducer(s, action), {
-      ...prevState,
-      lastAction: action.type, // initialize new state as
-    } as FormState<D>);
-
     switch (action.type) {
-      // Initial values (reference) changed
       // @ts-ignore skip fallthrough
       case 'initialValues': // copy new from action
         state.initialValues = { ...(action.value || ({} as D)) };
@@ -68,12 +53,14 @@ export function getFormReducer<D extends Data = Data>(
           changed: {},
           errors: {},
           isSubmitting: false,
+          isValidating: false,
           submitted: 0,
           touched: {},
         } satisfies FormState<D>;
 
       // On field value change
-      case 'onChange': {
+      case 'setValue': {
+        // TODO: use immer/immutable ???
         const values = { ...state.values };
 
         if (op.get(values, action.name) === action.value) {
@@ -82,9 +69,12 @@ export function getFormReducer<D extends Data = Data>(
 
         setIn(values, action.name, action.value);
 
+        // TODO: validate single field
+        // TODO: add support for async validation
+        // TODO: think about debounce validation
         const errors0 = validate(values);
 
-        const x = {
+        return {
           ...state,
           changed: { ...state.changed, [action.name]: true },
           errors: (errors0 || {}) as FormErrors,
@@ -92,60 +82,56 @@ export function getFormReducer<D extends Data = Data>(
           touched: { ...state.touched, [action.name]: true },
           values,
         };
-
-        return x;
-
-        // Set field touched (mostly onBlur action)
       }
-      case 'setTouched':
-        if (Array.isArray(action.name)) {
-          const s = { ...state };
-          action.name.forEach((k) => (s.touched[k] = true));
-          return s;
+
+      // TODO: think about readOnly
+      case 'setDisabled':
+        if (state.disabled === action.value) {
+          return state;
+        } else {
+          return { ...state, disabled: !!action.value };
         }
 
+      // Set field as touched = record user interaction (mostly onBlur action)
+      case 'setTouched': {
+        const names = action.name ? (Array.isArray(action.name) ? action.name : [action.name]) : [];
+
         return {
           ...state,
-          touched: { ...state.touched, [action.name]: true },
+          touched: names.reduce((acc, name) => ({ ...acc, [name]: true }), state.touched || {}),
         };
 
-      // Async Submit action finished
-      case 'endSubmit':
-        return {
-          ...state,
-          disabled: false,
-          isSubmitting: false,
-          submitResult: action.result,
-        };
-
-      // Start submit async call
+        // Start submit async call
+      }
       case 'startSubmit': {
         if (state.isSubmitting) {
           return state;
         }
 
-        const errors1 = validate(state.values);
+        const submitErrors = validate(state.values);
 
-        if (prevState.lastAction === 'endSubmit') {
-          // eslint-disable-next-line no-console
-          console.log(state.errors);
+        const canSubmit = !submitErrors; // TODO: include isValidating
+
+        return {
+          ...state,
+          disabled: canSubmit,
+          errors: (submitErrors || {}) as FormErrors,
+          isSubmitting: canSubmit,
+          isValid: canSubmit,
+        };
+      }
+
+      // Submit action finished
+      case 'endSubmit':
+        if (!state.isSubmitting) {
+          return state;
         }
 
         return {
           ...state,
-          disabled: true,
-          errors: (errors1 || {}) as FormErrors,
-          isSubmitting: true,
-          isValid: !errors1,
-          submitted: state.submitted + 1,
+          disabled: false,
+          isSubmitting: false,
         };
-      }
-      case 'setDisabled':
-        if (prevState.disabled === action.value) {
-          return state;
-        } else {
-          return { ...state, disabled: !!action.value };
-        }
 
       default:
         return state;

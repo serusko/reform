@@ -1,19 +1,17 @@
-import { Dispatch, useCallback, useEffect, useReducer } from 'react';
+import { Dispatch, useCallback, useEffect, useReducer, useRef } from 'react';
 
-import { initialFormState } from '../constants';
 import {
   Data,
-  FormAction,
-  FormActionContext,
-  FormErrors,
   FormState,
-  FormStateContext,
+  FormAction,
   ValidationFn,
+  FormStateContext,
+  initialFormState,
+  FormActionContext,
 } from '../context';
-import { formReducerType, getFormReducer } from '../formReducer';
-import { validateYupSchema } from '../yup';
+import { FormReducerAction, formReducerType, getFormReducer } from '../formReducer';
 
-import { Props } from './Form.props';
+import type FormProps from './FormProps';
 
 const Form = <D extends Data = Data>({
   children,
@@ -22,22 +20,52 @@ const Form = <D extends Data = Data>({
   disabledFields,
   id,
   initialValues,
+  onStateUpdate,
   onSubmit,
   reducer,
   validation,
-}: Props<D>) => {
-  const validate: ValidationFn<D> = useCallback(
-    (data) => {
-      return typeof validation === 'function'
-        ? (validation(data) as FormErrors | Promise<FormErrors> | undefined)
-        : validateYupSchema(validation, data);
-    },
-    [validation],
-  );
+}: FormProps<D>) => {
+  const validate: ValidationFn<D> = useCallback((data) => validation?.(data), [validation]);
   const formReducer: formReducerType<D> = reducer || getFormReducer(validate);
+  const dispatchRef = useRef<Dispatch<FormReducerAction<D>>>();
+
+  const on = useRef((action: FormAction<D>, prev: FormState<D>, next: FormState<D>) => {
+    const dispatch = dispatchRef.current;
+
+    // check if we have already initialized form context providers and reducer properly
+    if (!dispatch) {
+      console.error('Cannot access to Dispatch trigger inside "on" action'); // TODO: improve error handling
+      return;
+    }
+
+    // trigger onSubmit
+    if (onSubmit && action.type === 'startSubmit' && next.isSubmitting && !prev.isSubmitting) {
+      const res = onSubmit?.(next.values);
+
+      if (res && typeof res.then === 'function') {
+        res.finally(() => dispatch({ type: 'endSubmit' }));
+      }
+    }
+
+    // TODO: console log errors when user "rage-click" submit action multiple times (errors are not displayed properly)
+
+    // trigger custom watchers
+    if (onStateUpdate) {
+      onStateUpdate(action, prev, next, dispatch);
+    }
+  }).current;
+
+  const eventFormReducer: formReducerType<D> = useCallback(
+    (prevState: FormState<D>, action: FormAction<D>) => {
+      const nextState = formReducer(prevState, action);
+      on(action, prevState, nextState);
+      return nextState;
+    },
+    [formReducer, on],
+  );
 
   const [state, dispatch] = useReducer<formReducerType<D>, FormState<D>>(
-    reducer as formReducerType<D>,
+    eventFormReducer,
     initialFormState as FormState<D>,
     (i: FormState<D>) =>
       formReducer(
@@ -52,6 +80,8 @@ const Form = <D extends Data = Data>({
       ),
   );
 
+  dispatchRef.current = dispatch;
+
   // watch initial values, if changed, trigger reducer action
   // so we can decide inside reducer what do we want to do
   useEffect(() => {
@@ -64,27 +94,6 @@ const Form = <D extends Data = Data>({
   useEffect(() => {
     dispatch({ type: 'setDisabled', value: !!disabled });
   }, [disabled]);
-
-  // Watch actions and if detects "submit" and its valid, we can trigger "onSubmit" action
-  // if it returns Promise, update state by triggering 'startSubmitting' action
-  // waiting until 'endSubmitting' is triggered
-  useEffect(() => {
-    if (state.lastAction === 'startSubmit') {
-      if (state.isValid) {
-        let p = onSubmit && onSubmit(state.values, dispatch, state);
-
-        if (!p || typeof p.then !== 'function') {
-          p = Promise.resolve();
-        }
-        p.catch(() => undefined);
-        p.then((result) => dispatch({ result, type: 'endSubmit' }));
-      } else {
-        dispatch({ type: 'endSubmit' });
-      }
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]); // track just state changes
 
   return (
     <FormActionContext.Provider value={dispatch as Dispatch<FormAction<Data>>}>

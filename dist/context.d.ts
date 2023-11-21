@@ -1,51 +1,92 @@
-import { ReactNode } from 'react';
-import { Schema } from 'yup';
-export { Schema };
+import { SetFieldErrorVal } from './components/BaseFieldProps';
 export type Data = Record<string, unknown>;
 export type FormErrors = Record<string, string>;
 export type ValidationFn<D> = (data: D) => undefined | FormErrors | Promise<undefined | FormErrors>;
-export type FormAction<D extends Data = Data> = {
+export type Schema = any;
+/**
+ * Standard form action ppol
+ * you can extend it with custom action
+ */
+export type FormAction<D extends Data = Data> = 
+/** reducer initialized */
+{
     type: 'init';
-} | {
+}
+/** initialValues has changed */
+ | {
     type: 'initialValues';
     value: undefined | D;
-} | {
+}
+/** trigger form reset = clear changed, touched, use initialValues */
+ | {
+    type: 'reset';
+}
+/** set field value to null*/
+ | {
     name: string;
-    type: 'onChange';
+    type: 'clearValue';
+}
+/** set field value to value from initialValues */
+ | {
+    name: string;
+    type: 'resetValue';
+}
+/** set field value */
+ | {
+    name: string;
+    type: 'setValue';
     value: unknown;
-} | {
-    error: undefined | string;
+}
+/** set all values */
+ | {
+    type: 'setValues';
+    values: D;
+}
+/** set field error(s) */
+ | {
+    error: SetFieldErrorVal;
     name: string | string[];
     type: 'setError';
-} | {
+}
+/** set errors */
+ | {
     errors: Record<string, string>;
     type: 'setErrors';
-} | {
+}
+/** mark field as touched (onBlur) */
+ | {
     name: string | string[];
     touched: boolean;
     type: 'setTouched';
-} | {
-    type: 'startSubmit';
-} | {
-    result?: unknown;
-    type: 'endSubmit';
-} | {
+}
+/** set disabled state */
+ | {
     type: 'setDisabled';
     value: boolean;
-} | {
+}
+/** start form submitting */
+ | {
+    type: 'startSubmit';
+}
+/** end form submitting */
+ | {
+    type: 'endSubmit';
+}
+/** start validation process */
+ | {
     errors?: FormErrors;
     type: 'startValidate';
-} | {
+}
+/** end validation process */
+ | {
     type: 'endValidate';
-} | {
-    type: 'reset';
 };
 /**
  * Form state context type
  */
 export interface FormState<D extends Data = Data> {
     /**
-     * List of fields changed by human interactions
+     * List of fields changed by onChange event
      */
     changed: Record<string, boolean>;
     /**
@@ -64,16 +105,6 @@ export interface FormState<D extends Data = Data> {
      */
     errors: FormErrors;
     /**
-     * Initial errors
-     * so you can prefill errors before first validation
-     */
-    initialErrors: FormErrors;
-    /**
-     * Initial touched map
-     * so you can control what errors will be displayed immediately
-     */
-    initialTouched?: Record<string, boolean>;
-    /**
      * Initial data cst from parent
      * every time they changed, "init" action should be triggered
      * so keep it memoized
@@ -85,16 +116,17 @@ export interface FormState<D extends Data = Data> {
     isSubmitting?: boolean;
     /**
      * Data are valid with provided schema
+     * - undefined = in progress / unknown / not yet validated
      */
-    isValid: boolean;
+    isValid: undefined | boolean;
+    /**
+     * In case of async validation, indicate progress
+     */
+    isValidating: boolean;
     /**
      * Remember last action type
      */
     lastAction: FormAction<D>['type'] | string;
-    /**
-     * Propagate form submit promise result
-     */
-    submitResult?: unknown;
     /**
      * Number of times of successful submit (valid data submitted)
      */
@@ -106,14 +138,18 @@ export interface FormState<D extends Data = Data> {
      */
     touched: Record<string, boolean>;
     /**
+     * Register single fields which has being validated asynchronously
+     * - could be used as remark for blocking submitting = wait until ready
+     *
+     */
+    validatingFields?: Record<string, boolean>;
+    /**
      * Form data values
      * could be nested object, we use dot chain to select specific value
-     * like: "tebName.paperCard.fieldSet.paramName"
+     * like: "tebName.paperCard.fieldSet.paramName" or "tabName.arrayTable.3.name" for arrays
      */
     values: D;
 }
+export declare const initialFormState: FormState<Data>;
 export declare const FormStateContext: import("use-context-selector").Context<FormState<any>>;
 export declare const FormActionContext: import("use-context-selector").Context<(action: FormAction) => void>;
-export declare function FormStateConsumer<D extends Data = Data>({ children, }: {
-    children?: (s: FormState<D>) => ReactNode;
-}): import("react/jsx-runtime").JSX.Element;
