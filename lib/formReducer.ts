@@ -1,5 +1,3 @@
-import { stat } from 'fs';
-
 import * as op from 'object-path';
 
 import { Data, FormAction, FormErrors, FormState, ValidationFn } from './context';
