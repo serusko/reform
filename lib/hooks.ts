@@ -20,7 +20,7 @@ export function useField<V = unknown>(name: string) {
   const initialValue = useFormSelect((s) => s.initialValues?.[name]);
   const isRequired = false; // TODO: ...
   const isTouched = useFormSelect((s) => s?.submitted > 0 || !!s?.touched[name]);
-  const value: V = useFormSelect((s) => get(s.values, name));
+  const value: V | null = useFormSelect((s) => get(s.values, name));
 
   const setValue = useSetFieldValue(name);
   const setTouched = useSetSetFieldTouched(name);

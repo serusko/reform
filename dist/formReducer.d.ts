@@ -6,4 +6,4 @@ export type formReducerType<D extends Data> = (s: FormState<D>, a: FormReducerAc
 /**
  * Default reducer
  */
-export declare function getFormReducer<D extends Data = Data>(validate: ValidationFn<D>): formReducerType<D>;
+export declare function getDefaultFormReducer<D extends Data = Data>(validate: ValidationFn<D>): formReducerType<D>;

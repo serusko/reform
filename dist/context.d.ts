@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import { SetFieldErrorVal } from './components/BaseFieldProps';
 export type Data = Record<string, unknown>;
-export type FormErrors = Record<string, string>;
-export type ValidationFn<D> = (data: D) => undefined | FormErrors | Promise<undefined | FormErrors>;
+export type FormErrors = Record<string, ReactNode>;
+export type ValidationFn<D> = (data: D) => undefined | FormErrors;
 export type Schema = any;
 /**
  * Standard form action ppol

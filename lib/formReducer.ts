@@ -26,7 +26,7 @@ export type formReducerType<D extends Data> = (
 /**
  * Default reducer
  */
-export function getFormReducer<D extends Data = Data>(
+export function getDefaultFormReducer<D extends Data = Data>(
   validate: ValidationFn<D>,
 ): formReducerType<D> {
   return function formReducer(

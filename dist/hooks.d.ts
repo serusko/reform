@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { SetFieldErrorVal } from './components/BaseFieldProps';
 import { FormState, Data, FormAction } from './context';
 /**
@@ -5,7 +6,7 @@ import { FormState, Data, FormAction } from './context';
  * - use dot chain for nested path
  */
 export declare function useField<V = unknown>(name: string): {
-    error: string | undefined;
+    error: ReactNode;
     initialValue: unknown;
     isChanged: boolean;
     isDisabled: boolean;
@@ -16,7 +17,7 @@ export declare function useField<V = unknown>(name: string): {
     onChange: (value: unknown) => void;
     setError: (error: SetFieldErrorVal) => void;
     setValue: (value: unknown) => void;
-    value: V;
+    value: V | null;
 };
 /**
  * Get specific field value
@@ -27,7 +28,7 @@ export declare function useFieldValue<V = unknown>(name: string): V;
  * Get specific field 'error' meta info
  * - use dot chain for nested path
  */
-export declare function useFieldError(name: string): string | undefined;
+export declare function useFieldError(name: string): ReactNode | undefined;
 /**
  * Get specific field 'touched' meta info
  * - use dot chain for nested path
