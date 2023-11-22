@@ -23,3 +23,9 @@ built with [Vite](https://vitejs.dev/guide/build.html#library-mode)
 - add abstraction for Formik
 - UI Builder...
 - html Form tag customization
+
+## Run
+
+- `yarn build` for production build
+- `yarn dev` for development version - vite react app with examples
+- `yarn test` for jest - TODO
