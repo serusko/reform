@@ -93,7 +93,14 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
       // Set field as touched = record user interaction (mostly onBlur action)
       case 'setTouched': {
-        const names = action.name ? (Array.isArray(action.name) ? action.name : [action.name]) : [];
+        const names = (
+          action.name ? (Array.isArray(action.name) ? action.name : [action.name]) : []
+        ).filter((name) => state.touched[name] !== action.touched); // TODO: use nested paths
+
+        if (!names.length) {
+          // skip render if no changes needed
+          return state;
+        }
 
         return {
           ...state,
@@ -117,6 +124,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
           errors: (submitErrors || {}) as FormErrors,
           isSubmitting: canSubmit,
           isValid: canSubmit,
+          submitted: state.submitted || 0 + 1,
         };
       }
 

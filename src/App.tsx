@@ -1,15 +1,55 @@
-import { FormValues } from '../lib';
+import * as y from 'yup';
+
 import Form from '../lib/components/Form';
 import HtmlField from '../lib/components/HtmlField';
+import FormErrors from '../lib/renderers/FormErrors';
+import FormValues from '../lib/renderers/FormValues';
+import { useValidation } from '../lib/yupHelpers';
 
 import './app.css';
 
-const inits = { age: 10, firstName: 'John', gender: 'f' };
+const inits = { age: 10, firstName: null, gender: 'f' };
+
+const schema = y.object({
+  birthDate: y
+    .string()
+    .nullable()
+    .required()
+    .when(['age'], ([age], schema) => {
+      const a = new Date(
+        new Date(new Date().setFullYear(new Date().getFullYear() - age)).setHours(23, 59, 59, 999),
+      );
+
+      const b = new Date(
+        new Date(new Date().setFullYear(new Date().getFullYear() - age - 1)).setHours(0, 0, 0, 0),
+      );
+
+      if (!age) {
+        return schema;
+      }
+      return schema.test(
+        'inRange',
+        `Date of Birth should be between ${b.toLocaleDateString()} and ${a.toLocaleDateString()}`,
+        (value) => {
+          if (!value) {
+            return true;
+          }
+          const v = new Date(value);
+          return b <= v && v <= a;
+        },
+      );
+    })
+    .default(null),
+  firstName: y.string().nullable().required().default(null),
+  lastName: y.string().nullable().required().default(null),
+});
 
 function App() {
+  const validation = useValidation(schema);
+
   return (
     <div style={{ padding: '2rem' }}>
-      <Form initialValues={inits} onSubmit={(data) => console.log(data)}>
+      <Form initialValues={inits} validation={validation} onSubmit={(data) => console.log(data)}>
         <div className="card">
           <h2 style={{ marginBottom: '2rem' }}>Html elements example</h2>
           <div className="row">
@@ -18,17 +58,9 @@ function App() {
             <HtmlField component="input" label="Last Name" name="lastName" />
           </div>
           <div className="row">
-            <HtmlField
-              required
-              component="input"
-              label="Age"
-              max={100}
-              min={1}
-              name="age"
-              type="range"
-            />
+            <HtmlField component="input" label="Age" max={100} min={1} name="age" type="range" />
 
-            <HtmlField required component="input" label="Age" name="age" type="number" />
+            <HtmlField component="input" label="Age" name="age" type="number" />
 
             <HtmlField component="select" label="Gender" name="gender">
               <option value=""></option>
@@ -74,29 +106,25 @@ function App() {
           </div>
 
           <div className="row">
-            <HtmlField
-              required
-              component="input"
-              label="Date of Birth"
-              name="birthDate"
-              type="date"
-            />
-            <HtmlField
-              required
-              component="input"
-              label="Time of Birth"
-              name="birthTime"
-              type="time"
-            />
+            <HtmlField component="input" label="Date of Birth" name="birthDate" type="date" />
+            <HtmlField component="input" label="Time of Birth" name="birthTime" type="time" />
           </div>
 
           <div className="row">
-            <HtmlField required component="input" label="Avatar" name="avatar" type="file" />
-            <HtmlField required component="input" label="Avatar" name="color" type="color" />
+            <HtmlField component="input" label="Avatar" name="avatar" type="file" />
+            <HtmlField component="input" label="Avatar" name="color" type="color" />
           </div>
 
-          <FormValues>{(values) => <pre>{JSON.stringify(values, null, 2)}</pre>}</FormValues>
+          <div className="row">
+            <FormValues>{(values) => <pre>{JSON.stringify(values, null, 2)}</pre>}</FormValues>
+
+            <FormErrors>{(errors) => <pre>{JSON.stringify(errors, null, 2)}</pre>}</FormErrors>
+          </div>
         </div>
+
+        <button style={{ marginTop: 900 }} type="submit">
+          Submit
+        </button>
       </Form>
     </div>
   );

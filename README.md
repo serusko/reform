@@ -25,6 +25,10 @@ built with [Vite](https://vitejs.dev/guide/build.html#library-mode)
 - support Ajv (Json schema / Open api)
 - UI Builder...
 
+## Known issues (To Be Fixed)
+
+1. when using HTML field, error messages are displayed via `setCustomValidity(error) + reportValidity()` - For the first time form is submitted, all fields going to be touched so error is displayed in random order, on second submit looks like "highest/first invalid" is focused (this is desired) = provide deeper testing and display err "first" element on page
+
 ## Run
 
 - `yarn build` for production build

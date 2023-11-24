@@ -1,11 +1,7 @@
 import { useCallback } from 'react';
+import type { Schema } from 'yup';
 
 import { Data } from './context';
-
-interface Schema {
-  describe: () => unknown;
-  validateSync: (data: Data, options: unknown) => unknown;
-}
 
 /**
  * Check if field is required in schema

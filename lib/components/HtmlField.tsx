@@ -10,8 +10,6 @@ import {
 
 import useField from '../hooks/useField';
 
-import RenderCount from './RenderCount';
-
 type Type = {
   button: HTMLButtonElement;
   input: HTMLInputElement;
@@ -98,22 +96,20 @@ export default function HtmlField<T extends keyof Type>({
   );
 
   return (
-    <RenderCount>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-        {component === 'input' && type && isCheckOrRadio ? (
-          <>
-            <label style={{ display: 'flex', flexDirection: 'row', gap: '0.25rem' }}>
-              {input}
-              {label && <span>{label}</span>}
-            </label>
-          </>
-        ) : (
-          <>
-            {label && <label htmlFor={htmlId}>{label}</label>}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+      {component === 'input' && type && isCheckOrRadio ? (
+        <>
+          <label style={{ display: 'flex', flexDirection: 'row', gap: '0.25rem' }}>
             {input}
-          </>
-        )}
-      </div>
-    </RenderCount>
+            {label && <span>{label}</span>}
+          </label>
+        </>
+      ) : (
+        <>
+          {label && <label htmlFor={htmlId}>{label}</label>}
+          {input}
+        </>
+      )}
+    </div>
   );
 }
