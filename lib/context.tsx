@@ -11,7 +11,7 @@ export type ValidationFn<D> = (data: D) => undefined | FormErrors;
 export type Schema = any;
 
 /**
- * Standard form action ppol
+ * Standard form action pool
  * you can extend it with custom action
  */
 export type FormAction<D extends Data = Data> =
@@ -58,6 +58,7 @@ export interface FormState<D extends Data = Data> {
    * control if all form should be disabled
    */
   disabled?: boolean;
+
   /**
    * Override default disabled state
    * - if global is yes (true) -> choose those which could be edited
@@ -92,6 +93,10 @@ export interface FormState<D extends Data = Data> {
    * Remember last action type
    */
   lastAction: FormAction<D>['type'] | string;
+  /**
+   * HTML Readonly mode
+   */
+  readOnly?: boolean;
   /**
    * Number of times of successful submit (valid data submitted)
    */

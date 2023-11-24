@@ -13,6 +13,7 @@ const Form = <D extends Data = Data>({
   initialValues,
   onStateUpdate,
   onSubmit,
+  readOnly,
   reducer,
   validation,
 }: FormProps<D>) => {
@@ -36,6 +37,7 @@ const Form = <D extends Data = Data>({
     formReducer,
     initialValues,
     !!disabled,
+    !!readOnly,
     onSubmitRef,
     onStateUpdateRef,
   );

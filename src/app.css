@@ -1,0 +1,57 @@
+html {
+  background: #eee;
+}
+
+.card {
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 5px 5px 15px -6px rgba(0, 0, 0, 0.35);
+  display: flex;
+  border-radius: 0.5rem;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direcion: row;
+  gap: 1rem;
+}
+
+.row > * {
+  flex: 1;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card input,
+.card select {
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.card input:not([type="checkbox"]):not([type="radio"]),
+.card select {
+  min-height: 2rem;
+  width: 100%;
+}
+
+.card input:focus,
+.card select:focus {
+  border-color: #999;
+  outline: none;
+}
+
+.card label {
+  font-size: 0.85rem;
+  display: block;
+  line-height: 1.2;
+}

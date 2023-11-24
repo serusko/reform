@@ -10,6 +10,7 @@ export default function useFormReducer<D extends Data>(
   formReducer: formReducerType<D>,
   initialValues: undefined | D,
   disabled: boolean,
+  readOnly: boolean,
   onSubmitRef: MutableRefObject<FormProps<D>['onSubmit']>,
   onStateUpdateRef: MutableRefObject<FormProps<D>['onStateUpdate']>,
 ) {
@@ -61,6 +62,7 @@ export default function useFormReducer<D extends Data>(
           ...i,
           disabled,
           initialValues: initialValues || ({} as D),
+          readOnly,
           values: initialValues || ({} as D),
         },
         { type: 'init' },

@@ -2,7 +2,7 @@ import { get } from 'object-path';
 import { FC, PropsWithChildren, ReactNode, useMemo } from 'react';
 
 import { Data, FormAction, FormState } from '..';
-import { useField, useFormDispatch, useFormSelect, useFormState } from '../hooks';
+import { useField, useFieldValue, useFormDispatch, useFormSelect, useFormState } from '../hooks';
 
 interface FieldConsumerProps<T = unknown> {
   children: (field: ReturnType<typeof useField<T>>) => ReactNode;
@@ -146,3 +146,19 @@ export const FormStateRender = <D extends Data = Data>({
 
   return null;
 };
+
+export function FieldValue<V = unknown>({
+  children,
+  name,
+}: {
+  children: (value: V | null) => ReactNode;
+  name: string;
+}) {
+  const v = useFieldValue<V>(name);
+  return children(v);
+}
+
+export function FormValues<D = Data>({ children }: { children: (values: D) => ReactNode }) {
+  const values = useFormSelect((s) => s.values as D);
+  return children(values);
+}

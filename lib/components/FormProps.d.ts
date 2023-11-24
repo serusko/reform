@@ -6,7 +6,7 @@ import { FormReducerAction, formReducerType } from '../formReducer';
 export default interface FormProps<D extends Data = Data> extends PropsWithChildren {
   /**
    * Default disabled status - could be overridden by specific field
-   * - changes made to this prop, will re-render form (affects field's "isDisabled" prop)
+   * - once changed, re-renders form with updated state
    */
   disabled?: boolean;
 
@@ -41,6 +41,13 @@ export default interface FormProps<D extends Data = Data> extends PropsWithChild
    * - does not trigger re-renders, just listening for changes
    */
   onSubmit?: <R = unknown>(data: D) => void | Promise<R>;
+
+  /**
+   * Readonly state
+   * - values are submitted and focusable
+   * - once changed, re-renders form with updated state
+   */
+  readOnly?: boolean;
 
   /**
    * Form state reducer = check default formReducer for docs

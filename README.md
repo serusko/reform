@@ -8,21 +8,22 @@ built with [Vite](https://vitejs.dev/guide/build.html#library-mode)
 
 ## TODO
 
-- use some immutable helper for setting values
-  - we have to copy nested objects, so we can use some helper
+- review HTML field
+- Flatten meta setters - error, touched
+- implement/review Aria rules
+- support YUP
 - async validation
   - enable async validation
+- html Form tag customization
+- add abstraction for Formik
+- use some immutable helper for setting values
+  - we have to copy nested objects, so we can use some helper and deliver more secure mutations
 - field validation
   - enable single field validation
-- HTML input support
-  - So we can support html tags instead of components and we have to handle actions and state properly
 - history tracking
 - support ZOD
-- support YUP
 - support Ajv (Json schema / Open api)
-- add abstraction for Formik
 - UI Builder...
-- html Form tag customization
 
 ## Run
 

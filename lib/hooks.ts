@@ -14,6 +14,7 @@ export function useField<V = unknown>(name: string) {
   const isDisabled = useFormSelect((s) =>
     s.disabledFields?.[name] ? !!s.disabledFields[name] : !!s.disabled,
   );
+  const isReadOnly = useFormSelect((s) => s.readOnly);
   const error = useFormSelect((s) =>
     s.submitted > 0 || !!s.touched?.[name] ? s.errors?.[name] : undefined,
   );
@@ -32,12 +33,13 @@ export function useField<V = unknown>(name: string) {
       initialValue,
       isChanged,
       isDisabled,
+      isReadOnly,
       isRequired,
       isTouched,
       name,
-      onBlur: () => setTouched(),
       onChange: setValue,
       setError,
+      setTouched,
       setValue,
       value,
     }),
@@ -45,6 +47,7 @@ export function useField<V = unknown>(name: string) {
       isChanged,
       isDisabled,
       error,
+      isReadOnly,
       initialValue,
       isRequired,
       name,
@@ -61,8 +64,8 @@ export function useField<V = unknown>(name: string) {
  * Get specific field value
  * - use dot chain for nested path
  */
-export function useFieldValue<V = unknown>(name: string): V {
-  return useContextSelector(FormStateContext, (v) => get(v.values, name));
+export function useFieldValue<V = unknown>(name: string): V | null {
+  return useContextSelector(FormStateContext, (v) => get(v.values, name) as V | null);
 }
 
 /**
