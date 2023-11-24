@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 
 const RenderCount: FC<PropsWithChildren> = ({ children }) => {
+  // @ts-ignore TODO: ...
   const x = useRef(import.meta.env.MODE === 'development' ? -1 : 0); // Strict mode adds +1 when using effect
 
   useEffect(() => {

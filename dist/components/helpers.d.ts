@@ -1,6 +1,6 @@
-import { FC, PropsWithChildren, ReactNode } from 'react';
-import { Data, FormAction, FormState } from '..';
-import { useField } from '../hooks';
+import { FC, ReactNode } from 'react';
+import { Data, FormState, FormAction } from '../context';
+import useField from '../hooks/useField';
 interface FieldConsumerProps<T = unknown> {
     children: (field: ReturnType<typeof useField<T>>) => ReactNode;
     name: string;
@@ -69,13 +69,12 @@ interface FormDispatchConsumerProps<D extends Data = Data, A = FormAction<D>> {
 /**
  * Make available dispatch action from JSX
  */
-export declare function FormDispatchConsumer<D extends Data = Data, A = FormAction<D>>({ children, }: FormDispatchConsumerProps<D, A>): import("react/jsx-runtime").JSX.Element;
-interface FormRenderProps<D extends Data> extends PropsWithChildren {
-    condition: (s: FormState<D>) => boolean;
-}
-/**
- * Conditionally render children content based on selector (must return truthy value)
- * TODO: double-check optimization - memoize child ? condition ?
- */
-export declare const FormStateRender: <D extends Data = Data>({ children, condition, }: FormRenderProps<D>) => import("react/jsx-runtime").JSX.Element | null;
+export declare function FormDispatchConsumer<D extends Data = Data, A extends FormAction<D> = FormAction<D>>({ children }: FormDispatchConsumerProps<D, A>): import("react/jsx-runtime").JSX.Element;
+export declare function FieldValue<V = unknown>({ children, name, }: {
+    children: (value: V | null) => ReactNode;
+    name: string;
+}): ReactNode;
+export declare function FormValues<D = Data>({ children }: {
+    children: (values: D) => ReactNode;
+}): ReactNode;
 export {};

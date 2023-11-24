@@ -1,6 +1,10 @@
-// TODO: support more validation libs
+import { useCallback } from 'react';
+
+import { Data } from './context';
+
 interface Schema {
   describe: () => unknown;
+  validateSync: (data: Data, options: unknown) => unknown;
 }
 
 /**
@@ -50,4 +54,49 @@ export function getRequired(schemaDesc: any) {
     acc[fieldName] = hasRequiredValidation(it);
     return acc;
   }, {} as RequiredMap);
+}
+
+/**
+ * Validate dataset against provided schema, and return errors
+ * @param {Schema} schema
+ * @param {Record<string, any>}  data
+ * @returns {undefined | Record<string, any>}
+ */
+export function validateSchemaData(schema: undefined | Schema, data: Record<string, unknown>) {
+  const validationErrors: Record<string, string> = {};
+
+  if (schema) {
+    try {
+      schema.validateSync(data, { abortEarly: false });
+      return undefined;
+    } catch (errors) {
+      // @ts-ignore TODO: type yup error
+      if (errors.inner) {
+        // @ts-ignore TODO: type yup error
+        errors.inner.forEach((error: unknown) => {
+          // @ts-ignore TODO: type yup error
+          if (error.path && error.message) {
+            // @ts-ignore TODO: type yup error
+            validationErrors[error.path.replaceAll('[', '.').replaceAll('].', '.')] = error.message;
+          }
+        });
+      }
+    }
+  }
+
+  if (validationErrors && Object.values(validationErrors).filter(Boolean).length === 0) {
+    return undefined;
+  }
+
+  return validationErrors;
+}
+
+/**
+ * Get reference-stable validation function
+ * - put reference stable schema - once is changed,
+ * new validation fn is returned
+ * and form could be re-rendered = state could be changed
+ */
+export function useValidation<D extends Data>(schema: Schema) {
+  return useCallback((data: D) => validateSchemaData(schema, data), [schema]);
 }

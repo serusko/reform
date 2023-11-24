@@ -8,7 +8,7 @@ import {
   useRef,
 } from 'react';
 
-import { useField } from '../index';
+import useField from '../hooks/useField';
 
 import RenderCount from './RenderCount';
 

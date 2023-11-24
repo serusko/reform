@@ -69,7 +69,7 @@ const Form = <D extends Data = Data>({
     <FormActionContext.Provider value={dispatch as Dispatch<FormAction<Data>>}>
       <FormStateContext.Provider value={state}>
         <form id={id} onSubmit={handleSubmit}>
-          {children}
+          {typeof children === 'function' ? children(state, dispatch) : children}
           <button style={{ left: -9999, position: 'fixed', top: -9999 }} type="submit" />
         </form>
       </FormStateContext.Provider>

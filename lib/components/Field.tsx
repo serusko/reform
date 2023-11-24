@@ -1,6 +1,6 @@
 import { ComponentType, ReactElement } from 'react';
 
-import { useField } from '../hooks';
+import useField from '../hooks/useField';
 
 import type BaseFieldProps from './BaseFieldProps';
 import FieldProps from './FieldProps';

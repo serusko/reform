@@ -1,6 +1,6 @@
 import * as op from 'object-path';
 
-import { Data, FormAction, FormErrors, FormState, ValidationFn } from './context';
+import { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
 
 export function setIn(obj: Data, path: string, value: unknown) {
   try {
@@ -25,9 +25,10 @@ export type formReducerType<D extends Data> = (
 
 /**
  * Default reducer
+ * - provide validation fn
  */
 export function getDefaultFormReducer<D extends Data = Data>(
-  validate: ValidationFn<D>,
+  validate?: ValidationFn<D>,
 ): formReducerType<D> {
   return function formReducer(
     state: FormState<D>,
@@ -70,7 +71,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
         // TODO: validate single field
         // TODO: add support for async validation
         // TODO: think about debounce validation
-        const errors0 = validate(values);
+        const errors0 = validate?.(values);
 
         return {
           ...state,
@@ -106,7 +107,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
           return state;
         }
 
-        const submitErrors = validate(state.values);
+        const submitErrors = validate?.(state.values);
 
         const canSubmit = !submitErrors; // TODO: include isValidating
 

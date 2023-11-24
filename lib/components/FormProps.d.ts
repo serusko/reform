@@ -1,9 +1,15 @@
-import { Dispatch, PropsWithChildren } from 'react';
+import { Dispatch, ReactNode } from 'react';
 
 import { Data, FormAction, FormState, ValidationFn } from '../context';
 import { FormReducerAction, formReducerType } from '../formReducer';
 
-export default interface FormProps<D extends Data = Data> extends PropsWithChildren {
+export default interface FormProps<D extends Data = Data> {
+  /**
+   * Form children content
+   * - pass React Elements
+   * - or function which accepts form State, and Dispatch action
+   */
+  children: ReactNode | ((s: FormState<D>, d: Dispatch<FormAction<D>>) => ReactNode);
   /**
    * Default disabled status - could be overridden by specific field
    * - once changed, re-renders form with updated state

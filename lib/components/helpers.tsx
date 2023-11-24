@@ -1,33 +1,9 @@
-import { get } from 'object-path';
-import { FC, PropsWithChildren, ReactNode, useMemo } from 'react';
+import { FC, ReactNode, useMemo } from 'react';
 
-import { Data, FormAction, FormState } from '..';
-import { useField, useFieldValue, useFormDispatch, useFormSelect, useFormState } from '../hooks';
-
-interface FieldConsumerProps<T = unknown> {
-  children: (field: ReturnType<typeof useField<T>>) => ReactNode;
-  name: string;
-}
-
-/**
- * Track Form Field state via JSX render function
- * TODO: Test memoizing optimization - children
- */
-export function FieldConsumer<V = unknown>({ children, name }: FieldConsumerProps<V>) {
-  const field = useField<V>(name);
-
-  return <>{children(field)}</>;
-}
-
-/**
- * Track Form Field value via JSX render function
- * TODO: Test memoizing optimization - children, value, name
- */
-export function FieldValueConsumer<V = unknown>({ children, name }: FieldConsumerProps<V>) {
-  const value = useFormSelect((s) => get(s.values, name));
-
-  return useMemo(() => <>{children(value)}</>, [children, value]);
-}
+import { Data, FormState } from '../context';
+import useArrayFieldLength from '../hooks/useArrayFieldLength';
+import useFormState from '../hooks/useFormState';
+import { FieldState } from '../renderers/FieldState';
 
 /**
  * Track length of array value and render as many as array length
@@ -35,7 +11,7 @@ export function FieldValueConsumer<V = unknown>({ children, name }: FieldConsume
  * so you can put map function
  * if you need re-render on field change, use FieldArrayRenderer
  */
-export const FieldArrayLengthConsumer: FC<{
+export const FieldArrayLength: FC<{
   name: string;
   /**
    *
@@ -45,10 +21,7 @@ export const FieldArrayLengthConsumer: FC<{
    */
   render: (length: number, arr: number[]) => ReactNode;
 }> = ({ name, render }) => {
-  const length = useFormSelect((s) => {
-    const value = get(s.values, name);
-    return (value && Array.isArray(value) ? value : []).length;
-  });
+  const length = useArrayFieldLength(name);
 
   return useMemo(
     () =>
@@ -85,13 +58,13 @@ interface ArrayFieldRendererProps<I = unknown> {
  */
 export const ArrayFieldRenderer: FC<ArrayFieldRendererProps> = ({ name, render }) => {
   return (
-    <FieldArrayLengthConsumer
+    <FieldArrayLength
       name={name}
       render={(_, arr) =>
         arr.map((index) => (
-          <FieldConsumer key={`${name}.${index}`} name={`${name}.${index}`}>
+          <FieldState key={`${name}.${index}`} name={`${name}.${index}`}>
             {(field) => render({ item: field.value, name: `${name}.${index}` })}
-          </FieldConsumer>
+          </FieldState>
         ))
       }
     />
@@ -101,7 +74,7 @@ export const ArrayFieldRenderer: FC<ArrayFieldRendererProps> = ({ name, render }
 /**
  * Make available complete form state from JSX
  */
-export function FormStateConsumer<D extends Data = Data>({
+export function FormState<D extends Data = Data>({
   children,
 }: {
   children?: (s: FormState<D>) => ReactNode;
@@ -109,56 +82,4 @@ export function FormStateConsumer<D extends Data = Data>({
   const s = useFormState<D>();
 
   return <>{children ? children(s) || null : null}</>;
-}
-
-interface FormDispatchConsumerProps<D extends Data = Data, A = FormAction<D>> {
-  children: (dispatch: (action: A) => void) => ReactNode;
-}
-
-/**
- * Make available dispatch action from JSX
- */
-export function FormDispatchConsumer<D extends Data = Data, A = FormAction<D>>({
-  children,
-}: FormDispatchConsumerProps<D, A>) {
-  const dispatch = useFormDispatch<D, A>();
-
-  return <>{children(dispatch)}</>;
-}
-
-interface FormRenderProps<D extends Data> extends PropsWithChildren {
-  condition: (s: FormState<D>) => boolean;
-}
-
-/**
- * Conditionally render children content based on selector (must return truthy value)
- * TODO: double-check optimization - memoize child ? condition ?
- */
-export const FormStateRender = <D extends Data = Data>({
-  children,
-  condition,
-}: FormRenderProps<D>) => {
-  const render = useFormSelect(condition);
-
-  if (render) {
-    return <>{children}</>;
-  }
-
-  return null;
-};
-
-export function FieldValue<V = unknown>({
-  children,
-  name,
-}: {
-  children: (value: V | null) => ReactNode;
-  name: string;
-}) {
-  const v = useFieldValue<V>(name);
-  return children(v);
-}
-
-export function FormValues<D = Data>({ children }: { children: (values: D) => ReactNode }) {
-  const values = useFormSelect((s) => s.values as D);
-  return children(values);
 }

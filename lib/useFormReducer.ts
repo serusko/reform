@@ -2,9 +2,8 @@ import { Dispatch, MutableRefObject, useCallback, useReducer, useRef } from 'rea
 
 import FormProps from './components/FormProps';
 import { initialFormState } from './context';
+import { Data, FormState, FormAction } from './context';
 import { FormReducerAction, formReducerType } from './formReducer';
-
-import { Data, FormAction, FormState } from '.';
 
 export default function useFormReducer<D extends Data>(
   formReducer: formReducerType<D>,
