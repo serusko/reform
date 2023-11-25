@@ -47,18 +47,21 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
       // Initializing component
       // @ts-ignore skip fallthrough
-      case 'init': // reset metadata
+      case 'init': {
+        // reset metadata
+        const initErrors = validate?.(state.values || {});
         return {
           ...state,
           changed: {},
           errors: {},
           isSubmitting: false,
+          isValid: !initErrors,
           isValidating: false,
           required: getRequired?.(state.values) || {},
           submitted: 0,
           touched: {},
         } satisfies FormState<D>;
-
+      }
       // On field value change
       case 'setValue': {
         // TODO: use immer/immutable ???
@@ -73,13 +76,13 @@ export function getDefaultFormReducer<D extends Data = Data>(
         // TODO: validate single field
         // TODO: add support for async validation
         // TODO: think about debounce validation
-        const errors0 = validate?.(values);
+        const setValueErrors = validate?.(values);
 
         return {
           ...state,
           changed: { ...state.changed, [action.name]: true },
-          errors: (errors0 || {}) as FormErrors,
-          isValid: !errors0,
+          errors: (setValueErrors || {}) as FormErrors,
+          isValid: !setValueErrors,
           required: getRequired?.(values) || {},
           touched: { ...state.touched, [action.name]: true },
           values,
@@ -118,8 +121,6 @@ export function getDefaultFormReducer<D extends Data = Data>(
         }
 
         const submitErrors = validate?.(state.values);
-
-        console.log(submitErrors);
 
         const canSubmit = !submitErrors; // TODO: include isValidating
 
