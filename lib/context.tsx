@@ -21,6 +21,7 @@ export const initialFormState: FormState<Data> = {
   isValid: true,
   isValidating: false,
   lastAction: 'init',
+  required: {},
   submitted: 0,
   touched: {},
   values: {} as Data,

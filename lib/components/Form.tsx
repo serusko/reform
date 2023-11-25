@@ -9,6 +9,7 @@ import type FormProps from './FormProps';
 const Form = <D extends Data = Data>({
   children,
   disabled,
+  getRequired,
   id,
   initialValues,
   onStateUpdate,
@@ -23,8 +24,8 @@ const Form = <D extends Data = Data>({
     [validation],
   );
   const formReducer: formReducerType<D> = useMemo(
-    () => reducer || getDefaultFormReducer(validate),
-    [reducer, validate],
+    () => reducer || getDefaultFormReducer(validate, getRequired),
+    [getRequired, reducer, validate],
   );
 
   // Do not cause reset form state on ref change - TODO refactor / useCallback with inside ref?

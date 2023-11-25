@@ -12,13 +12,13 @@ export default interface FormState<D extends Data = Data> {
    * control if all form should be disabled
    */
   disabled?: boolean;
-
   /**
    * Override default disabled state
    * - if global is yes (true) -> choose those which could be edited
    * - if global is no (false/undefined) -> disable some specific fields
    */
   disabledFields?: Record<string, boolean>;
+
   /**
    * Error map
    * [fieldName]: "error message"
@@ -51,6 +51,13 @@ export default interface FormState<D extends Data = Data> {
    * HTML Readonly mode
    */
   readOnly?: boolean;
+  /**
+   * Map of required fields
+   * so we can display *
+   * or use some other way
+   * to let user know which fields are required
+   */
+  required: Record<string, boolean>;
   /**
    * Number of times of successful submit (valid data submitted)
    */

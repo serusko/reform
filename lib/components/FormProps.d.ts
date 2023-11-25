@@ -17,6 +17,11 @@ export default interface FormProps<D extends Data = Data> {
   disabled?: boolean;
 
   /**
+   *
+   */
+  getRequired?: (data: D) => Record<string, boolean>;
+
+  /**
    * Html Id
    * used for triggering submit with button element
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#form

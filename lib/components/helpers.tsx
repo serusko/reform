@@ -70,16 +70,3 @@ export const ArrayFieldRenderer: FC<ArrayFieldRendererProps> = ({ name, render }
     />
   );
 };
-
-/**
- * Make available complete form state from JSX
- */
-export function FormState<D extends Data = Data>({
-  children,
-}: {
-  children?: (s: FormState<D>) => ReactNode;
-}) {
-  const s = useFormState<D>();
-
-  return <>{children ? children(s) || null : null}</>;
-}

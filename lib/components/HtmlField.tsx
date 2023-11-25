@@ -101,12 +101,22 @@ export default function HtmlField<T extends keyof Type>({
         <>
           <label style={{ display: 'flex', flexDirection: 'row', gap: '0.25rem' }}>
             {input}
-            {label && <span>{label}</span>}
+            {label && (
+              <span>
+                {label}
+                {isRequired ? ' *' : null}
+              </span>
+            )}
           </label>
         </>
       ) : (
         <>
-          {label && <label htmlFor={htmlId}>{label}</label>}
+          {label && (
+            <label htmlFor={htmlId}>
+              {label}
+              {isRequired ? ' *' : null}
+            </label>
+          )}
           {input}
         </>
       )}

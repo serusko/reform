@@ -32,6 +32,8 @@ export default function useFormReducer<D extends Data>(
 
       if (res && typeof res.then === 'function') {
         res.finally(() => dispatch({ type: 'endSubmit' }));
+      } else {
+        dispatch({ type: 'endSubmit' });
       }
     }
 

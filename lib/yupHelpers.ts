@@ -6,15 +6,16 @@ import { Data } from './context';
 /**
  * Check if field is required in schema
  */
-export function getIsRequired(schema: undefined | Schema, path: string) {
-  const map = schema ? getRequired(schema.describe()) : {};
+export function getIsRequired(schema: undefined | Schema, path: string, context?: unknown) {
+  const map = schema ? getRequired(schema.describe({ context })) : {};
 
   return !!map[path];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getRequired(schemaDesc: any) {
-  type RequiredMap = { [key: string]: RequiredMap | boolean };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type RequiredMap = any; //{ [key: string]: RequiredMap | boolean };
 
   // Heuristics to guess this is a date range
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

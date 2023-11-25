@@ -21,7 +21,7 @@ export default function useField<V = unknown>(name: string) {
     s.submitted > 0 || !!s.touched?.[name] ? s.errors?.[name] : undefined,
   );
   const initialValue = useFormSelect((s) => s.initialValues?.[name]);
-  const isRequired = false; // TODO: ...
+  const isRequired = useFormSelect((s) => get(s.required, name));
   const isTouched = useFormSelect((s) => s?.submitted > 0 || !!s?.touched[name]);
   const value: V | null = useFormSelect((s) => get(s.values, name));
 

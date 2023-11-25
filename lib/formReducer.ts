@@ -29,6 +29,7 @@ export type formReducerType<D extends Data> = (
  */
 export function getDefaultFormReducer<D extends Data = Data>(
   validate?: ValidationFn<D>,
+  getRequired?: (data: D) => Record<string, boolean>,
 ): formReducerType<D> {
   return function formReducer(
     state: FormState<D>,
@@ -53,6 +54,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
           errors: {},
           isSubmitting: false,
           isValidating: false,
+          required: getRequired?.(state.values) || {},
           submitted: 0,
           touched: {},
         } satisfies FormState<D>;
@@ -78,6 +80,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
           changed: { ...state.changed, [action.name]: true },
           errors: (errors0 || {}) as FormErrors,
           isValid: !errors0,
+          required: getRequired?.(values) || {},
           touched: { ...state.touched, [action.name]: true },
           values,
         };
@@ -115,6 +118,8 @@ export function getDefaultFormReducer<D extends Data = Data>(
         }
 
         const submitErrors = validate?.(state.values);
+
+        console.log(submitErrors);
 
         const canSubmit = !submitErrors; // TODO: include isValidating
 
