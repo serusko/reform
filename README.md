@@ -8,7 +8,8 @@ built with [Vite](https://vitejs.dev/guide/build.html#library-mode)
 
 ## Intro
 
-[![Watch the video](https://github.com/serusko/form/blob/v1/demo.png?raw=true)](https://github.com/serusko/form/blob/v1/demo.mp4?raw=true)
+
+[demo.webm](https://github.com/serusko/form/assets/5665925/5b647bd3-cd83-4cac-b25d-9edcfabd133d)
 
 ## TODO
 
