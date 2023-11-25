@@ -4,7 +4,6 @@ import Form from '../lib/components/Form';
 import HtmlField from '../lib/components/HtmlField';
 import { Data } from '../lib/context';
 import FormErrors from '../lib/renderers/FormErrors';
-import FormState from '../lib/renderers/FormState';
 import FormValues from '../lib/renderers/FormValues';
 import { getRequired, useValidation } from '../lib/yupHelpers';
 

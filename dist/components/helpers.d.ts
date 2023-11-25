@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react';
-import { Data, FormState } from '../context';
 /**
  * Track length of array value and render as many as array length
  * render only when length is changed
@@ -42,10 +41,4 @@ interface ArrayFieldRendererProps<I = unknown> {
  * - render array of elements based on index, each item should be
  */
 export declare const ArrayFieldRenderer: FC<ArrayFieldRendererProps>;
-/**
- * Make available complete form state from JSX
- */
-export declare function FormState<D extends Data = Data>({ children, }: {
-    children?: (s: FormState<D>) => ReactNode;
-}): import("react/jsx-runtime").JSX.Element;
 export {};

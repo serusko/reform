@@ -8,7 +8,7 @@ export default function useField<V = unknown>(name: string): {
     isChanged: boolean;
     isDisabled: boolean;
     isReadOnly: boolean | undefined;
-    isRequired: boolean;
+    isRequired: any;
     isTouched: boolean;
     name: string;
     onChange: (value: unknown) => void;
