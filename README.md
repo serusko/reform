@@ -6,6 +6,10 @@ Context state management based on [use-context-selector](https://github.com/dai-
 
 built with [Vite](https://vitejs.dev/guide/build.html#library-mode)
 
+## Intro
+
+[![Watch the video](https://demo.png)](https://demo.webm)
+
 ## TODO
 
 - review HTML field

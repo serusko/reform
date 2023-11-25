@@ -10,7 +10,7 @@ import { getRequired, useValidation } from '../lib/yupHelpers';
 
 import './app.css';
 
-const inits = { age: 10, firstName: 'a', gender: 'f' };
+const inits = { age: 10, firstName: '', gender: 'o' };
 
 const schema = y.object({
   birthDate: y
@@ -126,11 +126,15 @@ function App() {
         </div>
 
         <div className="row">
-          <FormValues>{(values) => <pre>{JSON.stringify(values, null, 2)}</pre>}</FormValues>
+          <div className="col">
+            <label>Values</label>
+            <FormValues>{(values) => <pre>{JSON.stringify(values, null, 2)}</pre>}</FormValues>
+          </div>
 
-          <FormErrors>{(errors) => <pre>{JSON.stringify(errors, null, 2)}</pre>}</FormErrors>
-
-          <FormState>{(state) => <pre>{JSON.stringify(state, null, 2)}</pre>}</FormState>
+          <div className="col">
+            <label>Errors</label>
+            <FormErrors>{(errors) => <pre>{JSON.stringify(errors, null, 2)}</pre>}</FormErrors>
+          </div>
         </div>
 
         <div>
