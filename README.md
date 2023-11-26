@@ -2,7 +2,7 @@
 
 Declarative Form State management container based on [use-context-selector](https://github.com/dai-shi/use-context-selector) and [use-reducer](https://react.dev/reference/react/useReducer) hook. Inspired by [formik](https://formik.org/).
 
-This library helps you create forms that are easy to maintain and expand, especially for apps that need complex data entry. The solution is flexible and not fixed. It also considers performance, accessibility, and consistency.
+This library helps you create forms that are easy to maintain and expand, especially for form-heavy. The solution is flexible and not fixed. It also considers performance, accessibility, and consistency.
 
 built with [Vite](https://vitejs.dev/guide/build.html#library-mode) 🖖
 
