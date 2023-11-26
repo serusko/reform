@@ -3,7 +3,7 @@
   "author": "serusko",
   "description": "Declarative React form state management container",
   "main": "dist/index.js",
-  "license": "GNU GPL V3",
+  "license": "GPL-3.0-or-later",
   "types": "dist/index.d.ts",
   "engine": {
     "node": ">=20"
