@@ -30,6 +30,40 @@ built with [Vite](https://vitejs.dev/guide/build.html#library-mode) 🖖
 </Form>
 ```
 
+## Custom Reducer, validation, detecting requiredFields
+
+```jsx
+
+  type data = Yup.TypeOf<schema>;
+  type CustomAction = FormAction<Data> & { type: 'onDeleteItem', index: number };
+  const props = {
+    initialValues: { age: 33 },
+    reducer: (prev: FormState<Data>, action: CustomAction) => {
+      /** ... implement custom reducer logic */
+      return getDefaultFormReducer()(prev, action)
+    },
+    validation: (data: Data) => {
+      /** ... implement custom validation rules */
+      return isValid ? errors : undefined
+    },
+    getRequired: (data: Data) => ({ firstName: true, lastName: !!data.firstName })
+    onSubmit: (data: Data) => Promise.resolve(/** custom action **/),
+    onStateChange(action: CustomAction<A>, prev: FormState<Data>, next:FormState<Data>, dispatch: Dispatch<FormReducerAction<D>>) => {
+      /** track form changes and fire some async actions */
+    }
+  }
+
+return <Form {...props}>
+  <Field component={TextField} name="firstName" />
+</Form>
+```
+
+## Good Practices
+
+- keep all your form login only in reducer (no "smart fields" with onChange logic overriding different field values)
+- keep you data model/schema aligned as much as possible with UI = prevents mind-numbing data editing
+- use input/output mapping = you can easily map JSON structures before and after those data are used with UI elements, so you don't need to fight against data structure received from API. Just like prepare data for `initialValues` and then process it `onSubmitCall`
+
 ## Features
 
 - optimized re-renders - each field is rendered only if needed by default (like Formik FastField by default but better 😉)
