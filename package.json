@@ -1,7 +1,9 @@
 {
   "name": "@serusko/reform",
-  "description": "Declarative Form State management container",
+  "author": "serusko",
+  "description": "Declarative React form state management container",
   "main": "dist/index.js",
+  "license": "GNU GPL V3",
   "types": "dist/index.d.ts",
   "engine": {
     "node": ">=20"
@@ -9,8 +11,8 @@
   "files": [
     "dist"
   ],
-  "private": false,
-  "version": "2.0.0",
+  "private": true,
+  "version": "2.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
