@@ -56,7 +56,8 @@ const Form = <D extends Data = Data>({
     if (state.disabled !== !!disabled) {
       dispatch({ type: 'setDisabled', value: !!disabled });
     }
-  }, [disabled, state.disabled, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disabled, dispatch]);
 
   const handleSubmit = useCallback(
     (e: SyntheticEvent) => {

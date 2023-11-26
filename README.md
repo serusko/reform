@@ -58,6 +58,8 @@ return <Form {...props}>
 </Form>
 ```
 
+\*This is just example and you should keep some values memoized/ reference stable, bcs some form state actions are working as watchers for those values. Read more in Docs, or check `Form.tsx` and its `useEffects(...)`.
+
 ## Good Practices
 
 - keep all your form login only in reducer (no "smart fields" with onChange logic overriding different field values)
