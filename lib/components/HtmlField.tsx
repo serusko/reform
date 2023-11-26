@@ -18,7 +18,7 @@ type Type = {
 };
 
 interface Props<T extends keyof Type> extends HTMLProps<HTMLInputElement> {
-  component: T;
+  component?: T;
   name: string;
 }
 
