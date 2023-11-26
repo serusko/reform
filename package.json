@@ -11,7 +11,7 @@
   "files": [
     "dist"
   ],
-  "private": true,
+  "private": false,
   "version": "2.0.1",
   "type": "module",
   "scripts": {
