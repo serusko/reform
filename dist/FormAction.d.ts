@@ -7,6 +7,7 @@ import { Data, FormErrors } from './context';
 type FormAction<D extends Data = Data> = 
 /** reducer initialized */
 {
+    initialValues?: D;
     type: 'init';
 }
 /** initialValues has changed */

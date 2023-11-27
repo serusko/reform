@@ -7,5 +7,5 @@ import useFormSelect from './useFormSelect';
  * - use dot chain for nested path
  */
 export default function useFieldValue<V = unknown>(name: string): V | null {
-  return useFormSelect((s) => get(s.values, name) as V | null);
+  return useFormSelect((s) => (get(s.values || {}, name) || null) as V | null);
 }

@@ -1,7 +1,10 @@
 import { useMemo } from 'react';
 
+import { useFieldValue } from '..';
 import { get } from '../helpers/object';
 
+import useFieldError from './useFieldError';
+import useFieldTouched from './useFieldTouched';
 import useFormSelect from './useFormSelect';
 import useSetFieldError from './useSetFieldError';
 import useSetSetFieldTouched from './useSetFieldTouched';
@@ -12,20 +15,20 @@ import useSetFieldValue from './useSetFieldValue';
  * - use dot chain for nested path
  */
 export default function useField<V = unknown>(name: string) {
-  const isChanged = useFormSelect((s) => !!s.changed?.[name]);
-  const isDisabled = useFormSelect((s) =>
-    s.disabledFields?.[name] ? !!s.disabledFields[name] : !!s.disabled,
-  );
-  const isReadOnly = useFormSelect((s) => s.readOnly);
-  const error = useFormSelect((s) =>
-    s.submitted > 0 || !!s.touched?.[name] ? s.errors?.[name] : undefined,
-  );
-  const initialValue = useFormSelect((s) => s.initialValues?.[name]);
-  const isRequired = useFormSelect((s) => get(s.required, name));
-  const isTouched = useFormSelect((s) => s?.submitted > 0 || !!s?.touched[name]);
-  const value: V | null = useFormSelect((s) => get(s.values, name));
+  const isChanged = useFormSelect((s) => !!get(s?.changed || {}, name));
+  const isDisabled = useFormSelect((s) => {
+    const specific = get(s?.disabledFields || {}, name);
+    return typeof specific === 'boolean' ? specific : !!s?.disabled;
+  });
+  const isReadOnly = useFormSelect((s) => !!s?.readOnly); // TODO: use field specific
+  const error = useFieldError(name);
 
-  const setValue = useSetFieldValue(name);
+  const initialValue = useFormSelect((s) => get(s?.initialValues || {}, name) || null);
+  const isRequired = useFormSelect((s) => !!get(s?.required, name));
+  const value: V | null = useFieldValue(name);
+  const isTouched = useFieldTouched(name);
+
+  const setValue = useSetFieldValue<V>(name);
   const setTouched = useSetSetFieldTouched(name);
   const setError = useSetFieldError(name);
 

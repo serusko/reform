@@ -1,20 +1,7 @@
 import * as op from 'object-path';
 
 import { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
-
-export function setIn(obj: Data, path: string, value: unknown) {
-  try {
-    op.set(obj, path, value);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('setIn', path);
-    throw e;
-  }
-}
-
-export function getIn(obj: Data, path: string) {
-  return op.get(obj, path);
-}
+import { get, set } from './helpers/object';
 
 export type FormReducerAction<D extends Data> = FormAction<D>;
 export type formReducerType<D extends Data> = (
@@ -54,6 +41,8 @@ export function getDefaultFormReducer<D extends Data = Data>(
           ...state,
           changed: {},
           errors: {},
+          initialValues:
+            ('initialValues' in action && action.initialValues) || state.initialValues || ({} as D),
           isSubmitting: false,
           isValid: !initErrors,
           isValidating: false,
@@ -71,12 +60,17 @@ export function getDefaultFormReducer<D extends Data = Data>(
           return state;
         }
 
-        setIn(values, action.name, action.value);
+        set(values, action.name, action.value);
 
         // TODO: validate single field
         // TODO: add support for async validation
         // TODO: think about debounce validation
         const setValueErrors = validate?.(values);
+        let touched = state.touched || {};
+        if (!get(touched, action.name)) {
+          touched = { ...touched };
+          set(touched, action.name, true);
+        }
 
         return {
           ...state,
@@ -84,7 +78,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
           errors: (setValueErrors || {}) as FormErrors,
           isValid: !setValueErrors,
           required: getRequired?.(values) || {},
-          touched: { ...state.touched, [action.name]: true },
+          touched,
           values,
         };
       }

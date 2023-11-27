@@ -1,19 +1,20 @@
+/// <reference types="react" />
 /**
  * Get field value, meta-info, actions for one field
  * - use dot chain for nested path
  */
 export default function useField<V = unknown>(name: string): {
-    error: any;
-    initialValue: unknown;
+    error: import("react").ReactNode;
+    initialValue: any;
     isChanged: boolean;
     isDisabled: boolean;
-    isReadOnly: boolean | undefined;
-    isRequired: any;
+    isReadOnly: boolean;
+    isRequired: boolean;
     isTouched: boolean;
     name: string;
-    onChange: (value: unknown) => void;
+    onChange: (value: V) => void;
     setError: (error: import("../components/BaseFieldProps").SetFieldErrorVal) => void;
     setTouched: (touched?: boolean) => void;
-    setValue: (value: unknown) => void;
+    setValue: (value: V) => void;
     value: V | null;
 };

@@ -7,7 +7,7 @@ import { Data, FormErrors } from './context';
  */
 type FormAction<D extends Data = Data> =
   /** reducer initialized */
-  | { type: 'init' }
+  | { initialValues?: D; type: 'init' }
   /** initialValues has changed */
   | { type: 'initialValues'; value: undefined | D }
   /** trigger form reset = clear changed, touched, use initialValues */
