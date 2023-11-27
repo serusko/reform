@@ -13,7 +13,14 @@ import useFormDispatch from './useFormDispatch';
 export default function useSetFieldError(name: string) {
   const dispatch = useFormDispatch();
   return useCallback(
-    (error: SetFieldErrorVal | undefined) => dispatch({ error, name, type: 'setError' }),
+    (error: SetFieldErrorVal | undefined | Promise<SetFieldErrorVal | undefined>) => {
+      const promise =
+        error && typeof (error as Promise<unknown>).then === 'function'
+          ? (error as Promise<SetFieldErrorVal | undefined>)
+          : Promise.resolve(error);
+
+      promise.then((error) => dispatch({ error, name, type: 'setError' }));
+    },
     [dispatch, name],
   );
 }

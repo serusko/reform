@@ -1,3 +1,4 @@
+import FormState from '../FormState';
 import { get } from '../helpers/object';
 
 import useFormSelect from './useFormSelect';
@@ -7,5 +8,5 @@ import useFormSelect from './useFormSelect';
  * - use dot chain for nested path
  */
 export default function useFieldValue<V = unknown>(name: string): V | null {
-  return useFormSelect((s) => (get(s.values || {}, name) || null) as V | null);
+  return useFormSelect((s: FormState) => (get(s.values || {}, name) || null) as V | null);
 }

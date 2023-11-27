@@ -10,5 +10,8 @@ import useFormDispatch from './useFormDispatch';
  */
 export default function useSetFieldValue<V = unknown>(name: string) {
   const dispatch = useFormDispatch();
-  return useCallback((value: V) => dispatch({ name, type: 'setValue', value }), [dispatch, name]);
+  return useCallback(
+    (value: V | null) => dispatch({ name, type: 'setValue', value }),
+    [dispatch, name],
+  );
 }

@@ -15,7 +15,6 @@ export type Schema = any;
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const initialFormState: FormState<Data> = {
-  changed: {},
   errors: {},
   initialValues: {},
   isValid: true,

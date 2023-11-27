@@ -39,7 +39,6 @@ export function getDefaultFormReducer<D extends Data = Data>(
         const initErrors = validate?.(state.values || {});
         return {
           ...state,
-          changed: {},
           errors: {},
           initialValues:
             ('initialValues' in action && action.initialValues) || state.initialValues || ({} as D),
@@ -74,7 +73,6 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
         return {
           ...state,
-          changed: { ...state.changed, [action.name]: true },
           errors: (setValueErrors || {}) as FormErrors,
           isValid: !setValueErrors,
           required: getRequired?.(values) || {},
@@ -83,14 +81,25 @@ export function getDefaultFormReducer<D extends Data = Data>(
         };
       }
 
-      // TODO: think about readOnly
-      case 'setDisabled':
-        if (state.disabled === action.value) {
-          return state;
-        } else {
-          return { ...state, disabled: !!action.value };
+      case 'setReadOnly': {
+        if (!action.name) {
+          return state.readOnly === action.value ? state : { ...state, readOnly: !!action.value };
         }
+        const readonlyFields = state.disabledFields || {};
+        set(readonlyFields, action.name, action.value);
+        return { ...state, readonlyFields };
+      }
 
+      // TODO: think about readOnly
+      //
+      case 'setDisabled': {
+        if (!action.name) {
+          return state.disabled === action.value ? state : { ...state, disabled: !!action.value };
+        }
+        const disabledFields = state.disabledFields || {};
+        set(disabledFields, action.name, action.value);
+        return { ...state, disabledFields };
+      }
       // Set field as touched = record user interaction (mostly onBlur action)
       case 'setTouched': {
         const names = (

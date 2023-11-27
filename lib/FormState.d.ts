@@ -5,10 +5,6 @@ import FormAction from './FormAction';
  */
 export default interface FormState<D extends Data = Data> {
   /**
-   * List of fields changed by onChange event
-   */
-  changed: Record<string, boolean>;
-  /**
    * control if all form should be disabled
    */
   disabled?: boolean;
@@ -16,6 +12,8 @@ export default interface FormState<D extends Data = Data> {
    * Override default disabled state
    * - if global is yes (true) -> choose those which could be edited
    * - if global is no (false/undefined) -> disable some specific fields
+   * you can set all ("disabled") to true and manually set some to false and vice-versa
+   * its override for global setting
    */
   disabledFields?: Record<string, boolean>;
 
@@ -24,6 +22,7 @@ export default interface FormState<D extends Data = Data> {
    * [fieldName]: "error message"
    */
   errors: FormErrors;
+
   /**
    * Initial data cst from parent
    * every time they changed, "init" action should be triggered
@@ -44,6 +43,11 @@ export default interface FormState<D extends Data = Data> {
    */
   isValidating: boolean;
   /**
+   * Some fields could have async processing like validation, so field can let form know to prevent submit until its validated
+   * feel free to use as blocked for custom actions like fetching resources for options...
+   */
+  isValidatingFields?: Record<string, boolean>;
+  /**
    * Remember last action type
    */
   lastAction: FormAction<D>['type'] | string;
@@ -51,6 +55,14 @@ export default interface FormState<D extends Data = Data> {
    * HTML Readonly mode
    */
   readOnly?: boolean;
+
+  /**
+   * Customize readonly-fields
+   * display all if "readOnly === true" or pick some to override
+   * you can set all to true and manually set some to false and vice-versa
+   * its override for global setting
+   */
+  readonlyFields?: Record<string, boolean>;
   /**
    * Map of required fields
    * so we can display *

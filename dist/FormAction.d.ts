@@ -59,6 +59,7 @@ type FormAction<D extends Data = Data> =
 }
 /** set disabled state */
  | {
+    name?: string;
     type: 'setDisabled';
     value: boolean;
 }
@@ -78,5 +79,11 @@ type FormAction<D extends Data = Data> =
 /** end validation process */
  | {
     type: 'endValidate';
+}
+/** Use ReadOnly to display values */
+ | {
+    name?: string;
+    type: 'setReadOnly';
+    value: boolean;
 };
 export default FormAction;

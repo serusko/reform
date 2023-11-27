@@ -5,4 +5,4 @@ import { SetFieldErrorVal } from '../components/BaseFieldProps';
  *
  * If you need to set more field values or additional info, use 'useFormDispatch'
  */
-export default function useSetFieldError(name: string): (error: SetFieldErrorVal | undefined) => void;
+export default function useSetFieldError(name: string): (error: SetFieldErrorVal | undefined | Promise<SetFieldErrorVal | undefined>) => void;

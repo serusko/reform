@@ -27,7 +27,7 @@ type FormAction<D extends Data = Data> =
   /** mark field as touched (onBlur) */
   | { name: string | string[]; touched: boolean; type: 'setTouched' }
   /** set disabled state */
-  | { type: 'setDisabled'; value: boolean }
+  | { name?: string; type: 'setDisabled'; value: boolean }
   /** start form submitting */
   | { type: 'startSubmit' }
   /** end form submitting */
@@ -35,6 +35,8 @@ type FormAction<D extends Data = Data> =
   /** start validation process */
   | { errors?: FormErrors; type: 'startValidate' }
   /** end validation process */
-  | { type: 'endValidate' };
+  | { type: 'endValidate' }
+  /** Use ReadOnly to display values */
+  | { name?: string; type: 'setReadOnly'; value: boolean };
 
 export default FormAction;

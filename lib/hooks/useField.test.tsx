@@ -25,7 +25,7 @@ describe('useField', () => {
     });
   });
 
-  it('Triggers proper reducer actions', () => {
+  it('Triggers proper reducer actions', async () => {
     const dispatch = jest.fn();
     const wrapper: FC<PropsWithChildren> = ({ children }) => (
       <FormActionContext.Provider value={dispatch}>{children}</FormActionContext.Provider>
@@ -35,7 +35,7 @@ describe('useField', () => {
       result: { current: field },
     } = renderHook(() => useField('fieldName'), { wrapper });
 
-    act(() => {
+    await act(() => {
       field.setValue('fieldValue');
     });
 
@@ -45,13 +45,13 @@ describe('useField', () => {
       value: 'fieldValue',
     });
 
-    act(() => {
+    await act(() => {
       field.setTouched(true);
     });
 
     expect(dispatch).toHaveBeenCalledWith({ name: 'fieldName', touched: true, type: 'setTouched' });
 
-    act(() => {
+    await act(() => {
       field.setError('Error message');
     });
 
@@ -63,7 +63,7 @@ describe('useField', () => {
 
     const errJsx = <p>Error Message</p>;
 
-    act(() => {
+    await act(() => {
       field.setError(errJsx);
     });
 

@@ -9,19 +9,24 @@ interface FieldData<V = unknown> {
 }
 
 /** MEtadata around UX */
-interface FieldMeta {
+interface FieldMeta<V = unknown> {
   /** Validation message */
   error?: ReactNode;
+  initialValue?: V | null;
   /** Indicate weather current value !== initialValue */
   isChanged: boolean;
   /** ReadOnly mode */
   isDisabled: boolean;
+  /** Readonly should be just not editable version */
+  isReadOnly: boolean;
   /** Required value (e.g. display *) */
   isRequired: boolean;
   /** Was field touched by user Interaction? */
   isTouched: boolean;
   /** Has running validation */
   isValidating: boolean;
+  /** field name */
+  name: string;
 }
 
 type Err = undefined | ReactNode;
@@ -42,9 +47,9 @@ interface FieldActions<V = unknown> {
   /** Change disabled state for specific field */
   setDisabled: (disabled: boolean) => void;
   /** Set validation from field, so field can set error or add Promise with result of validation */
-  setError?: (error: SetFieldErrorVal | Promise<SetFieldErrorVal>) => void;
+  setError: (error: SetFieldErrorVal | Promise<SetFieldErrorVal>) => void;
   /** Mark field as "touched" by user interaction */
-  setTouched?: (touched?: boolean) => void;
+  setTouched: (touched?: boolean) => void;
   /** Set field value */
   setValue: (v: V | null) => void;
 }
