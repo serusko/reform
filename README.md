@@ -1,6 +1,11 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)](https://snyk.io/test/github/serusko/form/badge.svg)
 [![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://badge.fury.io/js/@serusko%2Freform)
 
+[![npm version](./coverage/badge-statements.svg)](./coverage/badge-statements.svg)
+[![npm version](./coverage/badge-branches.svg)](./coverage/badge-branches.svg)
+[![npm version](./coverage/badge-functions.svg)](./coverage/badge-functions.svg)
+[![npm version](./coverage/badge-lines.svg)](./coverage/badge-lines.svg)
+
 # React Form
 
 Declarative Form State management container based on [use-context-selector](https://github.com/dai-shi/use-context-selector) and [use-reducer](https://react.dev/reference/react/useReducer) hook. Inspired by [formik](https://formik.org/).
