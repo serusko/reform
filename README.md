@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/10a9867a11c24f4e91fd5ea11637a26e)](https://app.codacy.com/gh/serusko/form?utm_source=github.com&utm_medium=referral&utm_content=serusko/form&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/form/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)](https://snyk.io/test/github/serusko/form/badge.svg)
 [![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://badge.fury.io/js/@serusko%2Freform)
