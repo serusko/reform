@@ -1,4 +1,4 @@
-[Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)]
 
 # React Form
 
