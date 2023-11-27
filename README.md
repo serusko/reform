@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/form/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)](https://snyk.io/test/github/serusko/form/badge.svg)
 [![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://badge.fury.io/js/@serusko%2Freform)
 
@@ -10,7 +11,7 @@
 
 Declarative Form State management container based on [use-context-selector](https://github.com/dai-shi/use-context-selector) and [use-reducer](https://react.dev/reference/react/useReducer) hook. Inspired by [formik](https://formik.org/).
 
-This library helps you create forms that are easy to maintain and expand, especially for form-heavy. The solution is flexible and not fixed. It also considers performance, accessibility, and consistency.
+This library helps you create forms that are easy to maintain and expand, especially for form-heavy apps. We keep eye on modularity, flexibility, performance, accessibility, and consistency at same time. Suppresses creative solutions and keep used solution patterns without unnecessary boilerplate or redundant code. You can write easy single field form for few line of codes which could scale up to multi-page complex spacious project.
 
 built with [Vite](https://vitejs.dev/guide/build.html#library-mode) 🖖
 
