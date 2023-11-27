@@ -1,4 +1,5 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)]
+[![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)](https://snyk.io/test/github/serusko/form/badge.svg)
+[![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://badge.fury.io/js/@serusko%2Freform)
 
 # React Form
 
