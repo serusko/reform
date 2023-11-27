@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/serusko/form/badge.svg)]
+
 # React Form
 
 Declarative Form State management container based on [use-context-selector](https://github.com/dai-shi/use-context-selector) and [use-reducer](https://react.dev/reference/react/useReducer) hook. Inspired by [formik](https://formik.org/).
