@@ -13,11 +13,11 @@
     "dist"
   ],
   "private": false,
-  "version": "2.0.20",
+  "version": "2.0.21",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --p ./tsconfig.build.json && vite build",
+    "build": "tsc --p ./tsconfig.build.json && jest npm run test && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "NODE_ENV=test jest --no-cache",
@@ -26,7 +26,8 @@
     "formatApp": "prettier --write ./src && yarn eslint ./src --fix",
     "formatLib": "prettier --write ./lib && yarn eslint ./lib --fix",
     "format": "yarn formatLib && yarn formatApp",
-    "test:coverage": "npm test -- --coverage"
+    "test:coverage": "npm test -- --coverage",
+    "coverage": "yarn test:coverage && bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ./coverage/lcov.info"
   },
   "dependencies": {
     "object-path": "^0.11.8",
