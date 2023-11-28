@@ -12,6 +12,7 @@ export default defineConfig({
     lib: { entry: resolve(__dirname, 'lib/index.ts'), formats: ['es'] },
     rollupOptions: {
       external: ['react', 'react/jsx-runtime'],
+      output: { entryFileNames: 'index.js' },
     },
   },
   plugins: [react(), eslint(), dts({ copyDtsFiles: true, include: ['lib'] })],
