@@ -13,7 +13,7 @@
     "dist"
   ],
   "private": false,
-  "version": "2.0.15",
+  "version": "2.0.16",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -28,6 +28,10 @@
     "format": "yarn formatLib && yarn formatApp",
     "test:coverage": "npm test -- --coverage",
     "test:badges": "npm run test:coverage  && jest-coverage-badges"
+  },
+  "dependencies": {
+    "object-path": "^0.11.8",
+    "use-context-selector": "^1.4.1"
   },
   "peerDependencies": {
     "object-path": "^0.11.8",
@@ -44,7 +48,6 @@
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
-    "@uidotdev/usehooks": "^2.4.1",
     "@vitejs/plugin-react": "^4.2.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",

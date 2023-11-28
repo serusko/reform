@@ -98,6 +98,7 @@ TODO
 
 ## TODO
 
+- use html reset form event
 - review HTML field
 - Flatten meta setters - error, touched
 - implement/review Aria rules
