@@ -14,6 +14,10 @@ export default defineConfig({
       external: ['react', 'react/jsx-runtime'],
       output: { entryFileNames: 'index.js' },
     },
+    sourcemap: true,
+  },
+  optimizeDeps: {
+    include: ['esm-dep > cjs-dep'],
   },
   plugins: [react(), eslint(), dts({ copyDtsFiles: true, include: ['lib'] })],
 });
