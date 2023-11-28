@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import type { Schema } from 'yup';
 
-import { Data } from './context';
+import type { Data } from './context';
 
 /**
  * Check if field is required in schema

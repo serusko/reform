@@ -1,4 +1,4 @@
-import { Data, ValidationFn, FormState, FormAction } from './context';
+import type { Data, ValidationFn, FormState, FormAction } from './context';
 export type FormReducerAction<D extends Data> = FormAction<D>;
 export type formReducerType<D extends Data> = (s: FormState<D>, a: FormReducerAction<D>, c?: formReducerType<D>[] | formReducerType<D>) => FormState<D>;
 /**

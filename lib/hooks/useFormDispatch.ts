@@ -1,6 +1,7 @@
 import { useContext } from 'use-context-selector';
 
-import { Data, FormAction, FormActionContext } from '../context';
+import type { Data, FormAction } from '../context';
+import { FormActionContext } from '../context';
 
 /**
  * Form dispatch action

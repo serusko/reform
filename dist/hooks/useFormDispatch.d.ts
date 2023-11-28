@@ -1,4 +1,4 @@
-import { Data, FormAction } from '../context';
+import type { Data, FormAction } from '../context';
 /**
  * Form dispatch action
  * trigger formReducer action

@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject } from 'react';
+import type { Dispatch, MutableRefObject } from 'react';
 import FormProps from './components/FormProps';
 import { Data, FormState } from './context';
 import { FormReducerAction, formReducerType } from './formReducer';

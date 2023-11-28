@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { Data, FormState as FormStateType } from '../context';
+import type { ReactNode } from 'react';
+import type { Data, FormState as FormStateType } from '../context';
 interface Props<D extends Data> {
     children: ReactNode | ((s: FormStateType<D>) => ReactNode);
     condition?: (s: FormStateType<D>) => boolean;

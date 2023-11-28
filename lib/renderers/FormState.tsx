@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { Data, FormState as FormStateType } from '../context';
+import type { Data, FormState as FormStateType } from '../context';
 import useFormSelect from '../hooks/useFormSelect';
 
 interface Props<D extends Data> {

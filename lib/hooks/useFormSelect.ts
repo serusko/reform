@@ -1,6 +1,7 @@
 import { useContextSelector } from 'use-context-selector';
 
-import { Data, FormState, FormStateContext } from '../context';
+import type { Data, FormState } from '../context';
+import { FormStateContext } from '../context';
 
 /**
  * "Redux like" Selector to get specific part of form state, or complete state

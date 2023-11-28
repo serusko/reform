@@ -1,2 +1,2 @@
-import { Data } from '../context';
+import type { Data } from '../context';
 export default function useSetValues<D extends Data = Data>(): (values: D) => void;

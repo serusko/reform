@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { SetFieldErrorVal } from '../components/BaseFieldProps';
+import type { SetFieldErrorVal } from '../components/BaseFieldProps';
 
 import useFormDispatch from './useFormDispatch';
 

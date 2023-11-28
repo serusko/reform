@@ -1,4 +1,4 @@
-import { ComponentProps, ComponentType } from 'react';
+import type { ComponentProps, ComponentType } from 'react';
 
 import type BaseFieldProps from './BaseFieldProps';
 

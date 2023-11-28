@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { Data, FormAction } from '../context';
+import type { Data, FormAction } from '../context';
 import useFormDispatch from '../hooks/useFormDispatch';
 
 interface FormDispatchConsumerProps<D extends Data = Data, A = FormAction<D>> {

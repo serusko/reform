@@ -1,4 +1,4 @@
-import FormAction from './FormAction';
+import type FormAction from './FormAction';
 
 /**
  * Form state context type

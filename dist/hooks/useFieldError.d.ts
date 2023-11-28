@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 /**
  * Get specific field 'error' meta info
  * - use dot chain for nested path

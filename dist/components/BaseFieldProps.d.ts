@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 /** Base field data */
 interface FieldData<V = unknown> {

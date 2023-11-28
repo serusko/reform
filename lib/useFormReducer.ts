@@ -1,4 +1,5 @@
-import { Dispatch, MutableRefObject, useCallback, useReducer, useRef } from 'react';
+import type { Dispatch, MutableRefObject } from 'react';
+import { useCallback, useReducer, useRef } from 'react';
 
 import FormProps from './components/FormProps';
 import { initialFormState } from './context';

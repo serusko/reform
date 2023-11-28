@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { createContext } from 'use-context-selector';
 
-import FormAction from './FormAction';
-import FormState from './FormState';
+import type FormAction from './FormAction';
+import type FormState from './FormState';
 
 export type Data = Record<string, unknown>;
 export type FormErrors = Record<string, ReactNode>;

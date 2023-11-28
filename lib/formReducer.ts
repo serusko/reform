@@ -1,6 +1,6 @@
 import * as op from 'object-path';
 
-import { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
+import type { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
 import { get, set } from './helpers/object';
 
 export type FormReducerAction<D extends Data> = FormAction<D>;

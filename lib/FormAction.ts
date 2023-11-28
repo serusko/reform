@@ -1,5 +1,5 @@
-import { SetFieldErrorVal } from './components/BaseFieldProps';
-import { Data, FormErrors } from './context';
+import type { SetFieldErrorVal } from './components/BaseFieldProps';
+import type { Data, FormErrors } from './context';
 
 /**
  * Standard form action pool

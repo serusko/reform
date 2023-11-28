@@ -1,4 +1,4 @@
-import { SetFieldErrorVal } from '../components/BaseFieldProps';
+import type { SetFieldErrorVal } from '../components/BaseFieldProps';
 /**
  * Set field error manually
  * - use dot chain for nested path

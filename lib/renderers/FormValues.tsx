@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { Data } from '../context';
+import type { Data } from '../context';
 import useFormSelect from '../hooks/useFormSelect';
 
 /**

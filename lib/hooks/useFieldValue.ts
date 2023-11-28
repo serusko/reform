@@ -1,4 +1,4 @@
-import FormState from '../FormState';
+import type FormState from '../FormState';
 import { get } from '../helpers/object';
 
 import useFormSelect from './useFormSelect';
