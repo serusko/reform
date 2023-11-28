@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import FormAction from './FormAction';
 import FormState from './FormState';
 export type Data = Record<string, unknown>;
