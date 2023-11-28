@@ -1,6 +1,7 @@
 # React Form
 
 [![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://badge.fury.io/js/@serusko%2Freform)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@serusko/reform)](https://img.shields.io/bundlephobia/minzip/@serusko/reform)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/reform/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/reform/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Known Vulnerabilities](https://snyk.io/test/github/serusko/reform/badge.svg)](https://snyk.io/test/github/serusko/reform/badge.svg)
