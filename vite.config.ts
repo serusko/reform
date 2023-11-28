@@ -16,8 +16,5 @@ export default defineConfig({
     },
     sourcemap: true,
   },
-  optimizeDeps: {
-    include: ['esm-dep > cjs-dep'],
-  },
   plugins: [react(), eslint(), dts({ copyDtsFiles: true, include: ['lib'] })],
 });
