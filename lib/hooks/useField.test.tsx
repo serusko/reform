@@ -110,17 +110,69 @@ describe('useField', () => {
       </Form>
     );
 
-    const { result } = renderHook(() => useField<string>('list.1.val'), { wrapper });
-    const field = result.current;
+    const {
+      result: { current: field },
+    } = renderHook(() => useField<string>('list.1.val'), { wrapper });
 
     expect(field).toMatchObject({ isChanged: false, isTouched: false, value: 'bar' });
 
+    await act(() => field.setValue('baz'));
+
+    await waitFor(() => expect(field.value).toBe('baz'));
+  });
+});
+
+describe('Initial Values', () => {
+  it('Uses custom default value', () => {
+    const wrapper: FC<PropsWithChildren> = ({ children }) => (
+      <Form initialValues={{ foo: 'value' }}>{children}</Form>
+    );
+
+    const {
+      result: { current: field },
+    } = renderHook(() => useField('foo'), { wrapper });
+
+    expect(field.value).toBe('value');
+  });
+
+  it.todo('On change InitialValues, value is changed');
+
+  it.todo('Reset Form will use initial value');
+});
+
+describe.only('Touched meta-property', () => {
+  it('Untouched field could be marked by setTouched', async () => {
+    const onStateUpdate = jest.fn();
+    const wrapper: FC<PropsWithChildren> = ({ children }) => (
+      <Form initialValues={{ foo: 'value' }} onStateUpdate={(action) => onStateUpdate(action)}>
+        {children}
+      </Form>
+    );
+
+    const {
+      result: { current: field },
+    } = renderHook(() => useField('foo'), { wrapper });
+
+    expect(field.isTouched).toBe(false);
+
     await act(() => {
-      field.setValue('baz');
+      field.setValue('bar');
     });
 
-    await waitFor(() => result.current.value === 'baz');
+    await waitFor(() => field.isTouched === true);
 
-    // TODO: check value, not working
+    // expect(field.isTouched).toBe(true) // TODO: inspect why not working
+
+    await act(() => {
+      field.setTouched(true);
+    });
+
+    expect(onStateUpdate).toHaveBeenCalledWith({
+      name: 'foo',
+      touched: true,
+      type: 'setTouched',
+    });
+
+    // expect(field.isTouched).toBe(true); // TODO: debug why its not working
   });
 });

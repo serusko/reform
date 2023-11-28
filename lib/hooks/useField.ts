@@ -23,19 +23,19 @@ import useSetFieldValue from './useSetFieldValue';
 export default function useField<V = unknown>(
   name: string,
 ): FieldMeta & FieldActions<V> & { value: V | null } {
+  const initialValue = useFieldInitialValue(name);
+  const isTouched = useFieldTouched(name);
   const isChanged = useFieldIsChanged(name);
+  const error = useFieldError(name);
   const isDisabled = useIsFieldDisabled(name);
   const isReadOnly = useFieldIsReadonly(name);
-  const error = useFieldError(name);
-  const initialValue = useFieldInitialValue(name);
   const isValidating = useFieldIsValidating(name);
   const isRequired = useFieldIsRequired(name);
-  const isTouched = useFieldTouched(name);
 
   const value: V | null = useFieldValue(name);
 
-  const setValue = useSetFieldValue<V>(name);
   const setTouched = useSetSetFieldTouched(name);
+  const setValue = useSetFieldValue<V>(name);
   const setError = useSetFieldError(name);
   const setDisabled = useSetFieldDisabled(name);
   const clearValue = useCallback(() => {

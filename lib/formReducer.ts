@@ -110,11 +110,12 @@ export function getDefaultFormReducer<D extends Data = Data>(
           // skip render if no changes needed
           return state;
         }
+        const touched = names.reduce(
+          (acc, name) => ({ ...acc, [name]: true }),
+          state.touched || {},
+        );
 
-        return {
-          ...state,
-          touched: names.reduce((acc, name) => ({ ...acc, [name]: true }), state.touched || {}),
-        };
+        return { ...state, touched };
 
         // Start submit async call
       }
