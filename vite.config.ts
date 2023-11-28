@@ -14,7 +14,6 @@ export default defineConfig({
       external: ['react', 'react/jsx-runtime', 'react-dom'],
       output: { entryFileNames: 'index.js' },
     },
-    sourcemap: true,
   },
   plugins: [visualizer(), react(), eslint(), dts({ copyDtsFiles: true, include: ['lib'] })],
 });
