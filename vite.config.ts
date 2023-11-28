@@ -11,7 +11,7 @@ export default defineConfig({
     copyPublicDir: false,
     lib: { entry: resolve(__dirname, 'lib/index.ts'), formats: ['es'] },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime', 'react-dom', 'object-path', 'use-context-selector'],
+      external: ['react', 'react/jsx-runtime', 'react-dom', 'object-path', 'yup'],
       output: { entryFileNames: 'index.js' },
     },
   },
