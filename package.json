@@ -1,6 +1,10 @@
 {
   "name": "@serusko/reform",
   "author": "serusko",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/serusko/reform.git"
+  },
   "description": "Declarative React form state management container",
   "license": "GPL-3.0-or-later",
   "types": "dist/index.d.ts",
@@ -13,7 +17,7 @@
     "dist"
   ],
   "private": false,
-  "version": "2.0.24",
+  "version": "2.0.25",
   "type": "module",
   "scripts": {
     "dev": "vite",
