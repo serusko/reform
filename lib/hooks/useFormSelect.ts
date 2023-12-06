@@ -1,13 +1,19 @@
-import { useContextSelector } from 'use-context-selector';
+import { useContext, useEffect, useState } from 'react';
 
-import type { Data, FormState } from '../context';
-import { FormStateContext } from '../context';
+import { Data, FormState, FormStateContext } from '../context';
 
-/**
- * "Redux like" Selector to get specific part of form state, or complete state
- */
 export default function useFormSelect<D extends Data = Data, R = unknown>(
   selector: (s: FormState<D>) => R,
 ) {
-  return useContextSelector(FormStateContext, selector);
+  const contextValue = useContext(FormStateContext);
+  const [selectedValue, setSelectedValue] = useState(selector(contextValue));
+  useEffect(() => {
+    const newSelectedValue = selector(contextValue);
+    if (!Object.is(selectedValue, newSelectedValue)) {
+      setSelectedValue(newSelectedValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selector, contextValue]);
+
+  return selectedValue;
 }

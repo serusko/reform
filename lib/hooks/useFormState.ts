@@ -1,4 +1,4 @@
-import { useContext } from 'use-context-selector';
+import { useContext } from 'react';
 
 import type { Data, FormState } from '../context';
 import { FormStateContext } from '../context';
