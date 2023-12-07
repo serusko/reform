@@ -28,7 +28,7 @@ export default interface FormState<D extends Data = Data> {
    * every time they changed, "init" action should be triggered
    * so keep it memoized
    */
-  initialValues?: D;
+  initialValues: D;
   /**
    * if onSubmit is Promise, Form is tracking promise
    */
@@ -46,7 +46,7 @@ export default interface FormState<D extends Data = Data> {
    * Some fields could have async processing like validation, so field can let form know to prevent submit until its validated
    * feel free to use as blocked for custom actions like fetching resources for options...
    */
-  isValidatingFields?: Record<string, boolean>;
+  isValidatingFields: Record<string, boolean>;
   /**
    * Remember last action type
    */

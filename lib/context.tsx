@@ -19,6 +19,7 @@ export const initialFormState: FormState<Data> = {
   initialValues: {},
   isValid: true,
   isValidating: false,
+  isValidatingFields: {},
   lastAction: 'init',
   required: {},
   submitted: 0,

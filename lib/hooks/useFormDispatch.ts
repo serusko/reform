@@ -11,7 +11,5 @@ export default function useFormDispatch<
   D extends Data = Data,
   A extends FormAction<D> = FormAction<D>,
 >(): (action: A) => void {
-  const d = useContext(FormActionContext) as (action: A) => void;
-
-  return d || (() => {});
+  return useContext(FormActionContext) as (action: A) => void;
 }
