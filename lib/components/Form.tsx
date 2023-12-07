@@ -1,6 +1,14 @@
-import { Dispatch, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
+import { Dispatch, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Data, FormAction, ValidationFn, FormStateContext, FormActionContext } from '../context';
+import {
+  Data,
+  FormAction,
+  ValidationFn,
+  FormStateContext,
+  FormActionContext,
+  initialFormState,
+  FormStateSub,
+} from '../context';
 import { formReducerType, getDefaultFormReducer } from '../formReducer';
 import useFormReducer from '../useFormReducer';
 
@@ -34,6 +42,8 @@ const Form = <D extends Data = Data>({
   const onSubmitRef = useRef(onSubmit);
   onSubmitRef.current = onSubmit;
 
+  const [formStateSub] = useState(new FormStateSub(initialFormState));
+
   const [state, dispatch] = useFormReducer<D>(
     formReducer,
     initialValues,
@@ -42,6 +52,11 @@ const Form = <D extends Data = Data>({
     onSubmitRef,
     onStateUpdateRef,
   );
+
+  useEffect(() => {
+    formStateSub.setState(state);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   // watch initial values, if changed, trigger reducer action
   // so we can decide inside reducer what do we want to do
@@ -69,7 +84,7 @@ const Form = <D extends Data = Data>({
 
   return (
     <FormActionContext.Provider value={dispatch as Dispatch<FormAction<Data>>}>
-      <FormStateContext.Provider value={state}>
+      <FormStateContext.Provider value={formStateSub}>
         <form id={id} onSubmit={handleSubmit}>
           {typeof children === 'function' ? children(state, dispatch) : children}
           <button style={{ left: -9999, position: 'fixed', top: -9999 }} type="submit" />

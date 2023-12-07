@@ -5,15 +5,20 @@ import { Data, FormState, FormStateContext } from '../context';
 export default function useFormSelect<D extends Data = Data, R = unknown>(
   selector: (s: FormState<D>) => R,
 ) {
-  const contextValue = useContext(FormStateContext);
-  const [selectedValue, setSelectedValue] = useState(selector(contextValue));
+  const formStateSub = useContext(FormStateContext);
+  const [selectedValue, setSelectedValue] = useState(selector(formStateSub.getState()));
+
   useEffect(() => {
-    const newSelectedValue = selector(contextValue);
-    if (!Object.is(selectedValue, newSelectedValue)) {
-      setSelectedValue(newSelectedValue);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selector, contextValue]);
+    const callback = (newState: FormState<D>) => {
+      const newSelectedValue = selector(newState);
+      if (!Object.is(selectedValue, newSelectedValue)) {
+        setSelectedValue(newSelectedValue);
+      }
+    };
+
+    formStateSub.subscribe(callback);
+    return () => formStateSub.unsubscribe(callback);
+  }, [selector, selectedValue, formStateSub]);
 
   return selectedValue;
 }
