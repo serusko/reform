@@ -13,5 +13,5 @@ export default function useFormDispatch<
 >(): (action: A) => void {
   const d = useContext(FormActionContext) as (action: A) => void;
 
-  return d || (() => {});
+  return d;
 }

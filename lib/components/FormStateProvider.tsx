@@ -33,7 +33,7 @@ const FormStateProvider: FC<Props> = ({
     (): FormState => ({
       ...state,
       disabled,
-      values: values || state.values || {},
+      values: values || state.values,
     }),
     [disabled, state, values],
   );

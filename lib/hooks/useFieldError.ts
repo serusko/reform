@@ -10,6 +10,6 @@ import useFormSelect from './useFormSelect';
  */
 export default function useFieldError(name: string): ReactNode | undefined {
   return useFormSelect((s) =>
-    s?.submitted > 0 || get(s?.touched || {}, name) ? get(s?.errors || {}, name) : undefined,
+    s?.submitted > 0 || get(s?.touched, name) ? get(s?.errors, name) : undefined,
   );
 }
