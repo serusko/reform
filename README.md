@@ -1,4 +1,4 @@
-# React Form
+![logo](https://github.com/serusko/reform/assets/5665925/faf58c5e-004e-40c6-b7ca-9f9a0fcad612)
 
 [![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://www.npmjs.com/package/@serusko/reform)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@serusko/reform)](https://bundlephobia.com/package/@serusko/reform)
