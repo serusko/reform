@@ -106,7 +106,6 @@ TODO
 - implement/review Aria rules
 - support YUP
 - async validation
-  - enable async validation
 - html Form tag customization
 - add abstraction for Formik
 - use some immutable helper for setting values

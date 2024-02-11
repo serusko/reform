@@ -23,6 +23,7 @@ const Form = <D extends Data = Data>({
     (data) => validation?.(data) || undefined,
     [validation],
   );
+
   const formReducer: formReducerType<D> = useMemo(
     () => reducer || getDefaultFormReducer(validate, getRequired),
     [getRequired, reducer, validate],
