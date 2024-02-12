@@ -15,7 +15,7 @@ export default interface FormState<D extends Data = Data> {
    * you can set all ("disabled") to true and manually set some to false and vice-versa
    * its override for global setting
    */
-  disabledFields?: Record<string, boolean>;
+  disabledFields: Record<string, boolean>;
 
   /**
    * Error map
@@ -28,7 +28,7 @@ export default interface FormState<D extends Data = Data> {
    * every time they changed, "init" action should be triggered
    * so keep it memoized
    */
-  initialValues?: D;
+  initialValues: D;
   /**
    * if onSubmit is Promise, Form is tracking promise
    */
@@ -46,7 +46,7 @@ export default interface FormState<D extends Data = Data> {
    * Some fields could have async processing like validation, so field can let form know to prevent submit until its validated
    * feel free to use as blocked for custom actions like fetching resources for options...
    */
-  isValidatingFields?: Record<string, boolean>;
+  isValidatingFields: Record<string, boolean>;
   /**
    * Remember last action type
    */
@@ -62,7 +62,7 @@ export default interface FormState<D extends Data = Data> {
    * you can set all to true and manually set some to false and vice-versa
    * its override for global setting
    */
-  readonlyFields?: Record<string, boolean>;
+  readonlyFields: Record<string, boolean>;
   /**
    * Map of required fields
    * so we can display *
@@ -85,7 +85,7 @@ export default interface FormState<D extends Data = Data> {
    * - could be used as remark for blocking submitting = wait until ready
    *
    */
-  validatingFields?: Record<string, boolean>;
+  validatingFields: Record<string, boolean>;
   /**
    * Form data values
    * could be nested object, we use dot chain to select specific value
