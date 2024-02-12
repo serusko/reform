@@ -1,4 +1,5 @@
 import type { SetFieldErrorVal } from './components/BaseFieldProps';
+import { NestedKeyOf } from './components/FieldProps';
 import type { Data, FormErrors } from './context';
 /**
  * Standard form action pool
@@ -21,17 +22,17 @@ type FormAction<D extends Data = Data> =
 }
 /** set field value to null*/
  | {
-    name: string;
+    name: NestedKeyOf<D>;
     type: 'clearValue';
 }
 /** set field value to value from initialValues */
  | {
-    name: string;
+    name: NestedKeyOf<D>;
     type: 'resetValue';
 }
 /** set field value */
  | {
-    name: string;
+    name: NestedKeyOf<D>;
     type: 'setValue';
     value: unknown;
 }
@@ -53,13 +54,13 @@ type FormAction<D extends Data = Data> =
 }
 /** mark field as touched (onBlur) */
  | {
-    name: string | string[];
+    name: NestedKeyOf<D>;
     touched: boolean;
     type: 'setTouched';
 }
 /** set disabled state */
  | {
-    name?: string;
+    name?: NestedKeyOf<D>;
     type: 'setDisabled';
     value: boolean;
 }

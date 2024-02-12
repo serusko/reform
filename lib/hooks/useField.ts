@@ -39,7 +39,7 @@ export default function useField<V = unknown, D extends Data = Data>(
   const setTouched = useSetSetFieldTouched(name);
   const setValue = useSetFieldValue<V>(name);
   const setError = useSetFieldError(name);
-  const setDisabled = useSetFieldDisabled(name);
+  const setDisabled = useSetFieldDisabled(name || undefined);
   const clearValue = useCallback(() => {
     setValue(null);
   }, [setValue]);
