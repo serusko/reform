@@ -1,5 +1,8 @@
 import { useCallback } from 'react';
 
+import { NestedKeyOf } from '../components/FieldProps';
+import { Data } from '../context';
+
 import useFormDispatch from './useFormDispatch';
 
 /**
@@ -8,7 +11,7 @@ import useFormDispatch from './useFormDispatch';
  *
  * If you need to set more field values or additional info, use 'useFormDispatch'
  */
-export default function useSetFieldValue<V = unknown>(name: string) {
+export default function useSetFieldValue<V = unknown, D extends Data = Data>(name: NestedKeyOf<D>) {
   const dispatch = useFormDispatch();
   return useCallback(
     (value: V | null) => dispatch({ name, type: 'setValue', value }),

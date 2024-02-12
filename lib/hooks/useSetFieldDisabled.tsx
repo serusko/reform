@@ -1,9 +1,12 @@
 import { useCallback } from 'react';
 
+import { NestedKeyOf } from '../components/FieldProps';
+import { Data } from '../context';
+
 import useFormDispatch from './useFormDispatch';
 
-export default function useSetFieldDisabled(name: string) {
-  const dispatch = useFormDispatch();
+export default function useSetFieldDisabled<D extends Data = Data>(name?: NestedKeyOf<D>) {
+  const dispatch = useFormDispatch<D>();
 
   return useCallback(
     (value: boolean) => {

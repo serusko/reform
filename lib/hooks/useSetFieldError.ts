@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 
 import type { SetFieldErrorVal } from '../components/BaseFieldProps';
+import { NestedKeyOf } from '../components/FieldProps';
+import { Data } from '../context';
 
 import useFormDispatch from './useFormDispatch';
 
@@ -10,7 +12,7 @@ import useFormDispatch from './useFormDispatch';
  *
  * If you need to set more field values or additional info, use 'useFormDispatch'
  */
-export default function useSetFieldError(name: string) {
+export default function useSetFieldError<D extends Data = Data>(name: NestedKeyOf<D>) {
   const dispatch = useFormDispatch();
   return useCallback(
     (error: SetFieldErrorVal | undefined | Promise<SetFieldErrorVal | undefined>) => {

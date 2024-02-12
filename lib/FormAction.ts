@@ -1,4 +1,5 @@
 import type { SetFieldErrorVal } from './components/BaseFieldProps';
+import { NestedKeyOf } from './components/FieldProps';
 import type { Data, FormErrors } from './context';
 
 /**
@@ -13,11 +14,11 @@ type FormAction<D extends Data = Data> =
   /** trigger form reset = clear changed, touched, use initialValues */
   | { type: 'reset' }
   /** set field value to null*/
-  | { name: string; type: 'clearValue' }
+  | { name: NestedKeyOf<D>; type: 'clearValue' }
   /** set field value to value from initialValues */
-  | { name: string; type: 'resetValue' }
+  | { name: NestedKeyOf<D>; type: 'resetValue' }
   /** set field value */
-  | { name: string; type: 'setValue'; value: unknown }
+  | { name: NestedKeyOf<D>; type: 'setValue'; value: unknown }
   /** set all values */
   | { type: 'setValues'; values: D }
   /** set field error(s) */
@@ -25,9 +26,9 @@ type FormAction<D extends Data = Data> =
   /** set errors */
   | { errors: Record<string, string>; type: 'setErrors' }
   /** mark field as touched (onBlur) */
-  | { name: string | string[]; touched: boolean; type: 'setTouched' }
+  | { name: NestedKeyOf<D>; touched: boolean; type: 'setTouched' }
   /** set disabled state */
-  | { name?: string; type: 'setDisabled'; value: boolean }
+  | { name?: NestedKeyOf<D>; type: 'setDisabled'; value: boolean }
   /** start form submitting */
   | { type: 'startSubmit' }
   /** end form submitting */

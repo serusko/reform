@@ -43,23 +43,11 @@ const schema = y.object({
     .default(null),
   firstName: y.string().nullable().required().default(null),
   lastName: y.string().nullable().required().default(null),
-  name: y.object({
-    first: y.string().nullable().required().default(null),
-    last: y.string().nullable().required().default(null),
-  }),
-  pepek: y
-    .array()
-    .of(y.object({ dd: y.string().required() }))
-    .default([]),
 });
 
 const getRequiredFn = (data: Data) => {
   return getRequired(schema.describe({ value: data }));
 };
-
-const pathName: NestedKeyOf<y.InferType<typeof schema>> = 'pepek.1.dd';
-
-console.log(pathName);
 
 function App() {
   const validation = useValidation(schema);
@@ -193,9 +181,3 @@ function App() {
 }
 
 export default App;
-
-type NestedKeyOf<T extends object> = {
-  [Key in keyof T & (string | number)]: Exclude<T[Key], undefined> extends object
-  ? `${Key}` | `${Key}.${NestedKeyOf<Exclude<T[Key], undefined>>}`
-  : `${Key}`;
-}[keyof T & (string | number)];

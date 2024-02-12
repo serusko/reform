@@ -1,5 +1,3 @@
-import * as op from 'object-path';
-
 import type { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
 import { get, set } from './helpers/object';
 
@@ -55,7 +53,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
         // TODO: use immer/immutable ???
         const values = { ...state.values };
 
-        if (op.get(values, action.name) === action.value) {
+        if (get(values, action.name) === action.value) {
           return state;
         }
 
