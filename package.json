@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "object-path": "^0.11.8",
-    "use-context-selector": "^1.4.1"
+    "use-context-selector": "^1.4.2"
   },
   "peerDependencies": {
     "object-path": "^0.11.8",
@@ -78,7 +78,7 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3",
-    "use-context-selector": "^1.4.1",
+    "use-context-selector": "^1.4.2",
     "vite": "^5.1.1",
     "vite-plugin-dts": "^3.7.2",
     "vite-plugin-eslint": "^1.8.1",
