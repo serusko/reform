@@ -1,8 +1,10 @@
+# Reform
+
 ![logo](https://github.com/serusko/reform/assets/5665925/faf58c5e-004e-40c6-b7ca-9f9a0fcad612)
 
 [![npm version](https://badge.fury.io/js/@serusko%2Freform.svg)](https://www.npmjs.com/package/@serusko/reform)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@serusko/reform)](https://bundlephobia.com/package/@serusko/reform)
-![](https://img.badgesize.io/serusko/reform/master/dist/index.js.svg?compression=gzip)
+![gzip size](https://img.badgesize.io/serusko/reform/master/dist/index.js.svg?compression=gzip)
 [![Quality Badge](https://app.codacy.com/project/badge/Grade/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/reform/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Coverage Badge](https://app.codacy.com/project/badge/Coverage/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/reform/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Known Vulnerabilities](https://snyk.io/test/github/serusko/reform/badge.svg)](https://snyk.io/test/github/serusko/reform/badge.svg)
@@ -130,10 +132,10 @@ TODO
 
 ## Development
 
-requires node `>=20` and `yarn`.
+requires node `>=20`.
 
 Scripts:
 
-- `yarn build` for production build
-- `yarn dev` for development version - run dev react app with examples
-- `yarn test` for jest - TODO
+- `npm run build` for production build
+- `npm run dev` for development version - run dev react app with examples
+- `npm run test` for jest - TODO
