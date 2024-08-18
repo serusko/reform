@@ -16,7 +16,7 @@
 
 Declarative Form State management container based on [use-context-selector](https://github.com/dai-shi/use-context-selector) and [use-reducer](https://react.dev/reference/react/useReducer) hook. Inspired by [formik](https://formik.org/).
 
-This library helps you create forms that are easy to maintain and expand, especially for form-heavy apps. We keep eye on modularity, flexibility, performance, accessibility, and consistency at same time. Suppresses creative solutions and keep used solution patterns without unnecessary boilerplate or redundant code. You can write easy single field form for few line of codes which could scale up to multi-page complex spacious project.
+This library simplifies the creation and maintenance of forms, making it ideal for form-heavy applications. It emphasizes modularity, flexibility, performance, accessibility, and consistency. By adhering to proven solution patterns, it eliminates unnecessary boilerplate and redundant code. You can start with a simple, single-field form and easily scale it up to a multi-page, complex project with minimal effort.
 
 built with [Vite](https://vitejs.dev/guide/build.html#library-mode) 🖖
 
@@ -76,22 +76,24 @@ return <Form {...props}>
 
 ## Good Practices
 
-- keep all your form login only in reducer (no "smart fields" with onChange logic overriding different field values)
-- keep you data model/schema aligned as much as possible with UI = prevents mind-numbing data editing
-- use input/output mapping = you can easily map JSON structures before and after those data are used with UI elements, so you don't need to fight against data structure received from API. Just like prepare data for `initialValues` and then process it `onSubmitCall`
+- Centralize all form logic within the reducer (avoid using "smart fields" that override field values with onChange logic).
+- Align your data model/schema with the UI as closely as possible to avoid tedious data editing.
+- Utilize input/output mapping to easily transform JSON structures before and after interacting with UI elements. This approach helps you seamlessly handle data received from the API, allowing you to prepare `initialValues` and efficiently process data during `onSubmitCall`.
 
 ## Features
 
-- optimized re-renders - each field is rendered only if needed by default (like Formik FastField by default but better 😉)
-- standardized metadata - pre-defined ux for displaying all states of each field `TODO: provide example, link mockup with explanation`
-- HTML input support - You can create form with minimum css (check demo code `app.css`)
-- strongly typed - we have support for custom schema Typing + custom Actions (reducer)
-- many helper functions / hooks / Components `TODO: document examples`
-- for Yup we have automatic detection of "required fields" -
-- planned support for ZOD, Ajv
-- easily extensible (planned plugin system for custom reducers like history)
-- #WIP async validation
-- ...
+## Features
+
+- **Optimized Re-renders**: Each field is rendered only when necessary, minimizing unnecessary updates by default.
+- **Standardized Metadata**: Pre-defined UX for consistently displaying all field states. `TODO: provide example, link mockup with explanation`.
+- **HTML Input Support**: Easily create forms with minimal CSS. `Check demo code: app.css`.
+- **Strongly Typed**: Supports custom schema typing and custom actions (via reducer), ensuring type safety across your forms.
+- **Extensive Helpers**: Includes a variety of helper functions, hooks, and components to streamline form development. `TODO: document examples`.
+- **Yup Integration**: Automatically detects "required fields" when using Yup for validation.
+- **Planned Support**: Future compatibility with ZOD and Ajv is on the roadmap.
+- **Easily Extensible**: A planned plugin system will allow for custom reducers, like history management.
+- **#WIP Async Validation**: Work in progress for seamless asynchronous validation.
+- **...**: And much more to come!
 
 ## Intro
 
