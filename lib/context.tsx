@@ -6,6 +6,10 @@ import type FormState from './FormState';
 
 export type Data = Record<string, unknown>;
 export type FormErrors = Record<string, ReactNode>;
+/**
+ * Return undefined if nor errors occurred
+ * so its fastest check if everything is valid
+ */
 export type ValidationFn<D> = (data: D) => undefined | FormErrors;
 
 export type { FormState, FormAction };
@@ -14,24 +18,23 @@ export type { FormState, FormAction };
 export type Schema = any;
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const initialFormState: FormState<Data> = {
-  disabledFields: {},
-  errors: {},
-  initialValues: {},
-  isValid: true,
-  isValidating: false,
-  isValidatingFields: {},
-  lastAction: 'init',
-  readonlyFields: {},
-  required: {},
-  submitted: 0,
-  touched: {},
-  validatingFields: {},
-  values: {} as Data,
-};
+export function getInitialFormState<D extends Data>(ini?: Partial<FormState<D>>): FormState<D> {
+  return {
+    disabled: false,
+    disabledFields: {},
+    errors: undefined,
+    initialValues: {} as D,
+    required: {},
+    validatingFields: {},
+    submitted: 0,
+    touched: {},
+    values: {} as D,
+    ...(ini || {}),
+  };
+}
 
 // bcs var cannot be Generic
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const FormStateContext = createContext<FormState<any>>(initialFormState);
+export const FormStateContext = createContext<FormState<any>>(getInitialFormState<any>());
 /* istanbul ignore next */
 export const FormActionContext = createContext<(action: FormAction) => void>(() => undefined);

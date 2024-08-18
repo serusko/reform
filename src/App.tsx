@@ -4,6 +4,7 @@ import Form from '../lib/components/Form';
 import HtmlField from '../lib/components/HtmlField';
 import { Data } from '../lib/context';
 import FormErrors from '../lib/renderers/FormErrors';
+import FormState from '../lib/renderers/FormState';
 import FormValues from '../lib/renderers/FormValues';
 import { getRequired, useValidation } from '../lib/yupHelpers';
 
@@ -168,6 +169,13 @@ function App() {
             <div className="col">
               <label>Errors</label>
               <FormErrors>{(errors) => <pre>{JSON.stringify(errors, null, 2)}</pre>}</FormErrors>
+            </div>
+
+            <div className="col">
+              <label>Touched</label>
+              <FormState>
+                {({ touched }) => <pre>{JSON.stringify(touched, null, 2)}</pre>}
+              </FormState>
             </div>
           </div>
 

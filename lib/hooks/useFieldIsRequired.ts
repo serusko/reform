@@ -5,5 +5,8 @@ import { get } from '../helpers/object';
 import useFormSelect from './useFormSelect';
 
 export default function useFieldIsRequired<D extends Data = Data>(name: NestedKeyOf<D>) {
-  return useFormSelect((s) => !!get(s?.required, name));
+  return useFormSelect((s) => {
+    const r = !!get(s.required, name);
+    return r;
+  });
 }

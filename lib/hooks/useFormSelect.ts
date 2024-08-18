@@ -9,5 +9,12 @@ import { FormStateContext } from '../context';
 export default function useFormSelect<D extends Data = Data, R = unknown>(
   selector: (s: FormState<D>) => R,
 ) {
-  return useContextSelector(FormStateContext, selector);
+  return useContextSelector(FormStateContext, (s) => {
+    if (!s) {
+      throw new Error(
+        'Missing Form State Context (most probably you "useFormSelect" was called out of Form tag',
+      );
+    }
+    return selector(s);
+  });
 }

@@ -1,3 +1,5 @@
+import { Reducer } from 'react';
+
 import type { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
 import { get, set } from './helpers/object';
 
@@ -15,42 +17,43 @@ export type formReducerType<D extends Data> = (
 export function getDefaultFormReducer<D extends Data = Data>(
   validate?: ValidationFn<D>,
   getRequired?: (data: D) => Record<string, boolean>,
-): formReducerType<D> {
+): Reducer<FormState<D>, FormAction<D>> {
   return function formReducer(
     state: FormState<D>,
     action: FormAction<D>, // TODO: improve action type - enable any other { type: ... } object
   ): FormState<D> {
+    console.log('formReducer', action.type);
+
     switch (action.type) {
+      // set new initial values - reset form state
       // @ts-ignore skip fallthrough
       case 'initialValues': // copy new from action
         state.initialValues = { ...(action.value || ({} as D)) };
 
       // reset form to initial state
       // @ts-ignore skip fallthrough
-      case 'reset': // reset values
+      case 'reset':
         state.values = { ...(state.initialValues || ({} as D)) };
 
-      // Initializing component
       // @ts-ignore skip fallthrough
       case 'init': {
-        // reset metadata
-        const initErrors = validate?.(state.values || {});
+        const newState =
+          action.type === 'init' && action.state ? { ...state, ...action.state } : state;
+        const initErrors = validate?.(newState.values || {});
+        const required = getRequired?.(newState.values) || {};
+
         return {
-          ...state,
-          errors: {},
-          initialValues:
-            ('initialValues' in action && action.initialValues) || state.initialValues || ({} as D),
-          isSubmitting: false,
-          isValid: !initErrors,
-          isValidating: false,
-          required: getRequired?.(state.values) || {},
-          submitted: 0,
-          touched: {},
+          ...newState,
+          errors: initErrors,
+          isSubmitting: newState.isSubmitting || false,
+          required: (action.type === 'init' && action.state?.required) || required,
+          submitted: newState.submitted || 0,
+          touched: newState.touched || {},
         } satisfies FormState<D>;
       }
+
       // On field value change
       case 'setValue': {
-        // TODO: use immer/immutable ???
         const values = { ...state.values };
 
         if (get(values, action.name) === action.value) {
@@ -61,7 +64,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
         // TODO: validate single field
         // TODO: add support for async validation
-        // TODO: think about debounce validation
+        // TODO: think about debounced validation
         const setValueErrors = validate?.(values);
         let touched = state.touched || {};
         if (!get(touched, action.name)) {
@@ -72,20 +75,10 @@ export function getDefaultFormReducer<D extends Data = Data>(
         return {
           ...state,
           errors: (setValueErrors || {}) as FormErrors,
-          isValid: !setValueErrors,
           required: getRequired?.(values) || {},
           touched,
           values,
         };
-      }
-
-      case 'setReadOnly': {
-        if (!action.name) {
-          return state.readOnly === action.value ? state : { ...state, readOnly: !!action.value };
-        }
-        const readonlyFields = state.disabledFields || {};
-        set(readonlyFields, action.name, action.value);
-        return { ...state, readonlyFields };
       }
 
       // TODO: think about readOnly
@@ -108,12 +101,15 @@ export function getDefaultFormReducer<D extends Data = Data>(
           // skip render if no changes needed
           return state;
         }
+
         const touched = names.reduce(
           (acc, name) => ({ ...acc, [name]: true }),
           state.touched || {},
         );
 
-        return { ...state, touched };
+        const touchedErrors = validate?.(state.values);
+
+        return { ...state, errors: touchedErrors, touched };
 
         // Start submit async call
       }
@@ -124,14 +120,13 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
         const submitErrors = validate?.(state.values);
 
-        const canSubmit = !submitErrors; // TODO: include isValidating
+        const canSubmit = !submitErrors;
 
         return {
           ...state,
           disabled: canSubmit,
           errors: (submitErrors || {}) as FormErrors,
           isSubmitting: canSubmit,
-          isValid: canSubmit,
           submitted: state.submitted || 0 + 1,
         };
       }

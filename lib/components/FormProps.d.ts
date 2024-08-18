@@ -1,4 +1,4 @@
-import type { Dispatch, ReactNode } from 'react';
+import type { Dispatch, ReactNode, Reducer } from 'react';
 
 import type { Data, FormAction, FormState, ValidationFn } from '../context';
 import type { FormReducerAction, formReducerType } from '../formReducer';
@@ -15,13 +15,6 @@ interface FormStateProps<D> {
    * !!! KEEP REF STABLE - once its changed, state will be reset (cleared and used new initial values)
    */
   initialValues?: D;
-
-  /**
-   * Readonly state
-   * - values are submitted and focusable
-   * - once changed, re-renders form with updated state
-   */
-  readOnly?: boolean;
 }
 
 interface FormCustomizationProps<D> {
@@ -34,11 +27,12 @@ interface FormCustomizationProps<D> {
    * Form state reducer = check default formReducer for docs
    * !!! KEEP REF STABLE - triggers reset of whole form state
    */
-  reducer?: formReducerType<D>;
+  reducer?: Reducer<FormState<D>, FormAction<D>>;
 
   /**
    * Validation schema or validation fn
    * !!! KEEP REF STABLE - triggers reset of whole form state
+   * - return undefined if no errors = fastest check if form is valid
    */
   validation?: ValidationFn<D>;
 }

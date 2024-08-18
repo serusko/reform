@@ -81,7 +81,10 @@ export function validateSchemaData(schema: undefined | Schema, data: Record<stri
     }
   }
 
-  if (validationErrors && Object.values(validationErrors).filter(Boolean).length === 0) {
+  if (
+    validationErrors &&
+    (Object.keys.length === 0 || Object.values(validationErrors).filter(Boolean).length === 0)
+  ) {
     return undefined;
   }
 

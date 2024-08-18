@@ -1,14 +1,13 @@
 import type { SetFieldErrorVal } from './components/BaseFieldProps';
 import { NestedKeyOf } from './components/FieldProps';
-import type { Data, FormErrors } from './context';
+import type { Data, FormErrors, FormState } from './context';
 
 /**
  * Standard form action pool
  * you can extend it with custom action
  */
 type FormAction<D extends Data = Data> =
-  /** reducer initialized */
-  | { initialValues?: D; type: 'init' }
+  | { state?: Partial<FormState<D>>; type: 'init' }
   /** initialValues has changed */
   | { type: 'initialValues'; value: undefined | D }
   /** trigger form reset = clear changed, touched, use initialValues */
@@ -32,7 +31,7 @@ type FormAction<D extends Data = Data> =
   /** start form submitting */
   | { type: 'startSubmit' }
   /** end form submitting */
-  | { type: 'endSubmit' }
+  | { result?: unknown; type: 'endSubmit' }
   /** start validation process */
   | { errors?: FormErrors; type: 'startValidate' }
   /** end validation process */

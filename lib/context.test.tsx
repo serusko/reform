@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import type { FC, PropsWithChildren } from 'react';
 
 import Form from './components/Form';
-import { initialFormState } from './context';
+import { getInitialFormState } from './context';
 import useFormState from './hooks/useFormState';
 
 describe('Default State Context', () => {
@@ -10,6 +10,6 @@ describe('Default State Context', () => {
     const wrapper: FC<PropsWithChildren> = ({ children }) => <Form>{children}</Form>;
     const hook = renderHook(() => useFormState(), { wrapper });
 
-    expect(hook.result.current).toMatchObject(initialFormState);
+    expect(hook.result.current).toMatchObject(getInitialFormState());
   });
 });

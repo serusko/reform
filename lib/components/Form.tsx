@@ -1,8 +1,16 @@
-import { Dispatch, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
+import { Dispatch, Reducer, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { Data, FormAction, ValidationFn, FormStateContext, FormActionContext } from '../context';
-import { formReducerType, getDefaultFormReducer } from '../formReducer';
-import useFormReducer from '../useFormReducer';
+import {
+  Data,
+  FormAction,
+  ValidationFn,
+  getInitialFormState,
+  FormStateContext,
+  FormActionContext,
+  FormState,
+} from '../context';
+import { getDefaultFormReducer } from '../formReducer';
+import useEnhancedReducer from '../hooks/useEnhancedReducer';
 
 import type FormProps from './FormProps';
 
@@ -14,59 +22,84 @@ const Form = <D extends Data = Data>({
   initialValues,
   onStateUpdate,
   onSubmit,
-  readOnly,
   reducer,
   validation,
 }: FormProps<D>) => {
+  const onStateUpdateRef = useRef(onStateUpdate);
+  onStateUpdateRef.current = onStateUpdate;
+  const onSubmitRef = useRef(onSubmit);
+  onSubmitRef.current = onSubmit;
+
   // Causes reset of form state
   const validate: ValidationFn<D> = useCallback(
     (data) => validation?.(data) || undefined,
     [validation],
   );
 
-  const formReducer: formReducerType<D> = useMemo(
-    () => reducer || getDefaultFormReducer(validate, getRequired),
+  const formReducer: Reducer<FormState<D>, FormAction<D>> = useMemo(
+    () => reducer || getDefaultFormReducer<D>(validate, getRequired),
     [getRequired, reducer, validate],
   );
 
-  // Do not cause reset form state on ref change - TODO refactor / useCallback with inside ref?
-  const onStateUpdateRef = useRef(onStateUpdate);
-  onStateUpdateRef.current = onStateUpdate;
-  const onSubmitRef = useRef(onSubmit);
-  onSubmitRef.current = onSubmit;
+  const mw = useMemo(
+    () =>
+      (_: FormState<D>) =>
+      (getState: () => FormState<D>, dispatch: Dispatch<FormAction<D>>) =>
+      (next: Dispatch<FormAction<D>>) =>
+      (action: FormAction<D>) => {
+        const prevState = getState();
+        next(action);
+        const nextState = getState();
 
-  const [state, dispatch] = useFormReducer<D>(
-    formReducer,
-    initialValues,
-    !!disabled,
-    !!readOnly,
-    onSubmitRef,
-    onStateUpdateRef,
+        if (action.type === 'startSubmit' && nextState.isSubmitting) {
+          const r = onSubmitRef.current?.(nextState.values);
+
+          if (typeof r?.then === 'function') {
+            r.catch(() => undefined).then((result) => {
+              dispatch({ result, type: 'endSubmit' });
+            });
+          }
+        }
+
+        onStateUpdateRef.current?.(action, prevState, nextState, dispatch);
+      },
+    [],
   );
 
-  // watch initial values, if changed, trigger reducer action
-  // so we can decide inside reducer what do we want to do
+  const initialState = useMemo(() => {
+    return formReducer(getInitialFormState({}), {
+      state: { disabled: !!disabled, initialValues, values: initialValues },
+      type: 'init',
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [state, dispatch, getState] = useEnhancedReducer<FormState<D>, FormAction<D>>(
+    formReducer,
+    initialState,
+    [mw],
+  );
+
+  // Track Disabled prop
   useEffect(() => {
-    if (initialValues !== state.initialValues) {
+    if (getState().disabled !== !!disabled) {
+      dispatch({ type: 'setDisabled', value: !!disabled });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disabled]);
+
+  // Track Initial values change
+  useEffect(() => {
+    if (getState().initialValues !== initialValues) {
       dispatch({ type: 'initialValues', value: initialValues });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialValues]);
 
-  useEffect(() => {
-    if (state.disabled !== !!disabled) {
-      dispatch({ type: 'setDisabled', value: !!disabled });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disabled, dispatch]);
-
-  const handleSubmit = useCallback(
-    (e: SyntheticEvent) => {
-      e.preventDefault();
-      dispatch({ type: 'startSubmit' });
-    },
-    [dispatch],
-  );
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    dispatch({ type: 'startSubmit' });
+  };
 
   return (
     <FormActionContext.Provider value={dispatch as Dispatch<FormAction<Data>>}>
