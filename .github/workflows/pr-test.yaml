@@ -22,5 +22,15 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - run: npm install
+  lint:
+    name: Run code linter (TS/ES)
+    needs: install
+    runs-on: ${{needs.install.outputs.RUNNER}}
+    steps:
       - run: npm run lint
+  test:
+    name: Run Unit Tests
+    needs: lint
+    runs-on: ${{needs.lint.outputs.RUNNER}}
+    steps:
       - run: npm run test
