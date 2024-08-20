@@ -39,7 +39,6 @@ export default function HtmlField<T extends keyof Type>({
   const {
     error,
     isDisabled,
-    isReadOnly,
     isRequired,
     setTouched,
     setValue,
@@ -51,14 +50,12 @@ export default function HtmlField<T extends keyof Type>({
 
   const handleChange = useCallback(
     (e: FormEventHandler<T>) => {
-      if (!isReadOnly) {
-        setValue(
-          // @ts-ignore TODO: improve
-          isCheckOrRadio ? (inputValue === value ? null : value) : e.currentTarget?.value || null,
-        );
-      }
+      setValue(
+        // @ts-ignore TODO: improve
+        isCheckOrRadio ? (inputValue === value ? null : value) : e.currentTarget?.value || null,
+      );
     },
-    [inputValue, isCheckOrRadio, isReadOnly, setValue, value],
+    [inputValue, isCheckOrRadio, setValue, value],
   );
 
   const inputRef = useRef<HTMLInputElement>();
@@ -83,7 +80,6 @@ export default function HtmlField<T extends keyof Type>({
       checked={isCheckOrRadio ? inputValue === value : undefined}
       disabled={isDisabled}
       id={htmlId}
-      readOnly={isReadOnly}
       required={typeof required === 'boolean' ? required : isRequired}
       type={type}
       value={isCheckOrRadio ? value : inputValue || ''}
