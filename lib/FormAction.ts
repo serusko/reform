@@ -32,6 +32,7 @@ type FormAction<D extends Data = Data> =
   /** start form submitting */
   | { type: 'startSubmit' }
   /** end form submitting */
+  /** End form submitting with optional result */
   | { result?: unknown; type: 'endSubmit' }
   /** start validation process */
   | { errors?: FormErrors; type: 'startValidate' }
