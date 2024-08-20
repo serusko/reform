@@ -22,8 +22,6 @@ export function getDefaultFormReducer<D extends Data = Data>(
     state: FormState<D>,
     action: FormAction<D>, // TODO: improve action type - enable any other { type: ... } object
   ): FormState<D> {
-    console.log('formReducer', action.type);
-
     switch (action.type) {
       // set new initial values - reset form state
       // @ts-ignore skip fallthrough
