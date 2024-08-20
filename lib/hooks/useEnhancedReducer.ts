@@ -22,9 +22,10 @@ export default function useEnhancedReducer<S, A extends Action = Action>(
   const getState = useCallback(() => lastState.current, []);
 
   // to prevent reducer called twice, per: https://github.com/facebook/react/issues/16295
-  const enhancedReducer = useRef(
-    (state: S, action: A) => (lastState.current = reducer(state, action)),
-  ).current;
+  const enhancedReducer = useRef((state: S, action: A) => {
+    lastState.current = reducer(state, action);
+    return lastState.current;
+  }).current;
 
   // basic reducer instance
   const [state, dispatch] = useReducer(enhancedReducer, initState);
