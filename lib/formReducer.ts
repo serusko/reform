@@ -103,7 +103,10 @@ export function getDefaultFormReducer<D extends Data = Data>(
         }
 
         const touched = names.reduce(
-          (acc, name) => ({ ...acc, [name]: true }),
+        const touched = names.reduce(
+          (acc, name) => { acc[name] = true; return acc; },
+          state.touched || {},
+        );
           state.touched || {},
         );
 
