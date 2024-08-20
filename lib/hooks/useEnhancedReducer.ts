@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useReducer, useRef, Dispatch, Reducer } from 'react';
 
-type Action = { [key: string]: unknown; type: unknown };
+type Action<T = string> = { [key: string]: unknown; type: T };
 
 type Middleware<S, A extends Action = Action> = (
   state: S,
