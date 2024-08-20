@@ -102,13 +102,10 @@ export function getDefaultFormReducer<D extends Data = Data>(
           return state;
         }
 
-        const touched = names.reduce(
-        const touched = names.reduce(
-          (acc, name) => { acc[name] = true; return acc; },
-          state.touched || {},
-        );
-          state.touched || {},
-        );
+        const touched = names.reduce((acc, name) => {
+          acc[name] = true;
+          return acc;
+        }, state.touched || {});
 
         const touchedErrors = validate?.(state.values);
 
@@ -130,7 +127,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
           disabled: canSubmit,
           errors: (submitErrors || {}) as FormErrors,
           isSubmitting: canSubmit,
-          submitted: state.submitted || 0 + 1,
+          submitted: (state.submitted || 0) + 1,
         };
       }
 
