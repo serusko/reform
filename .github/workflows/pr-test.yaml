@@ -15,8 +15,11 @@ jobs:
   install:
     name: Prepare Packages
     runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ runner.name }}
     timeout-minutes: 5
     steps:
+      - run: echo "selected runner = ${{ runner.name }}"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
