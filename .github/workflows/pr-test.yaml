@@ -22,10 +22,5 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - run: npm install
-      - run: npm run test
-  lint:
-    name: Check TS / ES Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
       - run: npm run lint
+      - run: npm run test
