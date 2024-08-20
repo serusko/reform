@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install:
-    name: Prepare Packages
+  test:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
     outputs:
       RUNNER: ${{ runner.name }}
