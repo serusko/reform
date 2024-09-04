@@ -1,7 +1,7 @@
 import { Reducer } from 'react';
 
 import type { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
-import { get, set } from './helpers/object';
+import { get, set } from './helpers';
 
 export type FormReducerAction<D extends Data> = FormAction<D>;
 export type formReducerType<D extends Data> = (
