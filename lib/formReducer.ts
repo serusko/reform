@@ -22,8 +22,6 @@ export function getDefaultFormReducer<D extends Data = Data>(
     state: FormState<D>,
     action: FormAction<D>, // TODO: improve action type - enable any other { type: ... } object
   ): FormState<D> {
-    console.log('formReducer', action.type);
-
     switch (action.type) {
       // set new initial values - reset form state
       // @ts-ignore skip fallthrough
@@ -85,7 +83,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
       //
       case 'setDisabled': {
         if (!action.name) {
-          return state.disabled === action.value ? state : { ...state, disabled: !!action.value };
+          return state.isDisabled === action.value ? state : { ...state, isDisabled: action.value };
         }
         const disabledFields = state.disabledFields || {};
         set(disabledFields, action.name, action.value);
@@ -102,10 +100,10 @@ export function getDefaultFormReducer<D extends Data = Data>(
           return state;
         }
 
-        const touched = names.reduce(
-          (acc, name) => ({ ...acc, [name]: true }),
-          state.touched || {},
-        );
+        const touched = names.reduce((acc, name) => {
+          acc[name] = true;
+          return acc;
+        }, state.touched || {});
 
         const touchedErrors = validate?.(state.values);
 
@@ -124,10 +122,10 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
         return {
           ...state,
-          disabled: canSubmit,
           errors: (submitErrors || {}) as FormErrors,
+          isDisabled: canSubmit,
           isSubmitting: canSubmit,
-          submitted: state.submitted || 0 + 1,
+          submitted: (state.submitted || 0) + 1,
         };
       }
 
@@ -139,7 +137,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
 
         return {
           ...state,
-          disabled: false,
+          isDisabled: false,
           isSubmitting: false,
         };
 

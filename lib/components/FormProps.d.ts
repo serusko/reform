@@ -1,7 +1,7 @@
 import type { Dispatch, ReactNode, Reducer } from 'react';
 
 import type { Data, FormAction, FormState, ValidationFn } from '../context';
-import type { FormReducerAction, formReducerType } from '../formReducer';
+import type { FormReducerAction } from '../formReducer';
 
 interface FormStateProps<D> {
   /**

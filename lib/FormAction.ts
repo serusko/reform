@@ -8,6 +8,7 @@ import type { Data, FormErrors, FormState } from './context';
  */
 type FormAction<D extends Data = Data> =
   | { state?: Partial<FormState<D>>; type: 'init' }
+  /** Initialize form state with optional partial state */
   /** initialValues has changed */
   | { type: 'initialValues'; value: undefined | D }
   /** trigger form reset = clear changed, touched, use initialValues */
@@ -31,6 +32,7 @@ type FormAction<D extends Data = Data> =
   /** start form submitting */
   | { type: 'startSubmit' }
   /** end form submitting */
+  /** End form submitting with optional result */
   | { result?: unknown; type: 'endSubmit' }
   /** start validation process */
   | { errors?: FormErrors; type: 'startValidate' }

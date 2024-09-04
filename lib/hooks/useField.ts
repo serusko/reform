@@ -8,7 +8,6 @@ import useFieldError from './useFieldError';
 import useFieldInitialValue from './useFieldInitialValue';
 import useFieldIsChanged from './useFieldIsChanged';
 import useIsFieldDisabled from './useFieldIsDisabled';
-import useFieldIsReadonly from './useFieldIsReadonly';
 import useFieldIsRequired from './useFieldIsRequired';
 import useFieldTouched from './useFieldTouched';
 import useFieldValue from './useFieldValue';
@@ -29,7 +28,6 @@ export default function useField<V = unknown, D extends Data = Data>(
   const isChanged = useFieldIsChanged(name);
   const error = useFieldError(name);
   const isDisabled = useIsFieldDisabled(name);
-  const isReadOnly = useFieldIsReadonly(name);
   const isRequired = useFieldIsRequired(name);
 
   const value: V | null = useFieldValue(name);
@@ -50,7 +48,6 @@ export default function useField<V = unknown, D extends Data = Data>(
       initialValue,
       isChanged,
       isDisabled,
-      isReadOnly,
       isRequired,
       isTouched,
       name,
@@ -67,7 +64,6 @@ export default function useField<V = unknown, D extends Data = Data>(
       initialValue,
       isChanged,
       isDisabled,
-      isReadOnly,
       isRequired,
       isTouched,
       name,

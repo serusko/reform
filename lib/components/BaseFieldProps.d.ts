@@ -18,8 +18,6 @@ interface FieldMeta<V = unknown> {
   isChanged: boolean;
   /** ReadOnly mode */
   isDisabled: boolean;
-  /** Readonly should be just not editable version */
-  isReadOnly: boolean;
   /** Required value (e.g. display *) */
   isRequired: boolean;
   /** Was field touched by user Interaction? */
@@ -48,7 +46,7 @@ interface FieldActions<V = unknown> {
   /** Set validation from field, so field can set error or add Promise with result of validation */
   setError: (error: SetFieldErrorVal | Promise<SetFieldErrorVal>) => void;
   /** Mark field as "touched" by user interaction */
-  setTouched: (touched: boolean = true) => void;
+  setTouched: (touched = true) => void;
   /** Set field value */
   setValue: (v: V | null) => void;
 }
