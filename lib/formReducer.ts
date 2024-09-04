@@ -1,7 +1,7 @@
 import { Reducer } from 'react';
 
 import type { Data, FormErrors, ValidationFn, FormState, FormAction } from './context';
-import { get, set } from './helpers/object';
+import { get, set } from './helpers';
 
 export type FormReducerAction<D extends Data> = FormAction<D>;
 export type formReducerType<D extends Data> = (
@@ -83,9 +83,7 @@ export function getDefaultFormReducer<D extends Data = Data>(
       //
       case 'setDisabled': {
         if (!action.name) {
-          return state.isDisabled === action.value
-            ? state
-            : { ...state, isDisabled: !!action.value };
+          return state.isDisabled === action.value ? state : { ...state, isDisabled: action.value };
         }
         const disabledFields = state.disabledFields || {};
         set(disabledFields, action.name, action.value);
