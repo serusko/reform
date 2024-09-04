@@ -8,6 +8,8 @@
 [![Quality Badge](https://app.codacy.com/project/badge/Grade/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/reform/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Coverage Badge](https://app.codacy.com/project/badge/Coverage/51cd57d0debc4aa38226f5e874594b80)](https://app.codacy.com/gh/serusko/reform/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Known Vulnerabilities](https://snyk.io/test/github/serusko/reform/badge.svg)](https://snyk.io/test/github/serusko/reform/badge.svg)
+[![Technical debt](https://badgen.infra.medigy.com/codeclimate/tech-debt/serusko/reform)](https://badgen.infra.medigy.com/codeclimate/tech-debt/serusko/reform.svg)
+[![Maintainability](https://badgen.infra.medigy.com/codeclimate/maintainability/serusko/reform)](https://badgen.infra.medigy.com/codeclimate/maintainability/serusko/reform.svg)
 
 <!-- [![npm version](./coverage/badge-statements.svg)](./coverage/badge-statements.svg)
 [![npm version](./coverage/badge-branches.svg)](./coverage/badge-branches.svg)
