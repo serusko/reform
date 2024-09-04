@@ -1,4 +1,4 @@
-import { get } from '../helpers/object';
+import { get } from '../helpers';
 
 import useFormSelect from './useFormSelect';
 

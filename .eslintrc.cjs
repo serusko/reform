@@ -17,7 +17,6 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       rules: {
         'react/no-unstable-nested-components': 'warn',
-        'react/no-unstable-nested-components': 'warn',
         '@typescript-eslint/ban-ts-comment': ['warn', { 'ts-ignore': 'allow-with-description' }],
         '@typescript-eslint/ban-ts-ignore': 'off',
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],

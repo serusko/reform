@@ -27,11 +27,11 @@
     "test": "NODE_ENV=test jest --no-cache",
     "test:watch": "NODE_ENV=test jest --no-cache --watchAll",
     "prepublishOnly": "npm run build",
-    "formatApp": "prettier --write ./src && yarn eslint ./src --fix",
-    "formatLib": "prettier --write ./lib && yarn eslint ./lib --fix",
-    "format": "yarn formatLib && yarn formatApp",
+    "formatApp": "prettier --write ./src && npm run eslint ./src --fix",
+    "formatLib": "prettier --write ./lib && npm run eslint ./lib --fix",
+    "format": "npm run formatLib && npm run formatApp",
     "test:coverage": "npm test -- --coverage",
-    "coverage": "yarn test:coverage && bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ./coverage/lcov.info"
+    "coverage": "npm run test:coverage && bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ./coverage/lcov.info"
   },
   "dependencies": {
     "object-path": "^0.11.8",

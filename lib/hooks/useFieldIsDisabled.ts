@@ -1,6 +1,6 @@
 import { NestedKeyOf } from '../components/FieldProps';
 import { Data } from '../context';
-import { get } from '../helpers/object';
+import { get } from '../helpers';
 
 import useFormSelect from './useFormSelect';
 
