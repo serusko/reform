@@ -1,4 +1,6 @@
+import Field from './components/Field';
 import Form from './components/Form';
+import HtmlField from './components/HtmlField';
 import useArrayFieldLength from './hooks/useArrayFieldLength';
 import useField from './hooks/useField';
 import useFieldError from './hooks/useFieldError';
@@ -38,6 +40,8 @@ export {
   useSetFieldError,
   useSetValues,
 };
+
+export { Field, HtmlField };
 
 export default Form;
 

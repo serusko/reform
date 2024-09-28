@@ -1,4 +1,6 @@
+import { default as Field } from './components/Field';
 import { default as Form } from './components/Form';
+import { default as HtmlField } from './components/HtmlField';
 import { default as useArrayFieldLength } from './hooks/useArrayFieldLength';
 import { default as useField } from './hooks/useField';
 import { default as useFieldError } from './hooks/useFieldError';
@@ -18,5 +20,6 @@ import { default as useSetFieldTouched } from './hooks/useSetFieldTouched';
 import { default as useSetFieldValue } from './hooks/useSetFieldValue';
 import { default as useSetValues } from './hooks/useSetValues';
 export { useArrayFieldLength, useFieldIsChanged, useFieldIsRequired, useFieldTouched, useFormDispatch, useFormSubmit, useSetFieldTouched, useFieldError, useFieldIsDisabled, useField, useFormSelect, useSetFieldDisabled, useSetFieldValue, useFieldInitialValue, useFieldValue, useFormState, useSetFieldError, useSetValues, };
+export { Field, HtmlField };
 export default Form;
 export { getDefaultFormReducer } from './formReducer';

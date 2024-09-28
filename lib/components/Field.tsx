@@ -1,22 +1,22 @@
 import { ComponentType, ReactElement } from 'react';
 
-import { Data } from '../context';
 import useField from '../hooks/useField';
 
-import type BaseFieldProps from './BaseFieldProps';
+import BaseFieldProps from './BaseFieldProps';
 import FieldProps from './FieldProps';
 
 /**
  * Generic wrapper "HoC" for connecting standard Field components with Form
  * TODO: find proper pattern name
  */
-function Field<D extends Data, C extends ComponentType<BaseFieldProps>>({
+function Field<C extends ComponentType<BaseFieldProps>>({
   component,
   isDisabled,
+  isRequired,
   name,
   ...props
-}: FieldProps<D, C>): ReactElement {
-  const Component = component as FieldProps<D, C>['component'];
+}: FieldProps<C>): ReactElement {
+  const Component = component as FieldProps<C>['component'];
 
   const field = useField(name as string);
 
@@ -31,7 +31,7 @@ function Field<D extends Data, C extends ComponentType<BaseFieldProps>>({
       {...errorProps}
       {...field}
       disabled={isDisabled !== undefined ? isDisabled : field.isDisabled}
-      required={props.isRequired !== undefined ? props.isRequired : field.isRequired}
+      required={isRequired !== undefined ? isRequired : field.isRequired}
     />
   );
 }

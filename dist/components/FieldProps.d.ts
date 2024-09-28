@@ -1,5 +1,4 @@
-import { ComponentProps, ComponentType } from 'react';
-import { Data } from '../context';
+import { ComponentType } from 'react';
 import { default as BaseFieldProps } from './BaseFieldProps';
 export type NestedKeyOf<T extends object> = {
   [Key in keyof T & (string | number)]: Exclude<T[Key], undefined> extends object
@@ -11,9 +10,11 @@ export type NestedKeyOf<T extends object> = {
  * Field props, is set of generic props and have to require component specific props (if needed)
  * <Field component={CustomInput} ... /> extends CustomInput Props type
  */
-type FieldProps<D extends Data = Data, C extends ComponentType<BaseFieldProps>> = {
+type FieldProps<C extends ComponentType<BaseFieldProps>> = {
   component: C;
-  name: NestedKeyOf<D>;
-} & Omit<ComponentProps<C>, 'value' | 'onChange'>;
+  isDisabled?: boolean;
+  isRequired?: boolean;
+  name: string;
+} & Omit<ComponentProps<C>, 'value' | 'setValue'>;
 
 export default FieldProps;

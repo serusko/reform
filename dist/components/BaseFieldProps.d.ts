@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 /** Base field data */
-interface FieldData<V = unknown> {
+interface FieldData<V> {
   /** Initial Form state value */
   initialValue: V | null;
   /** Current Form state value */
@@ -51,9 +51,7 @@ interface FieldActions<V = unknown> {
 }
 
 /** Common props as minimal field API interface */
-export default interface BaseFieldProps<V = unknown>
-  extends FieldMeta,
-    FieldData<V>,
-    FieldActions<V> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default interface BaseFieldProps<V = any> extends FieldMeta, FieldData<V>, FieldActions<V> {
   name: string;
 }

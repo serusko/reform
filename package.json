@@ -17,7 +17,7 @@
     "dist"
   ],
   "private": false,
-  "version": "2.0.27",
+  "version": "2.0.31",
   "type": "module",
   "scripts": {
     "dev": "export NODE_OPTIONS=--max-old-space-size=8192 && vite",
