@@ -1,12 +1,12 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
 
-import { Data, FormState, FormStateContext, initialFormState } from '../context';
+import { Data, FormState, FormStateContext, getInitialFormState } from '../context';
 
 interface Props<D extends Data = Data> extends PropsWithChildren {
   /**
    * Override disabled status
    */
-  disabled?: boolean;
+  isDisabled?: boolean;
 
   /**
    * Configure custom Form state
@@ -19,23 +19,25 @@ interface Props<D extends Data = Data> extends PropsWithChildren {
   values?: D;
 }
 
+const defaultInitialState = getInitialFormState();
+
 /**
  * Provide form state context
  * - provide static form state so values could be displayed as "view mode"
  */
 const FormStateProvider: FC<Props> = ({
   children,
-  disabled = true,
-  state = initialFormState,
+  isDisabled = true,
+  state = defaultInitialState,
   values,
 }) => {
   const contextValue = useMemo(
     (): FormState => ({
       ...state,
-      disabled,
+      isDisabled,
       values: values || state.values,
     }),
-    [disabled, state, values],
+    [isDisabled, state, values],
   );
 
   return <FormStateContext.Provider value={contextValue}>{children}</FormStateContext.Provider>;

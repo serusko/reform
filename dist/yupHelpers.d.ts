@@ -1,5 +1,5 @@
-import type { Schema } from 'yup';
-import type { Data } from './context';
+import { Schema } from 'yup';
+import { Data } from './context';
 /**
  * Check if field is required in schema
  */

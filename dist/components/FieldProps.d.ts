@@ -1,9 +1,6 @@
-import type { ComponentProps, ComponentType } from 'react';
-
+import { ComponentProps, ComponentType } from 'react';
 import { Data } from '../context';
-
-import type BaseFieldProps from './BaseFieldProps';
-
+import { default as BaseFieldProps } from './BaseFieldProps';
 export type NestedKeyOf<T extends object> = {
   [Key in keyof T & (string | number)]: Exclude<T[Key], undefined> extends object
     ? `${Key}` | `${Key}.${NestedKeyOf<Exclude<T[Key], undefined>>}`

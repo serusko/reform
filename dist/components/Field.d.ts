@@ -1,7 +1,7 @@
 import { ComponentType, ReactElement } from 'react';
 import { Data } from '../context';
-import type BaseFieldProps from './BaseFieldProps';
-import FieldProps from './FieldProps';
+import { default as BaseFieldProps } from './BaseFieldProps';
+import { default as FieldProps } from './FieldProps';
 /**
  * Generic wrapper "HoC" for connecting standard Field components with Form
  * TODO: find proper pattern name

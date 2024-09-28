@@ -1,4 +1,4 @@
-import type { FieldActions, FieldMeta } from '../components/BaseFieldProps';
+import { FieldActions, FieldMeta } from '../components/BaseFieldProps';
 import { NestedKeyOf } from '../components/FieldProps';
 import { Data } from '../context';
 /**

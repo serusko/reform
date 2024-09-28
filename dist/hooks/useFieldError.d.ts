@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { NestedKeyOf } from '../components/FieldProps';
 import { Data } from '../context';
 /**

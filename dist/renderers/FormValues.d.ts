@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import type { Data } from '../context';
+import { ReactNode } from 'react';
+import { Data } from '../context';
 /**
  * Access Form Values from JSX
  */

@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-
+import { ReactNode } from 'react';
 /** Base field data */
 interface FieldData<V = unknown> {
   /** Initial Form state value */
@@ -12,19 +11,16 @@ interface FieldData<V = unknown> {
 interface FieldMeta<V = unknown> {
   /** Validation message */
   error?: ReactNode;
+  /** Initial value */
   initialValue?: V | null;
   /** Indicate weather current value !== initialValue */
   isChanged: boolean;
   /** ReadOnly mode */
   isDisabled: boolean;
-  /** Readonly should be just not editable version */
-  isReadOnly: boolean;
   /** Required value (e.g. display *) */
   isRequired: boolean;
   /** Was field touched by user Interaction? */
   isTouched: boolean;
-  /** Has running validation */
-  isValidating: boolean;
   /** field name */
   name: string;
 }
@@ -49,7 +45,7 @@ interface FieldActions<V = unknown> {
   /** Set validation from field, so field can set error or add Promise with result of validation */
   setError: (error: SetFieldErrorVal | Promise<SetFieldErrorVal>) => void;
   /** Mark field as "touched" by user interaction */
-  setTouched: (touched?: boolean) => void;
+  setTouched: (touched: boolean = true) => void;
   /** Set field value */
   setValue: (v: V | null) => void;
 }

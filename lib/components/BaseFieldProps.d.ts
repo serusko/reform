@@ -18,8 +18,6 @@ interface FieldMeta<V = unknown> {
   isChanged: boolean;
   /** ReadOnly mode */
   isDisabled: boolean;
-  /** Readonly should be just not editable version */
-  isReadOnly: boolean;
   /** Required value (e.g. display *) */
   isRequired: boolean;
   /** Was field touched by user Interaction? */
