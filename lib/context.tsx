@@ -25,9 +25,9 @@ export function getInitialFormState<D extends Data>(ini?: Partial<FormState<D>>)
     errors: undefined,
     initialValues: {} as D,
     required: {},
-    validatingFields: {},
     submitted: 0,
     touched: {},
+    validatingFields: {},
     values: {} as D,
     ...(ini || {}),
   };

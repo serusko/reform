@@ -35,12 +35,11 @@
   },
   "dependencies": {
     "object-path": "^0.11.8",
-    "use-context-selector": "^1.4.1",
+    "use-context-selector": "^1.4.4",
     "yup": "^1.4.0"
   },
   "peerDependencies": {
-    "object-path": "^0.11.8",
-    "use-context-selector": "^1.4.1"
+    "object-path": "^0.11.8"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
