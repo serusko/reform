@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useReducer, useRef, Dispatch, Reducer } from 'react';
 
-type Action = { [key: string]: unknown; type: unknown };
+type Action<T = string> = { [key: string]: unknown; type: T };
 
 type Middleware<S, A extends Action = Action> = (
   state: S,
@@ -22,9 +22,10 @@ export default function useEnhancedReducer<S, A extends Action = Action>(
   const getState = useCallback(() => lastState.current, []);
 
   // to prevent reducer called twice, per: https://github.com/facebook/react/issues/16295
-  const enhancedReducer = useRef(
-    (state: S, action: A) => (lastState.current = reducer(state, action)),
-  ).current;
+  const enhancedReducer = useRef((state: S, action: A) => {
+    lastState.current = reducer(state, action);
+    return lastState.current;
+  }).current;
 
   // basic reducer instance
   const [state, dispatch] = useReducer(enhancedReducer, initState);

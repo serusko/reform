@@ -7,8 +7,8 @@ import type FormState from './FormState';
 export type Data = Record<string, unknown>;
 export type FormErrors = Record<string, ReactNode>;
 /**
- * Return undefined if nor errors occurred
- * so its fastest check if everything is valid
+ * Returns undefined if no errors occurred,
+ * allowing for a quick check of validity.
  */
 export type ValidationFn<D> = (data: D) => undefined | FormErrors;
 
@@ -20,10 +20,10 @@ export type Schema = any;
 // eslint-disable-next-line react-refresh/only-export-components
 export function getInitialFormState<D extends Data>(ini?: Partial<FormState<D>>): FormState<D> {
   return {
-    disabled: false,
     disabledFields: {},
     errors: undefined,
     initialValues: {} as D,
+    isDisabled: false,
     required: {},
     submitted: 0,
     touched: {},

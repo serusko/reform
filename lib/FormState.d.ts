@@ -3,11 +3,6 @@
  */
 export default interface FormState<D extends Data = Data> {
   /**
-   * control if all form should be disabled
-   */
-  disabled: boolean;
-
-  /**
    * Override default disabled state
    * - if global is yes (true) -> choose those which could be edited
    * - if global is no (false/undefined) -> disable some specific fields
@@ -28,6 +23,11 @@ export default interface FormState<D extends Data = Data> {
    * so keep it memoized
    */
   initialValues: D;
+
+  /**
+   * control if all form should be disabled
+   */
+  isDisabled: boolean;
   /**
    * if onSubmit is Promise, Form is tracking promise
    */

@@ -17,7 +17,6 @@ describe('useField', () => {
       initialValue: null,
       isChanged: false,
       isDisabled: false,
-      isReadOnly: false,
       isRequired: false,
       isTouched: false,
       name: 'fieldName',

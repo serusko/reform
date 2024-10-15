@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'release/**'
+      - 'hotfix/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ runner.name }}
+    timeout-minutes: 5
+    steps:
+      - run: echo "selected runner = ${{ runner.name }}"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - run: npm install
+  # lint:
+  #   name: Run code linter (TS/ES)
+  #   needs: install
+  #   runs-on: ${{needs.install.outputs.RUNNER}}
+  #   steps:
+      - run: npm run lint
+  # test:
+  #   name: Run Unit Tests
+  #   needs: install
+  #   runs-on: ${{needs.install.outputs.RUNNER}}
+  #   steps:
+      - run: npm run test
