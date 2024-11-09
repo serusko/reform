@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 /** Base field data */
-interface FieldData<V = unknown> {
+interface FieldData<V> {
   /** Initial Form state value */
   initialValue: V | null;
   /** Current Form state value */
@@ -18,8 +18,6 @@ interface FieldMeta<V = unknown> {
   isChanged: boolean;
   /** ReadOnly mode */
   isDisabled: boolean;
-  /** Readonly should be just not editable version */
-  isReadOnly: boolean;
   /** Required value (e.g. display *) */
   isRequired: boolean;
   /** Was field touched by user Interaction? */
@@ -54,9 +52,7 @@ interface FieldActions<V = unknown> {
 }
 
 /** Common props as minimal field API interface */
-export default interface BaseFieldProps<V = unknown>
-  extends FieldMeta,
-    FieldData<V>,
-    FieldActions<V> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default interface BaseFieldProps<V = any> extends FieldMeta, FieldData<V>, FieldActions<V> {
   name: string;
 }

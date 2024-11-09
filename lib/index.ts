@@ -1,13 +1,13 @@
+import Field from './components/Field';
 import Form from './components/Form';
+import HtmlField from './components/HtmlField';
 import useArrayFieldLength from './hooks/useArrayFieldLength';
 import useField from './hooks/useField';
 import useFieldError from './hooks/useFieldError';
 import useFieldInitialValue from './hooks/useFieldInitialValue';
 import useFieldIsChanged from './hooks/useFieldIsChanged';
 import useFieldIsDisabled from './hooks/useFieldIsDisabled';
-import useFieldIsReadonly from './hooks/useFieldIsReadonly';
 import useFieldIsRequired from './hooks/useFieldIsRequired';
-import useFieldIsValidating from './hooks/useFieldIsValidating';
 import useFieldTouched from './hooks/useFieldTouched';
 import useFieldValue from './hooks/useFieldValue';
 import useFormDispatch from './hooks/useFormDispatch';
@@ -30,18 +30,18 @@ export {
   useSetFieldTouched,
   useFieldError,
   useFieldIsDisabled,
-  useFieldIsValidating,
   useField,
   useFormSelect,
   useSetFieldDisabled,
   useSetFieldValue,
   useFieldInitialValue,
-  useFieldIsReadonly,
   useFieldValue,
   useFormState,
   useSetFieldError,
   useSetValues,
 };
+
+export { Field, HtmlField };
 
 export default Form;
 

@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import type { Data, FormAction } from '../context';
+import { ReactNode } from 'react';
+import { Data, FormAction } from '../context';
 interface FormDispatchConsumerProps<D extends Data = Data, A = FormAction<D>> {
     children: (dispatch: (action: A) => void) => ReactNode;
 }

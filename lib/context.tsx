@@ -20,10 +20,10 @@ export type Schema = any;
 // eslint-disable-next-line react-refresh/only-export-components
 export function getInitialFormState<D extends Data>(ini?: Partial<FormState<D>>): FormState<D> {
   return {
-    disabled: false,
     disabledFields: {},
     errors: undefined,
     initialValues: {} as D,
+    isDisabled: false,
     required: {},
     submitted: 0,
     touched: {},

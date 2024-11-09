@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 interface Props<V> {
     children: (value: V | null) => ReactNode;
     name: string;

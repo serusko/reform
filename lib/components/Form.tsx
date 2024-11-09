@@ -68,7 +68,7 @@ const Form = <D extends Data = Data>({
 
   const initialState = useMemo(() => {
     return formReducer(getInitialFormState({}), {
-      state: { disabled: !!disabled, initialValues, values: initialValues },
+      state: { initialValues, isDisabled: !!disabled, values: initialValues },
       type: 'init',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,7 +82,7 @@ const Form = <D extends Data = Data>({
 
   // Track Disabled prop
   useEffect(() => {
-    if (getState().disabled !== !!disabled) {
+    if (getState().isDisabled !== !!disabled) {
       dispatch({ type: 'setDisabled', value: !!disabled });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

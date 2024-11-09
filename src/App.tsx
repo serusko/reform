@@ -9,6 +9,9 @@ import FormValues from '../lib/renderers/FormValues';
 import { getRequired, useValidation } from '../lib/yupHelpers';
 
 import './app.css';
+import { Field } from '../lib';
+
+import CustomInput from './CustomInput';
 
 const inits = { age: 10, firstName: '', gender: 'o' };
 
@@ -178,6 +181,8 @@ function App() {
               </FormState>
             </div>
           </div>
+
+          <Field component={CustomInput} name="firstName" />
 
           <div>
             <button type="submit">Submit</button>

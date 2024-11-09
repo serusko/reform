@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import useField from '../hooks/useField';
+import { ReactNode } from 'react';
+import { default as useField } from '../hooks/useField';
 interface Props<T = unknown> {
     children: (field: ReturnType<typeof useField<T>>) => ReactNode;
     name: string;

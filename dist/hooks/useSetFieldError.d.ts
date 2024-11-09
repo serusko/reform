@@ -1,4 +1,4 @@
-import type { SetFieldErrorVal } from '../components/BaseFieldProps';
+import { SetFieldErrorVal } from '../components/BaseFieldProps';
 import { NestedKeyOf } from '../components/FieldProps';
 import { Data } from '../context';
 /**

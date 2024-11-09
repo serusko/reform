@@ -1,8 +1,8 @@
-import { jsx as me, jsxs as Qe } from "react/jsx-runtime";
-import { useContext as ze, useReducer as Fe, useEffect as pe, useLayoutEffect as Je, createContext as $e, useRef as G, useState as Xe, createElement as Ze, useCallback as N, useMemo as Te } from "react";
-import { unstable_batchedUpdates as xe } from "react-dom";
-import { set as oe, get as V } from "object-path";
-var ge = { exports: {} }, _e = {};
+import { jsx as Z, jsxs as oe, Fragment as Oe } from "react/jsx-runtime";
+import { useContext as ze, useReducer as Le, useEffect as fe, useLayoutEffect as Je, createContext as Xe, useRef as $, useState as Ze, createElement as en, useCallback as B, useMemo as ee } from "react";
+import { unstable_batchedUpdates as nn } from "react-dom";
+import { get as M, set as he } from "object-path";
+var we = { exports: {} }, pe = {};
 /**
  * @license React
  * scheduler.production.min.js
@@ -12,175 +12,157 @@ var ge = { exports: {} }, _e = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var Oe;
-function en() {
-  return Oe || (Oe = 1, function(e) {
-    function n(r, s) {
-      var c = r.length;
-      r.push(s);
-      e:
-        for (; 0 < c; ) {
-          var g = c - 1 >>> 1, S = r[g];
-          if (0 < u(S, s))
-            r[g] = s, r[c] = S, c = g;
-          else
-            break e;
-        }
-    }
-    function l(r) {
-      return r.length === 0 ? null : r[0];
-    }
-    function t(r) {
-      if (r.length === 0)
-        return null;
-      var s = r[0], c = r.pop();
-      if (c !== s) {
-        r[0] = c;
-        e:
-          for (var g = 0, S = r.length, W = S >>> 1; g < W; ) {
-            var U = 2 * (g + 1) - 1, te = r[U], B = U + 1, z = r[B];
-            if (0 > u(te, c))
-              B < S && 0 > u(z, te) ? (r[g] = z, r[B] = c, g = B) : (r[g] = te, r[U] = c, g = U);
-            else if (B < S && 0 > u(z, c))
-              r[g] = z, r[B] = c, g = B;
-            else
-              break e;
-          }
+var Ce;
+function tn() {
+  return Ce || (Ce = 1, function(e) {
+    function n(t, f) {
+      var d = t.length;
+      t.push(f);
+      e: for (; 0 < d; ) {
+        var p = d - 1 >>> 1, S = t[p];
+        if (0 < o(S, f)) t[p] = f, t[d] = S, d = p;
+        else break e;
       }
-      return s;
     }
-    function u(r, s) {
-      var c = r.sortIndex - s.sortIndex;
-      return c !== 0 ? c : r.id - s.id;
+    function r(t) {
+      return t.length === 0 ? null : t[0];
+    }
+    function u(t) {
+      if (t.length === 0) return null;
+      var f = t[0], d = t.pop();
+      if (d !== f) {
+        t[0] = d;
+        e: for (var p = 0, S = t.length, X = S >>> 1; p < X; ) {
+          var K = 2 * (p + 1) - 1, ie = t[K], x = K + 1, te = t[x];
+          if (0 > o(ie, d)) x < S && 0 > o(te, ie) ? (t[p] = te, t[x] = d, p = x) : (t[p] = ie, t[K] = d, p = K);
+          else if (x < S && 0 > o(te, d)) t[p] = te, t[x] = d, p = x;
+          else break e;
+        }
+      }
+      return f;
+    }
+    function o(t, f) {
+      var d = t.sortIndex - f.sortIndex;
+      return d !== 0 ? d : t.id - f.id;
     }
     if (typeof performance == "object" && typeof performance.now == "function") {
-      var a = performance;
+      var v = performance;
       e.unstable_now = function() {
-        return a.now();
+        return v.now();
       };
     } else {
-      var v = Date, p = v.now();
+      var l = Date, h = l.now();
       e.unstable_now = function() {
-        return v.now() - p;
+        return l.now() - h;
       };
     }
-    var h = [], b = [], m = 1, d = null, f = 3, w = !1, y = !1, T = !1, L = typeof setTimeout == "function" ? setTimeout : null, j = typeof clearTimeout == "function" ? clearTimeout : null, X = typeof setImmediate < "u" ? setImmediate : null;
+    var c = [], s = [], y = 1, b = null, m = 3, T = !1, w = !1, C = !1, I = typeof setTimeout == "function" ? setTimeout : null, W = typeof clearTimeout == "function" ? clearTimeout : null, R = typeof setImmediate < "u" ? setImmediate : null;
     typeof navigator < "u" && navigator.scheduling !== void 0 && navigator.scheduling.isInputPending !== void 0 && navigator.scheduling.isInputPending.bind(navigator.scheduling);
-    function Z(r) {
-      for (var s = l(b); s !== null; ) {
-        if (s.callback === null)
-          t(b);
-        else if (s.startTime <= r)
-          t(b), s.sortIndex = s.expirationTime, n(h, s);
-        else
-          break;
-        s = l(b);
+    function V(t) {
+      for (var f = r(s); f !== null; ) {
+        if (f.callback === null) u(s);
+        else if (f.startTime <= t) u(s), f.sortIndex = f.expirationTime, n(c, f);
+        else break;
+        f = r(s);
       }
     }
-    function x(r) {
-      if (T = !1, Z(r), !y)
-        if (l(h) !== null)
-          y = !0, A(ee);
-        else {
-          var s = l(b);
-          s !== null && H(x, s.startTime - r);
-        }
+    function U(t) {
+      if (C = !1, V(t), !w) if (r(c) !== null) w = !0, N(A);
+      else {
+        var f = r(s);
+        f !== null && Y(U, f.startTime - t);
+      }
     }
-    function ee(r, s) {
-      y = !1, T && (T = !1, j(Y), Y = -1), w = !0;
-      var c = f;
+    function A(t, f) {
+      w = !1, C && (C = !1, W(G), G = -1), T = !0;
+      var d = m;
       try {
-        for (Z(s), d = l(h); d !== null && (!(d.expirationTime > s) || r && !D()); ) {
-          var g = d.callback;
-          if (typeof g == "function") {
-            d.callback = null, f = d.priorityLevel;
-            var S = g(d.expirationTime <= s);
-            s = e.unstable_now(), typeof S == "function" ? d.callback = S : d === l(h) && t(h), Z(s);
-          } else
-            t(h);
-          d = l(h);
+        for (V(f), b = r(c); b !== null && (!(b.expirationTime > f) || t && !F()); ) {
+          var p = b.callback;
+          if (typeof p == "function") {
+            b.callback = null, m = b.priorityLevel;
+            var S = p(b.expirationTime <= f);
+            f = e.unstable_now(), typeof S == "function" ? b.callback = S : b === r(c) && u(c), V(f);
+          } else u(c);
+          b = r(c);
         }
-        if (d !== null)
-          var W = !0;
+        if (b !== null) var X = !0;
         else {
-          var U = l(b);
-          U !== null && H(x, U.startTime - s), W = !1;
+          var K = r(s);
+          K !== null && Y(U, K.startTime - f), X = !1;
         }
-        return W;
+        return X;
       } finally {
-        d = null, f = c, w = !1;
+        b = null, m = d, T = !1;
       }
     }
-    var K = !1, q = null, Y = -1, ie = 5, C = -1;
-    function D() {
-      return !(e.unstable_now() - C < ie);
+    var z = !1, j = null, G = -1, J = 5, O = -1;
+    function F() {
+      return !(e.unstable_now() - O < J);
     }
-    function ne() {
-      if (q !== null) {
-        var r = e.unstable_now();
-        C = r;
-        var s = !0;
+    function q() {
+      if (j !== null) {
+        var t = e.unstable_now();
+        O = t;
+        var f = !0;
         try {
-          s = q(!0, r);
+          f = j(!0, t);
         } finally {
-          s ? E() : (K = !1, q = null);
+          f ? k() : (z = !1, j = null);
         }
-      } else
-        K = !1;
+      } else z = !1;
     }
-    var E;
-    if (typeof X == "function")
-      E = function() {
-        X(ne);
-      };
+    var k;
+    if (typeof R == "function") k = function() {
+      R(q);
+    };
     else if (typeof MessageChannel < "u") {
-      var P = new MessageChannel(), Q = P.port2;
-      P.port1.onmessage = ne, E = function() {
-        Q.postMessage(null);
+      var P = new MessageChannel(), ne = P.port2;
+      P.port1.onmessage = q, k = function() {
+        ne.postMessage(null);
       };
-    } else
-      E = function() {
-        L(ne, 0);
-      };
-    function A(r) {
-      q = r, K || (K = !0, E());
+    } else k = function() {
+      I(q, 0);
+    };
+    function N(t) {
+      j = t, z || (z = !0, k());
     }
-    function H(r, s) {
-      Y = L(function() {
-        r(e.unstable_now());
-      }, s);
+    function Y(t, f) {
+      G = I(function() {
+        t(e.unstable_now());
+      }, f);
     }
-    e.unstable_IdlePriority = 5, e.unstable_ImmediatePriority = 1, e.unstable_LowPriority = 4, e.unstable_NormalPriority = 3, e.unstable_Profiling = null, e.unstable_UserBlockingPriority = 2, e.unstable_cancelCallback = function(r) {
-      r.callback = null;
+    e.unstable_IdlePriority = 5, e.unstable_ImmediatePriority = 1, e.unstable_LowPriority = 4, e.unstable_NormalPriority = 3, e.unstable_Profiling = null, e.unstable_UserBlockingPriority = 2, e.unstable_cancelCallback = function(t) {
+      t.callback = null;
     }, e.unstable_continueExecution = function() {
-      y || w || (y = !0, A(ee));
-    }, e.unstable_forceFrameRate = function(r) {
-      0 > r || 125 < r ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : ie = 0 < r ? Math.floor(1e3 / r) : 5;
+      w || T || (w = !0, N(A));
+    }, e.unstable_forceFrameRate = function(t) {
+      0 > t || 125 < t ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : J = 0 < t ? Math.floor(1e3 / t) : 5;
     }, e.unstable_getCurrentPriorityLevel = function() {
-      return f;
+      return m;
     }, e.unstable_getFirstCallbackNode = function() {
-      return l(h);
-    }, e.unstable_next = function(r) {
-      switch (f) {
+      return r(c);
+    }, e.unstable_next = function(t) {
+      switch (m) {
         case 1:
         case 2:
         case 3:
-          var s = 3;
+          var f = 3;
           break;
         default:
-          s = f;
+          f = m;
       }
-      var c = f;
-      f = s;
+      var d = m;
+      m = f;
       try {
-        return r();
+        return t();
       } finally {
-        f = c;
+        m = d;
       }
     }, e.unstable_pauseExecution = function() {
     }, e.unstable_requestPaint = function() {
-    }, e.unstable_runWithPriority = function(r, s) {
-      switch (r) {
+    }, e.unstable_runWithPriority = function(t, f) {
+      switch (t) {
         case 1:
         case 2:
         case 3:
@@ -188,18 +170,18 @@ function en() {
         case 5:
           break;
         default:
-          r = 3;
+          t = 3;
       }
-      var c = f;
-      f = r;
+      var d = m;
+      m = t;
       try {
-        return s();
+        return f();
       } finally {
-        f = c;
+        m = d;
       }
-    }, e.unstable_scheduleCallback = function(r, s, c) {
-      var g = e.unstable_now();
-      switch (typeof c == "object" && c !== null ? (c = c.delay, c = typeof c == "number" && 0 < c ? g + c : g) : c = g, r) {
+    }, e.unstable_scheduleCallback = function(t, f, d) {
+      var p = e.unstable_now();
+      switch (typeof d == "object" && d !== null ? (d = d.delay, d = typeof d == "number" && 0 < d ? p + d : p) : d = p, t) {
         case 1:
           var S = -1;
           break;
@@ -215,22 +197,22 @@ function en() {
         default:
           S = 5e3;
       }
-      return S = c + S, r = { id: m++, callback: s, priorityLevel: r, startTime: c, expirationTime: S, sortIndex: -1 }, c > g ? (r.sortIndex = c, n(b, r), l(h) === null && r === l(b) && (T ? (j(Y), Y = -1) : T = !0, H(x, c - g))) : (r.sortIndex = S, n(h, r), y || w || (y = !0, A(ee))), r;
-    }, e.unstable_shouldYield = D, e.unstable_wrapCallback = function(r) {
-      var s = f;
+      return S = d + S, t = { id: y++, callback: f, priorityLevel: t, startTime: d, expirationTime: S, sortIndex: -1 }, d > p ? (t.sortIndex = d, n(s, t), r(c) === null && t === r(s) && (C ? (W(G), G = -1) : C = !0, Y(U, d - p))) : (t.sortIndex = S, n(c, t), w || T || (w = !0, N(A))), t;
+    }, e.unstable_shouldYield = F, e.unstable_wrapCallback = function(t) {
+      var f = m;
       return function() {
-        var c = f;
-        f = s;
+        var d = m;
+        m = f;
         try {
-          return r.apply(this, arguments);
+          return t.apply(this, arguments);
         } finally {
-          f = c;
+          m = d;
         }
       };
     };
-  }(_e)), _e;
+  }(pe)), pe;
 }
-var ye = {};
+var ge = {};
 /**
  * @license React
  * scheduler.development.js
@@ -240,158 +222,157 @@ var ye = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var Ie;
-function nn() {
-  return Ie || (Ie = 1, function(e) {
+var Fe;
+function rn() {
+  return Fe || (Fe = 1, function(e) {
     process.env.NODE_ENV !== "production" && function() {
       typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-      var n = !1, l = !1, t = 5;
-      function u(i, o) {
+      var n = !1, r = !1, u = 5;
+      function o(i, a) {
         var _ = i.length;
-        i.push(o), p(i, o, _);
-      }
-      function a(i) {
-        return i.length === 0 ? null : i[0];
+        i.push(a), h(i, a, _);
       }
       function v(i) {
+        return i.length === 0 ? null : i[0];
+      }
+      function l(i) {
         if (i.length === 0)
           return null;
-        var o = i[0], _ = i.pop();
-        return _ !== o && (i[0] = _, h(i, _, 0)), o;
+        var a = i[0], _ = i.pop();
+        return _ !== a && (i[0] = _, c(i, _, 0)), a;
       }
-      function p(i, o, _) {
-        for (var k = _; k > 0; ) {
-          var O = k - 1 >>> 1, M = i[O];
-          if (b(M, o) > 0)
-            i[O] = o, i[k] = M, k = O;
+      function h(i, a, _) {
+        for (var g = _; g > 0; ) {
+          var E = g - 1 >>> 1, H = i[E];
+          if (s(H, a) > 0)
+            i[E] = a, i[g] = H, g = E;
           else
             return;
         }
       }
-      function h(i, o, _) {
-        for (var k = _, O = i.length, M = O >>> 1; k < M; ) {
-          var I = (k + 1) * 2 - 1, J = i[I], F = I + 1, ae = i[F];
-          if (b(J, o) < 0)
-            F < O && b(ae, J) < 0 ? (i[k] = ae, i[F] = o, k = F) : (i[k] = J, i[I] = o, k = I);
-          else if (F < O && b(ae, o) < 0)
-            i[k] = ae, i[F] = o, k = F;
+      function c(i, a, _) {
+        for (var g = _, E = i.length, H = E >>> 1; g < H; ) {
+          var L = (g + 1) * 2 - 1, re = i[L], D = L + 1, ce = i[D];
+          if (s(re, a) < 0)
+            D < E && s(ce, re) < 0 ? (i[g] = ce, i[D] = a, g = D) : (i[g] = re, i[L] = a, g = L);
+          else if (D < E && s(ce, a) < 0)
+            i[g] = ce, i[D] = a, g = D;
           else
             return;
         }
       }
-      function b(i, o) {
-        var _ = i.sortIndex - o.sortIndex;
-        return _ !== 0 ? _ : i.id - o.id;
+      function s(i, a) {
+        var _ = i.sortIndex - a.sortIndex;
+        return _ !== 0 ? _ : i.id - a.id;
       }
-      var m = 1, d = 2, f = 3, w = 4, y = 5;
-      function T(i, o) {
+      var y = 1, b = 2, m = 3, T = 4, w = 5;
+      function C(i, a) {
       }
-      var L = typeof performance == "object" && typeof performance.now == "function";
-      if (L) {
-        var j = performance;
+      var I = typeof performance == "object" && typeof performance.now == "function";
+      if (I) {
+        var W = performance;
         e.unstable_now = function() {
-          return j.now();
+          return W.now();
         };
       } else {
-        var X = Date, Z = X.now();
+        var R = Date, V = R.now();
         e.unstable_now = function() {
-          return X.now() - Z;
+          return R.now() - V;
         };
       }
-      var x = 1073741823, ee = -1, K = 250, q = 5e3, Y = 1e4, ie = x, C = [], D = [], ne = 1, E = null, P = f, Q = !1, A = !1, H = !1, r = typeof setTimeout == "function" ? setTimeout : null, s = typeof clearTimeout == "function" ? clearTimeout : null, c = typeof setImmediate < "u" ? setImmediate : null;
+      var U = 1073741823, A = -1, z = 250, j = 5e3, G = 1e4, J = U, O = [], F = [], q = 1, k = null, P = m, ne = !1, N = !1, Y = !1, t = typeof setTimeout == "function" ? setTimeout : null, f = typeof clearTimeout == "function" ? clearTimeout : null, d = typeof setImmediate < "u" ? setImmediate : null;
       typeof navigator < "u" && navigator.scheduling !== void 0 && navigator.scheduling.isInputPending !== void 0 && navigator.scheduling.isInputPending.bind(navigator.scheduling);
-      function g(i) {
-        for (var o = a(D); o !== null; ) {
-          if (o.callback === null)
-            v(D);
-          else if (o.startTime <= i)
-            v(D), o.sortIndex = o.expirationTime, u(C, o);
+      function p(i) {
+        for (var a = v(F); a !== null; ) {
+          if (a.callback === null)
+            l(F);
+          else if (a.startTime <= i)
+            l(F), a.sortIndex = a.expirationTime, o(O, a);
           else
             return;
-          o = a(D);
+          a = v(F);
         }
       }
       function S(i) {
-        if (H = !1, g(i), !A)
-          if (a(C) !== null)
-            A = !0, ve(W);
+        if (Y = !1, p(i), !N)
+          if (v(O) !== null)
+            N = !0, _e(X);
           else {
-            var o = a(D);
-            o !== null && be(S, o.startTime - i);
+            var a = v(F);
+            a !== null && ye(S, a.startTime - i);
           }
       }
-      function W(i, o) {
-        A = !1, H && (H = !1, Ee()), Q = !0;
+      function X(i, a) {
+        N = !1, Y && (Y = !1, Ie()), ne = !0;
         var _ = P;
         try {
-          var k;
-          if (!l)
-            return U(i, o);
+          var g;
+          if (!r) return K(i, a);
         } finally {
-          E = null, P = _, Q = !1;
+          k = null, P = _, ne = !1;
         }
       }
-      function U(i, o) {
-        var _ = o;
-        for (g(_), E = a(C); E !== null && !n && !(E.expirationTime > _ && (!i || Se())); ) {
-          var k = E.callback;
-          if (typeof k == "function") {
-            E.callback = null, P = E.priorityLevel;
-            var O = E.expirationTime <= _, M = k(O);
-            _ = e.unstable_now(), typeof M == "function" ? E.callback = M : E === a(C) && v(C), g(_);
+      function K(i, a) {
+        var _ = a;
+        for (p(_), k = v(O); k !== null && !n && !(k.expirationTime > _ && (!i || Pe())); ) {
+          var g = k.callback;
+          if (typeof g == "function") {
+            k.callback = null, P = k.priorityLevel;
+            var E = k.expirationTime <= _, H = g(E);
+            _ = e.unstable_now(), typeof H == "function" ? k.callback = H : k === v(O) && l(O), p(_);
           } else
-            v(C);
-          E = a(C);
+            l(O);
+          k = v(O);
         }
-        if (E !== null)
+        if (k !== null)
           return !0;
-        var I = a(D);
-        return I !== null && be(S, I.startTime - _), !1;
+        var L = v(F);
+        return L !== null && ye(S, L.startTime - _), !1;
       }
-      function te(i, o) {
+      function ie(i, a) {
         switch (i) {
-          case m:
-          case d:
-          case f:
-          case w:
           case y:
+          case b:
+          case m:
+          case T:
+          case w:
             break;
           default:
-            i = f;
+            i = m;
         }
         var _ = P;
         P = i;
         try {
-          return o();
+          return a();
         } finally {
           P = _;
         }
       }
-      function B(i) {
-        var o;
+      function x(i) {
+        var a;
         switch (P) {
+          case y:
+          case b:
           case m:
-          case d:
-          case f:
-            o = f;
+            a = m;
             break;
           default:
-            o = P;
+            a = P;
             break;
         }
         var _ = P;
-        P = o;
+        P = a;
         try {
           return i();
         } finally {
           P = _;
         }
       }
-      function z(i) {
-        var o = P;
+      function te(i) {
+        var a = P;
         return function() {
           var _ = P;
-          P = o;
+          P = a;
           try {
             return i.apply(this, arguments);
           } finally {
@@ -399,515 +380,628 @@ function nn() {
           }
         };
       }
-      function Me(i, o, _) {
-        var k = e.unstable_now(), O;
+      function Be(i, a, _) {
+        var g = e.unstable_now(), E;
         if (typeof _ == "object" && _ !== null) {
-          var M = _.delay;
-          typeof M == "number" && M > 0 ? O = k + M : O = k;
+          var H = _.delay;
+          typeof H == "number" && H > 0 ? E = g + H : E = g;
         } else
-          O = k;
-        var I;
+          E = g;
+        var L;
         switch (i) {
-          case m:
-            I = ee;
-            break;
-          case d:
-            I = K;
-            break;
           case y:
-            I = ie;
+            L = A;
+            break;
+          case b:
+            L = z;
             break;
           case w:
-            I = Y;
+            L = J;
             break;
-          case f:
+          case T:
+            L = G;
+            break;
+          case m:
           default:
-            I = q;
+            L = j;
             break;
         }
-        var J = O + I, F = {
-          id: ne++,
-          callback: o,
+        var re = E + L, D = {
+          id: q++,
+          callback: a,
           priorityLevel: i,
-          startTime: O,
-          expirationTime: J,
+          startTime: E,
+          expirationTime: re,
           sortIndex: -1
         };
-        return O > k ? (F.sortIndex = O, u(D, F), a(C) === null && F === a(D) && (H ? Ee() : H = !0, be(S, O - k))) : (F.sortIndex = J, u(C, F), !A && !Q && (A = !0, ve(W))), F;
-      }
-      function Ne() {
-      }
-      function He() {
-        !A && !Q && (A = !0, ve(W));
+        return E > g ? (D.sortIndex = E, o(F, D), v(O) === null && D === v(F) && (Y ? Ie() : Y = !0, ye(S, E - g))) : (D.sortIndex = re, o(O, D), !N && !ne && (N = !0, _e(X))), D;
       }
       function Ue() {
-        return a(C);
-      }
-      function Be(i) {
-        i.callback = null;
       }
       function je() {
+        !N && !ne && (N = !0, _e(X));
+      }
+      function qe() {
+        return v(O);
+      }
+      function We(i) {
+        i.callback = null;
+      }
+      function Ge() {
         return P;
       }
-      var ue = !1, le = null, ce = -1, fe = t, we = -1;
-      function Se() {
-        var i = e.unstable_now() - we;
-        return !(i < fe);
+      var se = !1, ae = null, ve = -1, be = u, ke = -1;
+      function Pe() {
+        var i = e.unstable_now() - ke;
+        return !(i < be);
       }
-      function We() {
+      function Ye() {
       }
-      function Ye(i) {
+      function Ke(i) {
         if (i < 0 || i > 125) {
           console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported");
           return;
         }
-        i > 0 ? fe = Math.floor(1e3 / i) : fe = t;
+        i > 0 ? be = Math.floor(1e3 / i) : be = u;
       }
-      var de = function() {
-        if (le !== null) {
+      var me = function() {
+        if (ae !== null) {
           var i = e.unstable_now();
-          we = i;
-          var o = !0, _ = !0;
+          ke = i;
+          var a = !0, _ = !0;
           try {
-            _ = le(o, i);
+            _ = ae(a, i);
           } finally {
-            _ ? re() : (ue = !1, le = null);
+            _ ? le() : (se = !1, ae = null);
           }
         } else
-          ue = !1;
-      }, re;
-      if (typeof c == "function")
-        re = function() {
-          c(de);
+          se = !1;
+      }, le;
+      if (typeof d == "function")
+        le = function() {
+          d(me);
         };
       else if (typeof MessageChannel < "u") {
-        var Pe = new MessageChannel(), Ge = Pe.port2;
-        Pe.port1.onmessage = de, re = function() {
-          Ge.postMessage(null);
+        var Ee = new MessageChannel(), xe = Ee.port2;
+        Ee.port1.onmessage = me, le = function() {
+          xe.postMessage(null);
         };
       } else
-        re = function() {
-          r(de, 0);
+        le = function() {
+          t(me, 0);
         };
-      function ve(i) {
-        le = i, ue || (ue = !0, re());
+      function _e(i) {
+        ae = i, se || (se = !0, le());
       }
-      function be(i, o) {
-        ce = r(function() {
+      function ye(i, a) {
+        ve = t(function() {
           i(e.unstable_now());
-        }, o);
+        }, a);
       }
-      function Ee() {
-        s(ce), ce = -1;
+      function Ie() {
+        f(ve), ve = -1;
       }
-      var Ke = We, qe = null;
-      e.unstable_IdlePriority = y, e.unstable_ImmediatePriority = m, e.unstable_LowPriority = w, e.unstable_NormalPriority = f, e.unstable_Profiling = qe, e.unstable_UserBlockingPriority = d, e.unstable_cancelCallback = Be, e.unstable_continueExecution = He, e.unstable_forceFrameRate = Ye, e.unstable_getCurrentPriorityLevel = je, e.unstable_getFirstCallbackNode = Ue, e.unstable_next = B, e.unstable_pauseExecution = Ne, e.unstable_requestPaint = Ke, e.unstable_runWithPriority = te, e.unstable_scheduleCallback = Me, e.unstable_shouldYield = Se, e.unstable_wrapCallback = z, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+      var $e = Ye, Qe = null;
+      e.unstable_IdlePriority = w, e.unstable_ImmediatePriority = y, e.unstable_LowPriority = T, e.unstable_NormalPriority = m, e.unstable_Profiling = Qe, e.unstable_UserBlockingPriority = b, e.unstable_cancelCallback = We, e.unstable_continueExecution = je, e.unstable_forceFrameRate = Ke, e.unstable_getCurrentPriorityLevel = Ge, e.unstable_getFirstCallbackNode = qe, e.unstable_next = x, e.unstable_pauseExecution = Ue, e.unstable_requestPaint = $e, e.unstable_runWithPriority = ie, e.unstable_scheduleCallback = Be, e.unstable_shouldYield = Pe, e.unstable_wrapCallback = te, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
     }();
-  }(ye)), ye;
+  }(ge)), ge;
 }
-process.env.NODE_ENV === "production" ? ge.exports = en() : ge.exports = nn();
-var he = ge.exports;
-const se = Symbol(), tn = Symbol(), Ve = typeof window > "u" || /ServerSideRendering/.test(window.navigator && window.navigator.userAgent) ? pe : Je, rn = he.unstable_runWithPriority ? (e) => he.unstable_runWithPriority(he.unstable_NormalPriority, e) : (e) => e(), un = (e) => e;
-function Le(e) {
-  const n = $e({ [se]: { v: { current: e }, n: { current: -1 }, l: /* @__PURE__ */ new Set(), u: (t) => t() } });
-  var l;
-  return n[tn] = n.Provider, n.Provider = (l = n.Provider, ({ value: t, children: u }) => {
-    const a = G(t), v = G(0), [p, h] = Xe(null);
-    p && (p(t), h(null));
-    const b = G();
-    if (!b.current) {
-      const m = /* @__PURE__ */ new Set(), d = (f, w) => {
-        xe(() => {
-          v.current += 1;
-          const y = { n: v.current };
-          w != null && w.suspense && (y.n *= -1, y.p = new Promise((T) => {
-            h(() => (L) => {
-              y.v = L, delete y.p, T(L);
-            });
-          })), m.forEach((T) => T(y)), f();
-        });
-      };
-      b.current = { [se]: { v: a, n: v, l: m, u: d } };
-    }
-    return Ve(() => {
-      a.current = t, v.current += 1, rn(() => {
-        b.current[se].l.forEach((m) => {
-          m({ n: v.current, v: t });
+process.env.NODE_ENV === "production" ? we.exports = tn() : we.exports = rn();
+var Te = we.exports;
+const de = Symbol(), un = Symbol(), ln = typeof window > "u" || /ServerSideRendering/.test(window.navigator && window.navigator.userAgent), De = ln ? fe : Je, on = Te.unstable_runWithPriority ? (e) => {
+  try {
+    Te.unstable_runWithPriority(Te.unstable_NormalPriority, e);
+  } catch (n) {
+    if (n.message === "Not implemented.")
+      e();
+    else
+      throw n;
+  }
+} : (e) => e(), sn = (e) => ({
+  value: r,
+  children: u
+}) => {
+  const o = $(r), v = $(0), [l, h] = Ze(null);
+  l && (l(r), h(null));
+  const c = $();
+  if (!c.current) {
+    const s = /* @__PURE__ */ new Set(), y = (b, m) => {
+      nn(() => {
+        v.current += 1;
+        const T = {
+          n: v.current
+        };
+        m != null && m.suspense && (T.n *= -1, T.p = new Promise((w) => {
+          h(() => (C) => {
+            T.v = C, delete T.p, w(C);
+          });
+        })), s.forEach((w) => w(T)), b();
+      });
+    };
+    c.current = {
+      [de]: {
+        /* "v"alue     */
+        v: o,
+        /* versio"n"   */
+        n: v,
+        /* "l"isteners */
+        l: s,
+        /* "u"pdate    */
+        u: y
+      }
+    };
+  }
+  return De(() => {
+    o.current = r, v.current += 1, on(() => {
+      c.current[de].l.forEach((s) => {
+        s({
+          n: v.current,
+          v: r
         });
       });
-    }, [t]), Ze(l, { value: b.current }, u);
-  }), delete n.Consumer, n;
+    });
+  }, [r]), en(e, {
+    value: c.current
+  }, u);
+}, an = (e) => e;
+function Re(e) {
+  const n = Xe({
+    [de]: {
+      /* "v"alue     */
+      v: {
+        current: e
+      },
+      /* versio"n"   */
+      n: {
+        current: -1
+      },
+      /* "l"isteners */
+      l: /* @__PURE__ */ new Set(),
+      /* "u"pdate    */
+      u: (r) => r()
+    }
+  });
+  return n[un] = n.Provider, n.Provider = sn(n.Provider), delete n.Consumer, n;
 }
-function Ce(e, n) {
-  const l = ze(e)[se];
-  if (typeof process == "object" && process.env.NODE_ENV !== "production" && !l)
+function Ve(e, n) {
+  const r = ze(e)[de];
+  if (typeof process == "object" && process.env.NODE_ENV !== "production" && !r)
     throw new Error("useContextSelector requires special context");
-  const { v: { current: t }, n: { current: u }, l: a } = l, v = n(t), [p, h] = Fe((b, m) => {
-    if (!m)
-      return [t, v];
-    if ("p" in m)
-      throw m.p;
-    if (m.n === u)
-      return Object.is(b[1], v) ? b : [t, v];
+  const {
+    /* "v"alue     */
+    v: {
+      current: u
+    },
+    /* versio"n"   */
+    n: {
+      current: o
+    },
+    /* "l"isteners */
+    l: v
+  } = r, l = n(u), [h, c] = Le((s, y) => {
+    if (!y)
+      return [u, l];
+    if ("p" in y)
+      throw y.p;
+    if (y.n === o)
+      return Object.is(s[1], l) ? s : [u, l];
     try {
-      if ("v" in m) {
-        if (Object.is(b[0], m.v))
-          return b;
-        const d = n(m.v);
-        return Object.is(b[1], d) ? b : [m.v, d];
+      if ("v" in y) {
+        if (Object.is(s[0], y.v))
+          return s;
+        const b = n(y.v);
+        return Object.is(s[1], b) ? s : [y.v, b];
       }
     } catch {
     }
-    return [...b];
-  }, [t, v]);
-  return Object.is(p[1], v) || h(), Ve(() => (a.add(h), () => {
-    a.delete(h);
-  }), [a]), p[1];
+    return [...s];
+  }, [u, l]);
+  return Object.is(h[1], l) || c(), De(() => (v.add(c), () => {
+    v.delete(c);
+  }), [v]), h[1];
 }
-function Re(e) {
-  return Ce(e, un);
+function Me(e) {
+  return Ve(e, an);
 }
-const De = {
-  disabledFields: {},
-  errors: {},
-  initialValues: {},
-  isValid: !0,
-  isValidating: !1,
-  isValidatingFields: {},
-  lastAction: "init",
-  readonlyFields: {},
-  required: {},
-  submitted: 0,
-  touched: {},
-  validatingFields: {},
-  values: {}
-}, ke = Le(De), Ae = Le(() => {
-});
-function ln(e, n) {
-  return function(t, u) {
-    switch (u.type) {
-      case "initialValues":
-        t.initialValues = { ...u.value || {} };
-      case "reset":
-        t.values = { ...t.initialValues || {} };
-      case "init": {
-        const a = e == null ? void 0 : e(t.values || {});
-        return {
-          ...t,
-          errors: {},
-          initialValues: "initialValues" in u && u.initialValues || t.initialValues || {},
-          isSubmitting: !1,
-          isValid: !a,
-          isValidating: !1,
-          required: (n == null ? void 0 : n(t.values)) || {},
-          submitted: 0,
-          touched: {}
-        };
-      }
-      case "setValue": {
-        const a = { ...t.values };
-        if (V(a, u.name) === u.value)
-          return t;
-        oe(a, u.name, u.value);
-        const v = e == null ? void 0 : e(a);
-        let p = t.touched || {};
-        return V(p, u.name) || (p = { ...p }, oe(p, u.name, !0)), {
-          ...t,
-          errors: v || {},
-          isValid: !v,
-          required: (n == null ? void 0 : n(a)) || {},
-          touched: p,
-          values: a
-        };
-      }
-      case "setReadOnly": {
-        if (!u.name)
-          return t.readOnly === u.value ? t : { ...t, readOnly: !!u.value };
-        const a = t.disabledFields || {};
-        return oe(a, u.name, u.value), { ...t, readonlyFields: a };
-      }
-      case "setDisabled": {
-        if (!u.name)
-          return t.disabled === u.value ? t : { ...t, disabled: !!u.value };
-        const a = t.disabledFields || {};
-        return oe(a, u.name, u.value), { ...t, disabledFields: a };
-      }
-      case "setTouched": {
-        const a = (u.name ? Array.isArray(u.name) ? u.name : [u.name] : []).filter((p) => t.touched[p] !== u.touched);
-        if (!a.length)
-          return t;
-        const v = a.reduce(
-          (p, h) => ({ ...p, [h]: !0 }),
-          t.touched || {}
-        );
-        return { ...t, touched: v };
-      }
-      case "startSubmit": {
-        if (t.isSubmitting)
-          return t;
-        const a = e == null ? void 0 : e(t.values), v = !a;
-        return {
-          ...t,
-          disabled: v,
-          errors: a || {},
-          isSubmitting: v,
-          isValid: v,
-          submitted: t.submitted || 1
-        };
-      }
-      case "endSubmit":
-        return t.isSubmitting ? {
-          ...t,
-          disabled: !1,
-          isSubmitting: !1
-        } : t;
-      default:
-        return t;
-    }
+function Ae(e) {
+  return {
+    disabledFields: {},
+    errors: void 0,
+    initialValues: {},
+    isDisabled: !1,
+    required: {},
+    submitted: 0,
+    touched: {},
+    validatingFields: {},
+    values: {},
+    ...e || {}
   };
 }
-function an(e, n, l, t, u, a) {
-  const v = G(), p = G((m, d, f) => {
-    const w = v.current, y = u.current, T = a.current;
-    if (!w) {
-      console.error('Cannot access to Dispatch trigger inside "on" action');
-      return;
-    }
-    if (y && m.type === "startSubmit" && f.isSubmitting && !d.isSubmitting) {
-      const L = y == null ? void 0 : y(f.values);
-      L && typeof L.then == "function" ? L.finally(() => w({ type: "endSubmit" })) : w({ type: "endSubmit" });
-    }
-    T && T(m, d, f, w);
-  }), h = N(
-    (m, d) => {
-      const f = e(m, d);
-      return p.current(d, m, f), f;
-    },
-    [e, p]
-  ), b = Fe(
-    h,
-    De,
-    (m) => e(
-      {
-        ...m,
-        disabled: l,
-        initialValues: n || {},
-        readOnly: t,
-        values: n || {}
-      },
-      { type: "init" }
-    )
-  );
-  return v.current = b[1], b;
-}
-const on = ({
-  children: e,
-  disabled: n,
-  getRequired: l,
-  id: t,
-  initialValues: u,
-  onStateUpdate: a,
-  onSubmit: v,
-  readOnly: p,
-  reducer: h,
-  validation: b
-}) => {
-  const m = N(
-    (j) => (b == null ? void 0 : b(j)) || void 0,
-    [b]
-  ), d = Te(
-    () => h || ln(m, l),
-    [l, h, m]
-  ), f = G(a);
-  f.current = a;
-  const w = G(v);
-  w.current = v;
-  const [y, T] = an(
-    d,
-    u,
-    !!n,
-    !!p,
-    w,
-    f
-  );
-  pe(() => {
-    u !== y.initialValues && T({ type: "initialValues", value: u });
-  }, [u]), pe(() => {
-    y.disabled !== !!n && T({ type: "setDisabled", value: !!n });
-  }, [n, T]);
-  const L = N(
-    (j) => {
-      j.preventDefault(), T({ type: "startSubmit" });
-    },
-    [T]
-  );
-  return /* @__PURE__ */ me(Ae.Provider, { value: T, children: /* @__PURE__ */ me(ke.Provider, { value: y, children: /* @__PURE__ */ Qe("form", { id: t, onSubmit: L, children: [
-    typeof e == "function" ? e(y, T) : e,
-    /* @__PURE__ */ me("button", { style: { left: -9999, position: "fixed", top: -9999 }, type: "submit" })
-  ] }) }) });
-}, En = on;
-function R(e) {
-  return Ce(ke, e);
-}
-function On(e) {
-  return R((n) => {
-    const l = V(n.values, e);
-    return (l && Array.isArray(l) ? l : []).length;
+const Se = Re(Ae()), Ne = Re(() => {
+});
+function Q(e) {
+  return Ve(Se, (n) => {
+    if (!n)
+      throw new Error(
+        'Missing Form State Context (most probably you "useFormSelect" was called out of Form tag'
+      );
+    return e(n);
   });
-}
-function sn(e) {
-  return R(
-    (n) => (n == null ? void 0 : n.submitted) > 0 || V(n == null ? void 0 : n.touched, e) ? V(n == null ? void 0 : n.errors, e) : void 0
-  );
 }
 function cn(e) {
-  return R((n) => V(n == null ? void 0 : n.initialValues, e) || null);
+  return Q(
+    (n) => (n == null ? void 0 : n.submitted) > 0 || M(n == null ? void 0 : n.touched, e) ? M(n == null ? void 0 : n.errors, e) : void 0
+  );
 }
 function fn(e) {
-  return R((n) => {
-    const l = V(n.values, e) || null, t = V(n.initialValues, e) || null;
-    return l !== t;
-  });
+  return Q((n) => M(n == null ? void 0 : n.initialValues, e) || null);
 }
 function dn(e) {
-  return R((n) => {
-    const l = V(n == null ? void 0 : n.disabledFields, e);
-    return typeof l == "boolean" ? l : !!(n != null && n.disabled);
+  return Q((n) => {
+    const r = M(n.values, e) || null, u = M(n.initialValues, e) || null;
+    return r !== u;
   });
 }
 function vn(e) {
-  return R((n) => {
-    const l = V(n.readonlyFields, e);
-    return typeof l == "boolean" ? l : !!n.readOnly;
+  return Q((n) => {
+    const r = M(n == null ? void 0 : n.disabledFields, e);
+    return typeof r == "boolean" ? r : !!(n != null && n.isDisabled);
   });
 }
 function bn(e) {
-  return R((n) => !!V(n == null ? void 0 : n.required, e));
+  return Q((n) => !!M(n.required, e));
 }
 function mn(e) {
-  return R((n) => V(n == null ? void 0 : n.isValidatingFields, e) || !!(n != null && n.isValidating));
+  return Q((n) => (n == null ? void 0 : n.submitted) > 0 || !!M(n == null ? void 0 : n.touched, e));
 }
 function _n(e) {
-  return R((n) => (n == null ? void 0 : n.submitted) > 0 || !!V(n == null ? void 0 : n.touched, e));
+  return Q((n) => M(n.values, e) || null);
+}
+function ue() {
+  return Me(Ne);
 }
 function yn(e) {
-  return R((n) => V(n.values, e) || null);
-}
-function $() {
-  return Re(Ae);
+  const n = ue();
+  return B(
+    (r) => {
+      n({ name: e, type: "setDisabled", value: r });
+    },
+    [n, e]
+  );
 }
 function hn(e) {
-  const n = $();
-  return N(
-    (l) => {
-      n({ name: e, type: "setDisabled", value: l });
+  const n = ue();
+  return B(
+    (r) => {
+      (r && typeof r.then == "function" ? r : Promise.resolve(r)).then((o) => n({ error: o, name: e, type: "setError" }));
     },
     [n, e]
   );
 }
 function pn(e) {
-  const n = $();
-  return N(
-    (l) => {
-      (l && typeof l.then == "function" ? l : Promise.resolve(l)).then((u) => n({ error: u, name: e, type: "setError" }));
-    },
+  const n = ue();
+  return B(
+    (r = !0) => n({ name: e, touched: r, type: "setTouched" }),
     [n, e]
   );
 }
 function gn(e) {
-  const n = $();
-  return N(
-    (l = !0) => n({ name: e, touched: l, type: "setTouched" }),
+  const n = ue();
+  return B(
+    (r) => n({ name: e, type: "setValue", value: r }),
     [n, e]
   );
 }
-function Tn(e) {
-  const n = $();
-  return N(
-    (l) => n({ name: e, type: "setValue", value: l }),
-    [n, e]
-  );
-}
-function In(e) {
-  const n = cn(e), l = _n(e), t = fn(e), u = sn(e), a = dn(e), v = vn(e), p = mn(e), h = bn(e), b = yn(e), m = gn(e), d = Tn(e), f = pn(e), w = hn(e || void 0), y = N(() => {
-    d(null);
-  }, [d]), T = N(() => d(n), [n, d]);
-  return Te(
+function He(e) {
+  const n = fn(e), r = mn(e), u = dn(e), o = cn(e), v = vn(e), l = bn(e), h = _n(e), c = pn(e), s = gn(e), y = hn(e), b = yn(e || void 0), m = B(() => {
+    s(null);
+  }, [s]), T = B(() => s(n), [n, s]);
+  return ee(
     () => ({
-      clearValue: y,
-      error: u,
+      clearValue: m,
+      error: o,
       initialValue: n,
-      isChanged: t,
-      isDisabled: a,
-      isReadOnly: v,
-      isRequired: h,
-      isTouched: l,
-      isValidating: p,
+      isChanged: u,
+      isDisabled: v,
+      isRequired: l,
+      isTouched: r,
       name: e,
       resetValue: T,
-      setDisabled: w,
-      setError: f,
-      setTouched: m,
-      setValue: d,
-      value: b
+      setDisabled: b,
+      setError: y,
+      setTouched: c,
+      setValue: s,
+      value: h
     }),
     [
-      y,
-      u,
+      m,
+      o,
       n,
-      t,
-      a,
+      u,
       v,
-      h,
       l,
-      p,
+      r,
       e,
       T,
-      f,
-      m,
-      d,
-      w,
-      b
+      y,
+      c,
+      s,
+      b,
+      h
     ]
   );
 }
-function Fn() {
-  return Re(ke);
+function In({
+  component: e,
+  isDisabled: n,
+  isRequired: r,
+  name: u,
+  ...o
+}) {
+  const v = e, l = He(u), h = {
+    errorText: l.error
+  };
+  return (
+    // @ts-ignore TODO: ...
+    /* @__PURE__ */ Z(
+      v,
+      {
+        ...o,
+        ...h,
+        ...l,
+        disabled: n !== void 0 ? n : l.isDisabled,
+        required: r !== void 0 ? r : l.isRequired
+      }
+    )
+  );
 }
-function Vn() {
-  const e = $(), n = R((u) => !!u.isSubmitting), l = R((u) => !!u.isValidating), t = N(() => {
-    e({ type: "startSubmit" });
-  }, [e]);
-  return Te(() => {
-    const u = t;
-    return u[0] = n, u[1] = l, u[2] = t, u;
-  }, [n, l, t]);
+function Tn(e, n) {
+  return function(u, o) {
+    var v;
+    switch (console.log("formReducer", o.type), o.type) {
+      case "initialValues":
+        u.initialValues = { ...o.value || {} };
+      case "reset":
+        u.values = { ...u.initialValues || {} };
+      case "init": {
+        const l = o.type === "init" && o.state ? { ...u, ...o.state } : u, h = e == null ? void 0 : e(l.values || {}), c = (n == null ? void 0 : n(l.values)) || {};
+        return {
+          ...l,
+          errors: h,
+          isSubmitting: l.isSubmitting || !1,
+          required: o.type === "init" && ((v = o.state) == null ? void 0 : v.required) || c,
+          submitted: l.submitted || 0,
+          touched: l.touched || {}
+        };
+      }
+      case "setValue": {
+        const l = { ...u.values };
+        if (M(l, o.name) === o.value)
+          return u;
+        he(l, o.name, o.value);
+        const h = e == null ? void 0 : e(l);
+        let c = u.touched || {};
+        return M(c, o.name) || (c = { ...c }, he(c, o.name, !0)), {
+          ...u,
+          errors: h || {},
+          required: (n == null ? void 0 : n(l)) || {},
+          touched: c,
+          values: l
+        };
+      }
+      case "setDisabled": {
+        if (!o.name)
+          return u.isDisabled === o.value ? u : { ...u, isDisabled: !!o.value };
+        const l = u.disabledFields || {};
+        return he(l, o.name, o.value), { ...u, disabledFields: l };
+      }
+      case "setTouched": {
+        const l = (o.name ? Array.isArray(o.name) ? o.name : [o.name] : []).filter((s) => u.touched[s] !== o.touched);
+        if (!l.length)
+          return u;
+        const h = l.reduce(
+          (s, y) => ({ ...s, [y]: !0 }),
+          u.touched || {}
+        ), c = e == null ? void 0 : e(u.values);
+        return { ...u, errors: c, touched: h };
+      }
+      case "startSubmit": {
+        if (u.isSubmitting)
+          return u;
+        const l = e == null ? void 0 : e(u.values), h = !l;
+        return {
+          ...u,
+          errors: l || {},
+          isDisabled: h,
+          isSubmitting: h,
+          submitted: u.submitted || 1
+        };
+      }
+      case "endSubmit":
+        return u.isSubmitting ? {
+          ...u,
+          isDisabled: !1,
+          isSubmitting: !1
+        } : u;
+      default:
+        return u;
+    }
+  };
+}
+function wn(e, n, r = []) {
+  const u = $(n), o = B(() => u.current, []), v = $(
+    (y, b) => u.current = e(y, b)
+  ).current, [l, h] = Le(v, n), c = $(r), s = ee(
+    () => c.current.reduceRight(
+      (y, b) => (m) => b(l)(o, h)(y)(m),
+      h
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+  return [l, s, o];
+}
+const On = ({
+  children: e,
+  disabled: n,
+  getRequired: r,
+  id: u,
+  initialValues: o,
+  onStateUpdate: v,
+  onSubmit: l,
+  reducer: h,
+  validation: c
+}) => {
+  const s = $(v);
+  s.current = v;
+  const y = $(l);
+  y.current = l;
+  const b = B(
+    (V) => (c == null ? void 0 : c(V)) || void 0,
+    [c]
+  ), m = ee(
+    () => h || Tn(b, r),
+    [r, h, b]
+  ), T = ee(
+    () => (V) => (U, A) => (z) => (j) => {
+      var O, F;
+      const G = U();
+      z(j);
+      const J = U();
+      if (j.type === "startSubmit" && J.isSubmitting) {
+        const q = (O = y.current) == null ? void 0 : O.call(y, J.values);
+        typeof (q == null ? void 0 : q.then) == "function" && q.catch(() => {
+        }).then((k) => {
+          A({ result: k, type: "endSubmit" });
+        });
+      }
+      (F = s.current) == null || F.call(s, j, G, J, A);
+    },
+    []
+  ), w = ee(() => m(Ae({}), {
+    state: { initialValues: o, isDisabled: !!n, values: o },
+    type: "init"
+  }), []), [C, I, W] = wn(
+    m,
+    w,
+    [T]
+  );
+  fe(() => {
+    W().isDisabled !== !!n && I({ type: "setDisabled", value: !!n });
+  }, [n]), fe(() => {
+    W().initialValues !== o && I({ type: "initialValues", value: o });
+  }, [o]);
+  const R = (V) => {
+    V.preventDefault(), I({ type: "startSubmit" });
+  };
+  return /* @__PURE__ */ Z(Ne.Provider, { value: I, children: /* @__PURE__ */ Z(Se.Provider, { value: C, children: /* @__PURE__ */ oe("form", { id: u, onSubmit: R, children: [
+    typeof e == "function" ? e(C, I) : e,
+    /* @__PURE__ */ Z("button", { style: { left: -9999, position: "fixed", top: -9999 }, type: "submit" })
+  ] }) }) });
+};
+function Cn({
+  children: e,
+  component: n,
+  label: r,
+  name: u,
+  required: o,
+  type: v,
+  value: l,
+  ...h
+}) {
+  const c = n, {
+    error: s,
+    isDisabled: y,
+    isRequired: b,
+    setTouched: m,
+    setValue: T,
+    value: w
+  } = He(u), C = ee(() => `${n}-${u}-${Math.random()}`, [u, n]), I = ["radio", "checkbox"].includes(v || ""), W = B(
+    (U) => {
+      var A;
+      T(
+        // @ts-ignore TODO: improve
+        I ? w === l ? null : l : ((A = U.currentTarget) == null ? void 0 : A.value) || null
+      );
+    },
+    [w, I, T, l]
+  ), R = $();
+  fe(() => {
+    R.current && (s && typeof s == "string" ? (R.current.setCustomValidity(s), R.current.reportValidity()) : R.current.setCustomValidity(""));
+  });
+  const V = /* @__PURE__ */ Z(
+    c,
+    {
+      ...h,
+      ref: R,
+      checked: I ? w === l : void 0,
+      disabled: y,
+      id: C,
+      required: typeof o == "boolean" ? o : b,
+      type: v,
+      value: I ? l : w || "",
+      onBlur: () => m(!0),
+      onChange: W,
+      children: e
+    }
+  );
+  return /* @__PURE__ */ Z("div", { style: { display: "flex", flexDirection: "column", gap: "0.25rem" }, children: n === "input" && v && I ? /* @__PURE__ */ Z(Oe, { children: /* @__PURE__ */ oe("label", { style: { display: "flex", flexDirection: "row", gap: "0.25rem" }, children: [
+    V,
+    r && /* @__PURE__ */ oe("span", { children: [
+      r,
+      b ? " *" : null
+    ] })
+  ] }) }) : /* @__PURE__ */ oe(Oe, { children: [
+    r && /* @__PURE__ */ oe("label", { htmlFor: C, children: [
+      r,
+      b ? " *" : null
+    ] }),
+    V
+  ] }) });
+}
+function Fn(e) {
+  return Q((n) => {
+    const r = M(n.values, e);
+    return (r && Array.isArray(r) ? r : []).length;
+  });
 }
 function Ln() {
-  const e = $();
-  return N((n) => e({ type: "setValues", values: n }), [e]);
+  return Me(Se);
+}
+function Dn() {
+  const e = ue(), n = Q((u) => !!u.isSubmitting), r = B(() => {
+    e({ type: "startSubmit" });
+  }, [e]);
+  return ee(() => {
+    const u = r;
+    return u[0] = n, u[1] = r, u;
+  }, [n, r]);
+}
+function Rn() {
+  const e = ue();
+  return B((n) => e({ type: "setValues", values: n }), [e]);
 }
 export {
-  En as default,
-  ln as getDefaultFormReducer,
-  On as useArrayFieldLength,
-  In as useField,
-  sn as useFieldError,
-  cn as useFieldInitialValue,
-  fn as useFieldIsChanged,
-  dn as useFieldIsDisabled,
-  vn as useFieldIsReadonly,
+  In as Field,
+  Cn as HtmlField,
+  On as default,
+  Tn as getDefaultFormReducer,
+  Fn as useArrayFieldLength,
+  He as useField,
+  cn as useFieldError,
+  fn as useFieldInitialValue,
+  dn as useFieldIsChanged,
+  vn as useFieldIsDisabled,
   bn as useFieldIsRequired,
-  mn as useFieldIsValidating,
-  _n as useFieldTouched,
-  yn as useFieldValue,
-  $ as useFormDispatch,
-  R as useFormSelect,
-  Fn as useFormState,
-  Vn as useFormSubmit,
-  hn as useSetFieldDisabled,
-  pn as useSetFieldError,
-  gn as useSetFieldTouched,
-  Tn as useSetFieldValue,
-  Ln as useSetValues
+  mn as useFieldTouched,
+  _n as useFieldValue,
+  ue as useFormDispatch,
+  Q as useFormSelect,
+  Ln as useFormState,
+  Dn as useFormSubmit,
+  yn as useSetFieldDisabled,
+  hn as useSetFieldError,
+  pn as useSetFieldTouched,
+  gn as useSetFieldValue,
+  Rn as useSetValues
 };
