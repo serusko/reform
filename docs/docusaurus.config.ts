@@ -56,30 +56,13 @@ const config: Config = {
   themeConfig: {
     footer: {
       copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      links: [
-        {
-          items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
-          title: 'Docs',
-        },
-      ],
+      links: [],
       style: 'dark',
     },
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       items: [
-        {
-          label: 'Tutorial',
-          position: 'left',
-          sidebarId: 'tutorialSidebar',
-          type: 'docSidebar',
-        },
-        { label: 'Blog', position: 'left', to: '/blog' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
