@@ -1,5 +1,6 @@
 import * as y from 'yup';
 
+import Field from '../lib/components/Field';
 import Form from '../lib/components/Form';
 import HtmlField from '../lib/components/HtmlField';
 import { Data } from '../lib/context';
@@ -9,7 +10,6 @@ import FormValues from '../lib/renderers/FormValues';
 import { getRequired, useValidation } from '../lib/yupHelpers';
 
 import './app.css';
-import { Field } from '../lib';
 
 import CustomInput from './CustomInput';
 
