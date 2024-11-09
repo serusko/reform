@@ -27,6 +27,9 @@ jobs:
       - name: Build website
         run: npm run build
 
+      - name: List contents of ./docs after build
+        run: ls -la ./docs
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
