@@ -1,9 +1,9 @@
-name: Deploy Docusaurus to GitHub Pages
+name: Deploy Docusaurus
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build-and-deploy:
