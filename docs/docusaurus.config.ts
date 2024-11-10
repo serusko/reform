@@ -7,7 +7,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config: Config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/reform/',
+  baseUrl: '/reform',
 
   favicon: 'img/favicon.ico',
 
@@ -28,6 +28,8 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'facebook',
 
+  plugins: [],
+
   presets: [
     [
       'classic',
@@ -43,7 +45,7 @@ const config: Config = {
 
           sidebarPath: './sidebars.ts',
         },
-        theme: { customCss: './src/css/custom.css' },
+        theme: {},
       } satisfies Preset.Options,
     ],
   ],

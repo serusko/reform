@@ -54,7 +54,10 @@ interface ArrayFieldRendererProps<I = unknown> {
  * inspired by react-native FlatList
  * - render array of elements based on index, each item should be
  */
-export const ArrayFieldRenderer: FC<ArrayFieldRendererProps> = ({ name, render }) => {
+export const ArrayFieldRenderer: FC<ArrayFieldRendererProps> = ({
+  name,
+  render,
+}: ArrayFieldRendererProps) => {
   return (
     <FieldArrayLength
       name={name}
