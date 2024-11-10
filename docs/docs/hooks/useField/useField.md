@@ -2,7 +2,7 @@
 
 Retrieve whole metadata for single field including `value`, `errors`, and also action like `setValue`, `setTouched`.
 
-## Example 
+## Example
 
 ```typescript
 import Field from '@serusko/reform/components/Field`;
